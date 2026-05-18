@@ -1,11 +1,11 @@
-from config import DEFAULT_PAGES_PATH, DEFAULT_QUERY_LOG_PATH, DEFAULT_TREE_PATH
-from llm import generate_response
-from prompts import (
+from .config import DEFAULT_PAGES_PATH, DEFAULT_QUERY_LOG_PATH, DEFAULT_TREE_PATH
+from .llm import generate_response
+from .prompts import (
     generate_context_grounded_answer_prompt,
     generate_full_tree_node_selection_prompt,
     generate_single_level_node_selection_prompt,
 )
-from utils import (
+from .utils import (
     append_query_response,
     ensure_valid_json,
     find_node_by_id,
@@ -13,8 +13,19 @@ from utils import (
     format_candidate_nodes,
     format_node,
     format_retrieved_context,
+    get_pages_in_range,
     load_json_data,
+    validate_selection_response,
 )
+
+
+SELECTION_VALIDATION_REQUIREMENTS = """
+Return a JSON object with:
+- selected_node_id: either null or a dotted numeric string like 0001 or 0001.2
+- reason: non-empty string
+If selected_node_id is not null, it must be one of the provided candidate node IDs.
+Do not invent node IDs.
+"""
 
 
 def select_best_matching_node(
@@ -38,7 +49,12 @@ PARENT NODE:
         parent_node_text=parent_context,
     )
     response = generate_response(prompt)
-    parsed = ensure_valid_json(response)
+    allowed_node_ids = {node["node_id"] for node in candidate_nodes}
+    parsed = ensure_valid_json(
+        response,
+        validator=lambda data: validate_selection_response(data, allowed_node_ids),
+        validation_requirements=SELECTION_VALIDATION_REQUIREMENTS,
+    )
 
     selected_id = parsed.get("selected_node_id")
     if not selected_id:
@@ -87,7 +103,12 @@ def select_best_matching_node_from_full_tree(query: str, tree: list[dict]) -> di
         full_tree_candidates_text=format_candidate_nodes(flatten_tree(tree)),
     )
     response = generate_response(prompt)
-    parsed = ensure_valid_json(response)
+    allowed_node_ids = {node["node_id"] for node in flatten_tree(tree)}
+    parsed = ensure_valid_json(
+        response,
+        validator=lambda data: validate_selection_response(data, allowed_node_ids),
+        validation_requirements=SELECTION_VALIDATION_REQUIREMENTS,
+    )
 
     selected_id = parsed.get("selected_node_id")
     if not selected_id:
@@ -118,7 +139,11 @@ def get_context_from_node_id(
     if node is None:
         raise ValueError(f"Node ID '{node_id}' not found in tree.")
 
-    selected_pages = pages[node["start_index"] - 1 : node["end_index"]]
+    selected_pages = get_pages_in_range(
+        pages=pages,
+        start_page=node["start_index"],
+        end_page=node["end_index"],
+    )
     context = "\n\n".join(
         f"=============== PAGE {page['page']} START ===============\n"
         f"{page['page_text']}\n"
@@ -195,4 +220,3 @@ def answer_query(
     }
     append_query_response(result, log_path)
     return result
-

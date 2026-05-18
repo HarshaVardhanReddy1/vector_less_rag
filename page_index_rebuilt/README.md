@@ -139,6 +139,7 @@ Retrieval is hierarchical by default:
 3. Fall back to a full-tree selection pass if the hierarchical pass fails.
 
 The final answer is generated only from the page range covered by the selected node.
+Page lookup uses each page object's explicit `page` value, so retrieval stays correct even if the JSON list is reordered.
 
 ## Notes
 

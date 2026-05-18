@@ -1,7 +1,18 @@
-from config import DEFAULT_CONTEXT_MAX_TOKENS, DEFAULT_PAGES_PATH, DEFAULT_TOC_PATH
-from llm import generate_response
-from prompts import generate_toc_from_context_prompt, generate_toc_merge_prompt
-from utils import ensure_valid_json, load_json_data, save_json_data
+from .config import DEFAULT_CONTEXT_MAX_TOKENS, DEFAULT_PAGES_PATH, DEFAULT_TOC_PATH
+from .llm import generate_response
+from .prompts import generate_toc_from_context_prompt, generate_toc_merge_prompt
+from .utils import ensure_valid_json, load_json_data, save_json_data, validate_toc_nodes
+
+
+TOC_VALIDATION_REQUIREMENTS = """
+Return a JSON array of objects.
+Each object must contain exactly these fields:
+- title: non-empty string
+- node_id: non-empty dotted numeric string like 1, 1.2, or 2.3.4
+- page_number: integer >= 1
+- summary: non-empty string
+Do not return duplicate node_id values.
+"""
 
 
 def build_context_chunks(page_items: list[dict], max_tokens: int = DEFAULT_CONTEXT_MAX_TOKENS) -> list[str]:
@@ -39,13 +50,21 @@ def build_context_chunks(page_items: list[dict], max_tokens: int = DEFAULT_CONTE
 def generate_toc_from_context(context: str) -> list[dict]:
     prompt = generate_toc_from_context_prompt(context)
     result = generate_response(prompt)
-    return ensure_valid_json(result)
+    return ensure_valid_json(
+        result,
+        validator=validate_toc_nodes,
+        validation_requirements=TOC_VALIDATION_REQUIREMENTS,
+    )
 
 
 def merge_tocs(existing_toc: list[dict], new_toc: list[dict]) -> list[dict]:
     prompt = generate_toc_merge_prompt(existing_toc, new_toc)
     result = generate_response(prompt)
-    return ensure_valid_json(result)
+    return ensure_valid_json(
+        result,
+        validator=validate_toc_nodes,
+        validation_requirements=TOC_VALIDATION_REQUIREMENTS,
+    )
 
 
 

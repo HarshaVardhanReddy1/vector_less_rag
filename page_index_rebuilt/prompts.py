@@ -4,6 +4,7 @@ import json
 def generate_json_fix_prompt(
     broken_json: str,
     error_message: str,
+    validation_requirements: str = "",
 ) -> str:
 
     return f"""
@@ -23,12 +24,12 @@ IMPORTANT RULES:
 JSON ERROR:
 {error_message}
 
+VALIDATION REQUIREMENTS:
+{validation_requirements or "The JSON only needs to be valid and preserve the original meaning."}
+
 BROKEN JSON:
 {broken_json}
 """
-
-
- 
 
 
 def generate_toc_from_context_prompt(context: str) -> str:
@@ -352,8 +353,6 @@ Return the COMPLETE updated TOC as a valid JSON array.
 """
 
     return prompt
-
-
 
 
 def generate_single_level_node_selection_prompt(

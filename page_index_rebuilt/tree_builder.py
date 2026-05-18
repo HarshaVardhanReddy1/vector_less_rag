@@ -1,7 +1,7 @@
 from pathlib import Path
 
-from config import DEFAULT_PAGES_PATH, DEFAULT_TOC_PATH, DEFAULT_TREE_PATH
-from utils import load_json_data, save_json_data
+from .config import DEFAULT_PAGES_PATH, DEFAULT_TOC_PATH, DEFAULT_TREE_PATH
+from .utils import load_json_data, save_json_data
 
 
 def get_document_end_index(toc_data: list[dict], pages_path=DEFAULT_PAGES_PATH) -> int:
@@ -102,4 +102,3 @@ def generate_tree_from_toc(
     tree = build_tree_from_toc(toc_data, document_end_index=document_end_index)
     save_json_data(tree, output_path)
     return tree
-
