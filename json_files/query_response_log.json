@@ -1,0 +1,29 @@
+[
+    {
+        "query": "can you explain about staf development programs",
+        "selected_nodes": [],
+        "answer": "No relevant nodes were found for the query."
+    },
+    {
+        "query": "can you explain about staf development programs",
+        "selected_nodes": [
+            {
+                "node_id": "0004.8",
+                "title": "Training and Technical Assistance",
+                "start_index": 43,
+                "end_index": 43
+            }
+        ],
+        "answer": "The Federal Reserve’s “staff development” is carried out through its **Training and Technical Assistance** program.  In 2023 the Board:\n\n* Provided training and technical assistance to **foreign supervisors** and **minority‑owned depository institutions**.  \n* Organized **20 training seminars** (both on‑shore and overseas) that were attended by roughly **900 supervisors** from foreign central banks and supervisory agencies.  \n* Partnered with the **International Monetary Fund, the World Bank, and other organizations** (e.g., the Association of…​) to hold two additional training events for senior supervisory officials.  \n\nThese activities constitute the staff‑development side of the Federal Reserve’s outreach, using Federal Reserve staff as instructors and consultants to build supervisory expertise both domestically and internationally."
+    },
+    {
+        "query": "what is Rules of Practice and Procedure",
+        "selected_node": {
+            "node_id": "0020.3",
+            "title": "Rules of Practice and Procedure",
+            "start_index": 176,
+            "end_index": 176
+        },
+        "answer": "The Rules of Practice and Procedure are a set of procedural regulations governing the Federal Reserve Board’s administrative hearings. In the final rule approved on November 9 2023 (Docket No. R‑1766) and effective April 1 2024, the Board – together with the FDIC, OCC, and NCUA – updated these Uniform Rules of Practice and Procedure to recognize the use of electronic communications in all aspects of administrative hearings and to increase the efficiency and fairness of administrative adjudications."
+    }
+]
