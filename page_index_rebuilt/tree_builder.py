@@ -1,14 +1,14 @@
 from pathlib import Path
 
 from .config import DEFAULT_PAGES_PATH, DEFAULT_TOC_PATH, DEFAULT_TREE_PATH
-from .utils import load_json_data, save_json_data
+from .utils import load_json_data, save_json_data, validate_page_items, validate_toc_nodes
 
 
 def get_document_end_index(toc_data: list[dict], pages_path=DEFAULT_PAGES_PATH) -> int:
     pages_file = Path(pages_path)
 
     if pages_file.exists():
-        pages_data = load_json_data(pages_file)
+        pages_data = validate_page_items(load_json_data(pages_file))
         if pages_data:
             return max(item["page"] for item in pages_data)
 
@@ -58,7 +58,7 @@ def build_tree_from_toc(toc_data: list[dict], document_end_index: int | None = N
     if not toc_data:
         return []
 
-    sorted_toc = sort_toc_nodes(toc_data)
+    sorted_toc = sort_toc_nodes(validate_toc_nodes(toc_data))
 
     if document_end_index is None:
         document_end_index = get_document_end_index(sorted_toc)
@@ -98,7 +98,12 @@ def generate_tree_from_toc(
     output_path=DEFAULT_TREE_PATH,
     document_end_index: int | None = None,
 ) -> list[dict]:
-    toc_data = load_json_data(toc_path)
-    tree = build_tree_from_toc(toc_data, document_end_index=document_end_index)
-    save_json_data(tree, output_path)
-    return tree
+    try:
+        toc_data = load_json_data(toc_path)
+        tree = build_tree_from_toc(toc_data, document_end_index=document_end_index)
+        save_json_data(tree, output_path)
+        return tree
+    except Exception as error:
+        raise RuntimeError(
+            f"Failed to generate tree from TOC file '{toc_path}' into '{output_path}'."
+        ) from error

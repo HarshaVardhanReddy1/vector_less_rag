@@ -1,7 +1,13 @@
 from .config import DEFAULT_CONTEXT_MAX_TOKENS, DEFAULT_PAGES_PATH, DEFAULT_TOC_PATH
 from .llm import generate_response
 from .prompts import generate_toc_from_context_prompt, generate_toc_merge_prompt
-from .utils import ensure_valid_json, load_json_data, save_json_data, validate_toc_nodes
+from .utils import (
+    ensure_valid_json,
+    load_json_data,
+    save_json_data,
+    validate_page_items,
+    validate_toc_nodes,
+)
 
 
 TOC_VALIDATION_REQUIREMENTS = """
@@ -16,11 +22,15 @@ Do not return duplicate node_id values.
 
 
 def build_context_chunks(page_items: list[dict], max_tokens: int = DEFAULT_CONTEXT_MAX_TOKENS) -> list[str]:
+    if not isinstance(max_tokens, int) or isinstance(max_tokens, bool) or max_tokens <= 0:
+        raise ValueError(f"max_tokens must be a positive integer, got {max_tokens!r}.")
+
+    validated_page_items = validate_page_items(page_items)
     contexts: list[str] = []
     current_context: list[str] = []
     current_token_count = 0
 
-    for item in page_items:
+    for item in validated_page_items:
         page_number = item["page"]
         page_text = item["page_text"]
         token_count = item["token_count"]
@@ -48,23 +58,29 @@ def build_context_chunks(page_items: list[dict], max_tokens: int = DEFAULT_CONTE
 
 
 def generate_toc_from_context(context: str) -> list[dict]:
-    prompt = generate_toc_from_context_prompt(context)
-    result = generate_response(prompt)
-    return ensure_valid_json(
-        result,
-        validator=validate_toc_nodes,
-        validation_requirements=TOC_VALIDATION_REQUIREMENTS,
-    )
+    try:
+        prompt = generate_toc_from_context_prompt(context)
+        result = generate_response(prompt)
+        return ensure_valid_json(
+            result,
+            validator=validate_toc_nodes,
+            validation_requirements=TOC_VALIDATION_REQUIREMENTS,
+        )
+    except Exception as error:
+        raise RuntimeError("Failed to generate TOC from a context chunk.") from error
 
 
 def merge_tocs(existing_toc: list[dict], new_toc: list[dict]) -> list[dict]:
-    prompt = generate_toc_merge_prompt(existing_toc, new_toc)
-    result = generate_response(prompt)
-    return ensure_valid_json(
-        result,
-        validator=validate_toc_nodes,
-        validation_requirements=TOC_VALIDATION_REQUIREMENTS,
-    )
+    try:
+        prompt = generate_toc_merge_prompt(existing_toc, new_toc)
+        result = generate_response(prompt)
+        return ensure_valid_json(
+            result,
+            validator=validate_toc_nodes,
+            validation_requirements=TOC_VALIDATION_REQUIREMENTS,
+        )
+    except Exception as error:
+        raise RuntimeError("Failed to merge partial TOCs.") from error
 
 
 
@@ -74,13 +90,16 @@ def build_toc(contexts: list[str]) -> list[dict]:
     if not contexts:
         return []
 
-    toc = generate_toc_from_context(contexts[0])
+    try:
+        toc = generate_toc_from_context(contexts[0])
 
-    for context in contexts[1:]:
-        chunk_toc = generate_toc_from_context(context)
-        toc = merge_tocs(toc, chunk_toc)
+        for context in contexts[1:]:
+            chunk_toc = generate_toc_from_context(context)
+            toc = merge_tocs(toc, chunk_toc)
 
-    return deduplicate_toc(toc)
+        return deduplicate_toc(toc)
+    except Exception as error:
+        raise RuntimeError(f"Failed to build TOC from {len(contexts)} context chunk(s).") from error
 
 def deduplicate_toc(toc: list[dict]) -> list[dict]:
     seen = set()
@@ -101,11 +120,16 @@ def generate_toc(
     output_path=DEFAULT_TOC_PATH,
     max_tokens: int = DEFAULT_CONTEXT_MAX_TOKENS,
 ) -> list[dict]:
-    pages_data = load_json_data(pages_path)
-    contexts = build_context_chunks(pages_data, max_tokens=max_tokens)
-    toc = build_toc(contexts)
-    save_json_data(toc, output_path)
-    return toc
+    try:
+        pages_data = load_json_data(pages_path)
+        contexts = build_context_chunks(pages_data, max_tokens=max_tokens)
+        toc = build_toc(contexts)
+        save_json_data(toc, output_path)
+        return toc
+    except Exception as error:
+        raise RuntimeError(
+            f"Failed to generate TOC from pages file '{pages_path}' into '{output_path}'."
+        ) from error
 
   
   

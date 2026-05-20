@@ -118,7 +118,10 @@ def select_best_matching_node_from_full_tree(query: str, tree: list[dict]) -> di
 
 
 def retrieve_relevant_node(query: str, tree_path=DEFAULT_TREE_PATH) -> dict | None:
-    tree = load_json_data(tree_path)
+    try:
+        tree = load_json_data(tree_path)
+    except Exception as error:
+        raise RuntimeError(f"Failed to load retrieval tree from '{tree_path}'.") from error
 
     deepest_node = find_deepest_matching_node(query=query, candidate_nodes=tree)
     if deepest_node is not None:
@@ -132,8 +135,14 @@ def get_context_from_node_id(
     tree_path=DEFAULT_TREE_PATH,
     pages_path=DEFAULT_PAGES_PATH,
 ) -> dict:
-    tree = load_json_data(tree_path)
-    pages = load_json_data(pages_path)
+    try:
+        tree = load_json_data(tree_path)
+        pages = load_json_data(pages_path)
+    except Exception as error:
+        raise RuntimeError(
+            f"Failed to load retrieval inputs for node '{node_id}' from '{tree_path}' and "
+            f"'{pages_path}'."
+        ) from error
 
     node = find_node_by_id(tree, node_id)
     if node is None:
@@ -190,33 +199,38 @@ def answer_query(
     pages_path=DEFAULT_PAGES_PATH,
     log_path=DEFAULT_QUERY_LOG_PATH,
 ) -> dict:
-    retrieved_context = retrieve_context_for_query(
-        query=query,
-        tree_path=tree_path,
-        pages_path=pages_path,
-    )
+    try:
+        retrieved_context = retrieve_context_for_query(
+            query=query,
+            tree_path=tree_path,
+            pages_path=pages_path,
+        )
 
-    if retrieved_context is None:
+        if retrieved_context is None:
+            result = {
+                "query": query,
+                "selected_node": None,
+                "answer": "No relevant nodes were found for the query.",
+            }
+            append_query_response(result, log_path)
+            return result
+
+        answer_prompt = generate_answer_prompt(query, retrieved_context)
+        answer = generate_response(answer_prompt)
+
         result = {
             "query": query,
-            "selected_node": None,
-            "answer": "No relevant nodes were found for the query.",
+            "selected_node": {
+                "node_id": retrieved_context["node_id"],
+                "title": retrieved_context["title"],
+                "start_index": retrieved_context["start_index"],
+                "end_index": retrieved_context["end_index"],
+            },
+            "answer": answer,
         }
         append_query_response(result, log_path)
         return result
-
-    answer_prompt = generate_answer_prompt(query, retrieved_context)
-    answer = generate_response(answer_prompt)
-
-    result = {
-        "query": query,
-        "selected_node": {
-            "node_id": retrieved_context["node_id"],
-            "title": retrieved_context["title"],
-            "start_index": retrieved_context["start_index"],
-            "end_index": retrieved_context["end_index"],
-        },
-        "answer": answer,
-    }
-    append_query_response(result, log_path)
-    return result
+    except Exception as error:
+        raise RuntimeError(
+            f"Failed to answer query {query!r} using tree '{tree_path}' and pages '{pages_path}'."
+        ) from error

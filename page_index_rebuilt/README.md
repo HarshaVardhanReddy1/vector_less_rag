@@ -102,6 +102,23 @@ result = answer_query("Explain capital planning and stress testing.")
 print(result)
 ```
 
+## Evaluation
+
+A small curated benchmark lives in `evals/` with sample documents, reference TOC/tree files,
+and query expectations for retrieval quality checks.
+
+Run the retrieval-only benchmark:
+
+```bash
+python evals/run_eval.py
+```
+
+Run the benchmark with answer scoring as well:
+
+```bash
+python evals/run_eval.py --include-answer
+```
+
 ## Returned Shapes
 
 `build_index()` returns a summary dictionary like:

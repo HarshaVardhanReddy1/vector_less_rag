@@ -14,13 +14,42 @@ NODE_ID_PATTERN = re.compile(r"^\d+(?:\.\d+)*$")
 
 
 def load_json_data(json_path: str | Path) -> Any:
-    with open(json_path, "r", encoding="utf-8") as file:
-        return json.load(file)
+    path = Path(json_path)
+
+    try:
+        with open(path, "r", encoding="utf-8") as file:
+            return json.load(file)
+    except FileNotFoundError as error:
+        raise FileNotFoundError(f"JSON file not found: {path.resolve()}") from error
+    except json.JSONDecodeError as error:
+        raise ValueError(
+            f"Failed to parse JSON file {path.resolve()} at line {error.lineno}, "
+            f"column {error.colno}: {error.msg}"
+        ) from error
+    except OSError as error:
+        raise OSError(f"Failed to read JSON file {path.resolve()}: {error}") from error
 
 
 def save_json_data(data: Any, output_path: str | Path) -> None:
-    with open(output_path, "w", encoding="utf-8") as file:
-        json.dump(data, file, indent=4, ensure_ascii=False)
+    path = Path(output_path)
+
+    try:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        with open(path, "w", encoding="utf-8") as file:
+            json.dump(data, file, indent=4, ensure_ascii=False)
+    except TypeError as error:
+        raise ValueError(
+            f"Failed to serialize data for JSON output {path.resolve()}: {error}"
+        ) from error
+    except OSError as error:
+        raise OSError(f"Failed to write JSON file {path.resolve()}: {error}") from error
+
+
+def _truncate_for_error(value: Any, limit: int = 300) -> str:
+    text = _serialize_json_candidate(value)
+    if len(text) <= limit:
+        return text
+    return f"{text[:limit]}... [truncated {len(text) - limit} chars]"
 
 
 def get_pages_in_range(pages: list[dict], start_page: int, end_page: int) -> list[dict]:
@@ -83,9 +112,9 @@ def ensure_valid_json(
     validation_requirements: str = "",
 ) -> Any:
     current_response = json_context
-    
+    last_error: Exception | None = None
 
-    for _ in range(max_retries):
+    for attempt in range(1, max_retries + 1):
         try:
             parsed_response = (
                 current_response
@@ -94,6 +123,9 @@ def ensure_valid_json(
             )
             return validator(parsed_response) if validator is not None else parsed_response
         except (json.JSONDecodeError, ValueError, TypeError) as error:
+            last_error = error
+            if attempt == max_retries:
+                break
             repair_prompt = generate_json_fix_prompt(
                 _serialize_json_candidate(current_response),
                 str(error),
@@ -101,7 +133,11 @@ def ensure_valid_json(
             )
             current_response = generate_response(repair_prompt)
 
-    raise ValueError("Failed to parse and validate LLM response as valid JSON.")
+    raise ValueError(
+        "Failed to parse and validate LLM response as valid JSON after "
+        f"{max_retries} attempts. Last error: {last_error}. "
+        f"Last response snippet: {_truncate_for_error(current_response)}"
+    )
 
 
 def _validate_non_empty_string(value: Any, field_name: str) -> str:
@@ -158,6 +194,48 @@ def validate_toc_nodes(json_data: Any) -> list[dict]:
         )
 
     return validated_nodes
+
+
+def validate_page_items(json_data: Any) -> list[dict]:
+    if not isinstance(json_data, list):
+        raise ValueError("Pages JSON must be a JSON array.")
+
+    validated_pages: list[dict] = []
+    seen_page_numbers: set[int] = set()
+
+    for index, item in enumerate(json_data):
+        if not isinstance(item, dict):
+            raise ValueError(f"Page entry at index {index} must be a JSON object.")
+
+        page_number = item.get("page")
+        if not isinstance(page_number, int) or isinstance(page_number, bool) or page_number < 1:
+            raise ValueError(f"Field 'page[{index}]' must be an integer >= 1.")
+
+        if page_number in seen_page_numbers:
+            raise ValueError(f"Duplicate page number {page_number} found in pages JSON.")
+        seen_page_numbers.add(page_number)
+
+        page_text = item.get("page_text")
+        if not isinstance(page_text, str):
+            raise ValueError(f"Field 'page_text[{index}]' must be a string.")
+
+        token_count = item.get("token_count")
+        if (
+            not isinstance(token_count, int)
+            or isinstance(token_count, bool)
+            or token_count < 0
+        ):
+            raise ValueError(f"Field 'token_count[{index}]' must be an integer >= 0.")
+
+        validated_pages.append(
+            {
+                "page": page_number,
+                "page_text": page_text,
+                "token_count": token_count,
+            }
+        )
+
+    return validated_pages
 
 
 def validate_selection_response(

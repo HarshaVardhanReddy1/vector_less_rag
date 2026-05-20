@@ -1,0 +1,20 @@
+[
+    {
+        "title": "Paid Time Off",
+        "node_id": "1",
+        "page_number": 1,
+        "summary": "Annual leave, sick leave reporting, and carry-forward rules."
+    },
+    {
+        "title": "Travel and Expenses",
+        "node_id": "2",
+        "page_number": 2,
+        "summary": "Approval rules and reimbursement requirements for business travel."
+    },
+    {
+        "title": "Security and Access",
+        "node_id": "3",
+        "page_number": 3,
+        "summary": "Authentication, account lockout, and visitor access rules."
+    }
+]
