@@ -1,0 +1,62 @@
+[
+    {
+        "query": "What is the Earth Mover's Distance and how is it used in machine learning?",
+        "selected_node": {
+            "node_id": "0002.1",
+            "title": "Computing the EMD",
+            "start_index": 2,
+            "end_index": 2
+        },
+        "answer": "The Earth Mover’s Distance (EMD) is a metric that quantifies the dissimilarity between two histograms (or probability/feature distributions). It treats one histogram as a pile of “earth” that must be reshaped into the other histogram, and computes the minimum total cost of moving this earth. Formally, with flow variables \\(f_{i,j}\\) indicating how much mass moves from bin \\(i\\) of the first histogram \\(q\\) to bin \\(j\\) of the second histogram \\(p\\), and a ground‑distance matrix \\(C\\) specifying the cost \\(c_{i,j}\\) of moving a unit of mass between bins, the EMD is  \n\n\\[\n\\text{EMD}(q,p)=\\min_{F}\\sum_{i,j} f_{i,j}\\,c_{i,j},\n\\]\n\nsubject to non‑negative flows that exactly exhaust the mass in \\(q\\) and fill the mass in \\(p\\). Computing the EMD reduces to a min‑cost flow problem, often solved with linear programming or specialized network‑flow algorithms such as the successive shortest‑path method.\n\nIn machine learning, EMD is used as a similarity (or distance) measure between feature distributions. It enables EMD‑based similarity queries, clustering, and retrieval tasks where the underlying data are represented as histograms—e.g., comparing music‑genre distributions, image color histograms, or any high‑dimensional feature space. By providing a principled way to compare distributions, EMD supports tasks like nearest‑neighbor search, indexing, and ranking in large‑scale datasets."
+    },
+    {
+        "query": "Why is EMD considered better than Euclidean distance for histogram comparison?",
+        "selected_node": {
+            "node_id": "0002.1",
+            "title": "Computing the EMD",
+            "start_index": 2,
+            "end_index": 2
+        },
+        "answer": "EMD measures the minimum “work” needed to transform one histogram into another, explicitly taking the distances between bins into account. By modeling the cost of moving mass from one bin to another, it captures the similarity of neighboring bins and the overall shape of the distributions, whereas Euclidean distance simply compares bin‑wise values without considering how the bins relate spatially. This makes EMD a more perceptually meaningful and robust metric for histogram comparison."
+    },
+    {
+        "query": "Compare SSP and SIA.",
+        "selected_node": {
+            "node_id": "0003",
+            "title": "Scaling Up SSP",
+            "start_index": 4,
+            "end_index": 4
+        },
+        "answer": "SSP (Simplified Shortest‑Path) computes the Earth Mover’s Distance by constructing the full bipartite flow graph between two histograms. That graph contains every possible edge between bins, so its size grows quadratically with the number of bins, making the computation expensive for large histograms.\n\nSIA (Simplified Incremental Algorithm) avoids building the complete graph. It starts with an empty partial flow graph G₍₄₈₎ and gradually inserts edges in order of increasing cost, using a filter‑and‑refinement loop. Because the partial graph is usually much smaller than the full bipartite graph, the search for a min‑cost feasible path is far cheaper, and the algorithm can scale to histograms with many bins. In short, SSP works on the full graph with higher time and space cost, while SIA incrementally expands a compact subgraph, reducing both computational effort and memory usage."
+    },
+    {
+        "query": "What is the bottleneck in EMD-based similarity search?",
+        "selected_node": {
+            "node_id": "0001",
+            "title": "Introduction",
+            "start_index": 1,
+            "end_index": 1
+        },
+        "answer": "The refinement step is the bottleneck in EMD‑based similarity search."
+    },
+    {
+        "query": "How does the SSP algorithm compute EMD?",
+        "selected_node": {
+            "node_id": "0003",
+            "title": "Scaling Up SSP",
+            "start_index": 4,
+            "end_index": 4
+        },
+        "answer": "The SSP algorithm computes the Earth Mover’s Distance by repeatedly finding a minimum‑cost feasible path in a (partial) bipartite flow graph that represents the two histograms.  \n\n1. It builds a partial flow graph \\(G_{partial}\\) that initially contains only a few edges of the complete bipartite graph between the bins of the query histogram \\(q\\) and the candidate histogram \\(p\\).  \n2. Using Dijkstra’s shortest‑path search on \\(G_{partial}\\), it identifies the cheapest feasible path \\(sp\\) from a source node (a bin of \\(q\\) with remaining supply) to a sink node (a bin of \\(p\\) with remaining demand).  \n3. If the cost of this path is less than the current distance bound \\(\\Pi\\), the algorithm augments one unit of flow along the path, thereby reducing the remaining supply/demand.  \n4. The flow augmentation updates the graph (adding reverse edges with negative cost) and the distance bound \\(\\Pi\\) is tightened.  \n5. The process repeats—adding the next cheapest edge to the partial graph, recomputing the shortest feasible path, and augmenting flow—until all supply and demand are satisfied.  \n\nThe total cost accumulated from all augmentations equals the Earth Mover’s Distance between the two histograms."
+    },
+    {
+        "query": "What is progressive bounding?",
+        "selected_node": {
+            "node_id": "0004.2",
+            "title": "Progressive Bounding",
+            "start_index": 5,
+            "end_index": 5
+        },
+        "answer": "Progressive bounding is a technique that maintains a running lower‑bound estimate of the Earth Mover’s Distance (denoted emd⁻) throughout the execution of the SIA algorithm. By continuously tightening this lower bound as the calculation proceeds, the algorithm can stop early whenever the bound exceeds the current pruning threshold, avoiding the need to complete the full EMD computation."
+    }
+]

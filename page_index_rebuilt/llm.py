@@ -22,6 +22,7 @@ def generate_response(prompt: str, model: str = "openai/gpt-oss-120b:free") -> s
         client = get_client()
         response = client.chat.completions.create(
             model=model,
+            temperature=0,
             messages=[{"role": "user", "content": prompt}],
         )
         if not response.choices:

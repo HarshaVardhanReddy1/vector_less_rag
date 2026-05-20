@@ -1,0 +1,150 @@
+[
+    {
+        "node_id": "0001",
+        "title": "Introduction",
+        "start_index": 1,
+        "end_index": 1,
+        "summary": "Introduces Earth Mover’s Distance (EMD) similarity search, its challenges, and the focus on optimizing the refinement phase.",
+        "sub_nodes": []
+    },
+    {
+        "node_id": "0002",
+        "title": "Preliminaries",
+        "start_index": 2,
+        "end_index": 3,
+        "summary": "Defines EMD formally, presents the min‑cost flow formulation, and describes the filter‑and‑refinement framework.",
+        "sub_nodes": [
+            {
+                "node_id": "0002.1",
+                "title": "Computing the EMD",
+                "start_index": 2,
+                "end_index": 2,
+                "summary": "Explains how EMD is computed via linear programming and network‑flow algorithms, particularly the successive shortest path (SSP) method.",
+                "sub_nodes": []
+            },
+            {
+                "node_id": "0002.2",
+                "title": "Filter‑and‑Refinement Framework",
+                "start_index": 3,
+                "end_index": 3,
+                "summary": "Details the two‑phase search process, defining feasible edges, lower‑bound filters, and the overall k‑NN query procedure.",
+                "sub_nodes": []
+            }
+        ]
+    },
+    {
+        "node_id": "0003",
+        "title": "Scaling Up SSP",
+        "start_index": 4,
+        "end_index": 4,
+        "summary": "Introduces the Simplified Incremental Algorithm (SIA) for efficiently building a partial flow graph and scaling EMD computation to large histograms.",
+        "sub_nodes": []
+    },
+    {
+        "node_id": "0004",
+        "title": "Boosting the Refinement Phase",
+        "start_index": 5,
+        "end_index": 8,
+        "summary": "Presents two techniques—Progressive Bounding (PB) and Dynamic Refinement Ordering (DRO)—to accelerate the refinement stage of EMD‑based similarity search.",
+        "sub_nodes": [
+            {
+                "node_id": "0004.1",
+                "title": "Analysis of EMD Calculation",
+                "start_index": 5,
+                "end_index": 5,
+                "summary": "Analyzes the cost distribution of SIA iterations, showing that most runtime is spent in late iterations.",
+                "sub_nodes": []
+            },
+            {
+                "node_id": "0004.2",
+                "title": "Progressive Bounding",
+                "start_index": 5,
+                "end_index": 5,
+                "summary": "Describes a running lower bound (emd−) that enables early termination of SIA when it exceeds the pruning threshold.",
+                "sub_nodes": []
+            },
+            {
+                "node_id": "0004.3",
+                "title": "Sensitivity to Refinement Order",
+                "start_index": 6,
+                "end_index": 6,
+                "summary": "Discusses how the order of candidate refinement impacts overall query performance and motivates dynamic ordering.",
+                "sub_nodes": []
+            },
+            {
+                "node_id": "0004.4",
+                "title": "Dynamic Refinement Ordering",
+                "start_index": 6,
+                "end_index": 7,
+                "summary": "Introduces the DRO algorithm, which maintains a priority layer of candidates based on emd− and refines them adaptively.",
+                "sub_nodes": []
+            },
+            {
+                "node_id": "0004.5",
+                "title": "Running Upper Bound",
+                "start_index": 8,
+                "end_index": 8,
+                "summary": "Defines a running upper bound (emd+) using a greedy maximum‑flow estimate to further prune candidates during refinement.",
+                "sub_nodes": []
+            }
+        ]
+    },
+    {
+        "node_id": "0005",
+        "title": "Experimental Evaluation",
+        "start_index": 9,
+        "end_index": 10,
+        "summary": "Evaluates the proposed methods on six real datasets, comparing query times of various EMD computation techniques.",
+        "sub_nodes": [
+            {
+                "node_id": "0005.1",
+                "title": "Performance Improvement",
+                "start_index": 9,
+                "end_index": 10,
+                "summary": "Shows that SIA outperforms other black‑box EMD modules and that PB and DRO provide substantial speed‑ups, especially on large datasets.",
+                "sub_nodes": []
+            }
+        ]
+    },
+    {
+        "node_id": "0006",
+        "title": "Related Work",
+        "start_index": 11,
+        "end_index": 11,
+        "summary": "Reviews prior research on Earth Mover's Distance (EMD) applications, filter‑and‑refinement techniques, and various approximation and indexing methods.",
+        "sub_nodes": [
+            {
+                "node_id": "0006.1",
+                "title": "Parameter Tuning in DRO",
+                "start_index": 11,
+                "end_index": 11,
+                "summary": "Analyzes the impact of two sensitive DRO parameters—the maximum concurrent refined objects and the object prioritization function—on query performance.",
+                "sub_nodes": []
+            }
+        ]
+    },
+    {
+        "node_id": "0007",
+        "title": "Conclusion",
+        "start_index": 12,
+        "end_index": 12,
+        "summary": "Summarizes the paper's contributions in efficient EMD similarity evaluation, including progressive refinement and pruning strategies that reduce query cost.",
+        "sub_nodes": []
+    },
+    {
+        "node_id": "0008",
+        "title": "Acknowledgment",
+        "start_index": 12,
+        "end_index": 12,
+        "summary": "Recognizes funding sources and individuals who contributed code and feedback to the research.",
+        "sub_nodes": []
+    },
+    {
+        "node_id": "0009",
+        "title": "References",
+        "start_index": 12,
+        "end_index": 12,
+        "summary": "Lists cited works covering EMD theory, related algorithms, and applications across image retrieval, clustering, and privacy.",
+        "sub_nodes": []
+    }
+]

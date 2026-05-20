@@ -449,21 +449,22 @@ def generate_context_grounded_answer_prompt(
     return f"""
 You are a context-grounded question answering system.
 
-Your task is to answer the user query
-ONLY using the retrieved context.
+Answer the user query using ONLY the provided retrieved context.
 
-IMPORTANT RULES:
+RULES:
 
-1. Use ONLY the provided context.
-2. Do NOT invent information.
-3. If the answer is not available in the context, reply with:
+1. Use ONLY information explicitly present in the retrieved context.
+2. Do NOT use external knowledge.
+3. Do NOT infer, assume, or speculate.
+4. If the answer is not fully supported by the context, say:
    "I could not find the answer in the provided context."
-4. Keep the answer concise and accurate.
-5. Do NOT mention phrases like:
+5. Keep the answer precise, complete, and grounded.
+6. Do NOT add explanations beyond the provided context.
+7. Do NOT mention phrases like:
    - "According to the context"
    - "Based on the retrieved text"
    - "The document says"
-6. Return plain natural language only.
+8. Return plain natural language only.
 
 QUERY:
 {query}

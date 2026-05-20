@@ -4,8 +4,8 @@ import tiktoken
 
 
 model_name = "gpt-oss-120b:free"
-pdf_path = "docs/2023-annual-report.pdf"
-output_path = "json_files/pdf_pages1.json"
+pdf_path = "docs/earthmover.pdf"
+output_path = "json_files/json_pages/earthmover.json"
 
 def get_token_encoder(model_name):
     try:
