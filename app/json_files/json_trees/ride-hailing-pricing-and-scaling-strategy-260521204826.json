@@ -1,0 +1,109 @@
+[
+    {
+        "node_id": "0001",
+        "title": "Introduction and Architectural Overview",
+        "start_index": 1,
+        "end_index": 12,
+        "summary": "Sets the context for a scalable ride‑hailing platform in India, outlines performance goals and technology stack.",
+        "sub_nodes": [
+            {
+                "node_id": "0001.1",
+                "title": "High‑Performance Runtime Environment",
+                "start_index": 1,
+                "end_index": 2,
+                "summary": "Discusses the choice of Bun for core microservices and Python/FastAPI for AI workloads, with performance comparison.",
+                "sub_nodes": []
+            },
+            {
+                "node_id": "0001.2",
+                "title": "Service Communication via gRPC and Protocol Buffers",
+                "start_index": 2,
+                "end_index": 2,
+                "summary": "Describes the use of gRPC/Protobuf for low‑latency, type‑safe inter‑service calls.",
+                "sub_nodes": []
+            },
+            {
+                "node_id": "0001.3",
+                "title": "Event‑Driven Backbone: Apache Kafka",
+                "start_index": 2,
+                "end_index": 3,
+                "summary": "Explains Kafka’s role in telemetry ingestion, multi‑tier event processing, and exactly‑once semantics.",
+                "sub_nodes": []
+            },
+            {
+                "node_id": "0001.4",
+                "title": "Hybrid Database Strategy",
+                "start_index": 3,
+                "end_index": 4,
+                "summary": "Details the combined use of PostgreSQL, ScyllaDB, Redis, and HE3DB for ACID consistency, high‑throughput, caching, and encrypted analytics.",
+                "sub_nodes": []
+            },
+            {
+                "node_id": "0001.5",
+                "title": "Dynamic Pricing Engine",
+                "start_index": 4,
+                "end_index": 6,
+                "summary": "Presents the pricing formula, variables, external triggers, and AI models used for surge calculation.",
+                "sub_nodes": [
+                    {
+                        "node_id": "0001.5.1",
+                        "title": "Pricing Data Schema and Analytics",
+                        "start_index": 5,
+                        "end_index": 6,
+                        "summary": "Defines transactional tables (Trips, Payments, Driver Earnings) and promotional tables for user‑savings analytics.",
+                        "sub_nodes": []
+                    }
+                ]
+            },
+            {
+                "node_id": "0001.6",
+                "title": "Abstract Mapping Layer (Google vs. Ola)",
+                "start_index": 6,
+                "end_index": 7,
+                "summary": "Shows the strategy‑pattern implementation that enables runtime switching between mapping providers.",
+                "sub_nodes": []
+            },
+            {
+                "node_id": "0001.7",
+                "title": "Scaling Strategies and Fault Isolation",
+                "start_index": 7,
+                "end_index": 8,
+                "summary": "Covers horizontal scaling, stateless services, distributed locking, regional fault domains, and Kafka MirrorMaker replication.",
+                "sub_nodes": [
+                    {
+                        "node_id": "0001.7.1",
+                        "title": "Driver Telemetry Management",
+                        "start_index": 7,
+                        "end_index": 8,
+                        "summary": "Describes down‑sampling, dead‑reckoning, and GPS cleaning to handle network volatility.",
+                        "sub_nodes": []
+                    }
+                ]
+            },
+            {
+                "node_id": "0001.8",
+                "title": "Pricing Fairness and Compliance",
+                "start_index": 8,
+                "end_index": 8,
+                "summary": "Discusses surge caps, fare transparency, algorithmic fairness, and driver incentive mechanisms.",
+                "sub_nodes": []
+            },
+            {
+                "node_id": "0001.9",
+                "title": "Conclusions",
+                "start_index": 8,
+                "end_index": 9,
+                "summary": "Summarizes the architectural blueprint, emphasizing performance, AI integration, and fairness.",
+                "sub_nodes": []
+            },
+            {
+                "node_id": "0001.10",
+                "title": "References",
+                "start_index": 9,
+                "end_index": 12,
+                "summary": "Lists all cited works, articles, and resources supporting the design.",
+                "sub_nodes": []
+            }
+        ]
+    }
+]

@@ -1,0 +1,92 @@
+[
+    {
+        "title": "Fundamental Paradigms of Distributed Computing",
+        "node_id": "1",
+        "page_number": 1,
+        "summary": "Discusses core concepts of consensus, CAP theorem, consistency models, sharding and hashing in distributed systems."
+    },
+    {
+        "title": "Memory Hierarchies, Caching Dynamics, and Volatile Storage",
+        "node_id": "2",
+        "page_number": 2,
+        "summary": "Explores multi‑tiered CPU caches, locality principles, eviction policies, and concurrency control in memory."
+    },
+    {
+        "title": "Algorithmic Mechanics of Non-Vectorized Text Processing",
+        "node_id": "3",
+        "page_number": 2,
+        "summary": "Covers tokenization, normalization, stemming, lemmatization, and construction of inverted indexes."
+    },
+    {
+        "title": "Mathematical Foundations of Textual Retrieval Metrics",
+        "node_id": "4",
+        "page_number": 3,
+        "summary": "Introduces TF‑IDF formulation and its role in scoring document relevance."
+    },
+    {
+        "title": "Structural Foundations of Document Parsing and Document Object Models",
+        "node_id": "5",
+        "page_number": 4,
+        "summary": "Describes parsing of hierarchical document formats, DOM construction, encoding issues, and structural metadata."
+    },
+    {
+        "title": "Lexical Proximity, Collocation, and Windowing Methodologies",
+        "node_id": "6",
+        "page_number": 4,
+        "summary": "Explains proximity scoring, collocation detection, and sliding‑window techniques for phrase relevance."
+    },
+    {
+        "title": "Comparative Analysis of Indexing Strategies: B-Trees vs. Inverted Files",
+        "node_id": "7",
+        "page_number": 5,
+        "summary": "Compares B‑Tree/B+Tree structures with inverted file indexes for read/write performance in retrieval."
+    },
+    {
+        "title": "Algorithmic Complexity of Deterministic Finite Automata in String Matching",
+        "node_id": "8",
+        "page_number": 6,
+        "summary": "Details DFA/KMP/Aho‑Corasick algorithms, linear‑time matching, and memory trade‑offs of state explosion."
+    },
+    {
+        "title": "Natural Language Syntax, Part-of-Speech Tagging, and N-Gram Distribution",
+        "node_id": "9",
+        "page_number": 7,
+        "summary": "Covers POS tagging with HMM/CRF, Viterbi decoding, and n‑gram frequency analysis for linguistic patterns."
+    },
+    {
+        "title": "Boolean Retrieval Algebra and Query Optimization Frameworks",
+        "node_id": "10",
+        "page_number": 7,
+        "summary": "Describes Boolean query processing, set operations, and optimization techniques such as posting‑list ordering."
+    },
+    {
+        "title": "Storage Topologies for Large-Scale Textual Corpora",
+        "node_id": "11",
+        "page_number": 8,
+        "summary": "Discusses LSM‑Tree architecture, SSTables, compaction, and Bloom filter usage for efficient large‑scale indexing."
+    },
+    {
+        "title": "Compression Mechanics for Postings Lists and Word Dictionaries",
+        "node_id": "12",
+        "page_number": 9,
+        "summary": "Explains delta encoding, variable‑byte, Elias‑Gamma/Delta, and frame‑of‑reference compression techniques."
+    },
+    {
+        "title": "The Role of Document Re-Ranking and Exact Phase Verification",
+        "node_id": "13",
+        "page_number": 9,
+        "summary": "Outlines multi‑stage retrieval pipelines with high‑recall filtering followed by exact phrase verification and re‑ranking."
+    },
+    {
+        "title": "Evaluating Non-Vectorized Retrieval Performance Metrics",
+        "node_id": "14",
+        "page_number": 10,
+        "summary": "Presents precision, recall, F‑score, MAP, DCG/NDCG and operational latency benchmarks for retrieval systems."
+    },
+    {
+        "title": "Conclusion and Future Horizons of Retrieval Architecture",
+        "node_id": "15",
+        "page_number": 11,
+        "summary": "Summarizes the enduring relevance of deterministic indexing and hybrid approaches with vector embeddings."
+    }
+]

@@ -1,0 +1,116 @@
+[
+    {
+        "title": "Introduction",
+        "node_id": "1",
+        "page_number": 1,
+        "summary": "Introduces Earth Mover’s Distance (EMD) based similarity search, its challenges, and the focus on optimizing the refinement phase."
+    },
+    {
+        "title": "Preliminaries",
+        "node_id": "2",
+        "page_number": 2,
+        "summary": "Defines EMD formally, presents the min‑cost flow formulation, and introduces the filter‑and‑refinement framework."
+    },
+    {
+        "title": "Computing the EMD",
+        "node_id": "2.1",
+        "page_number": 2,
+        "summary": "Describes how EMD can be computed via linear programming and successive shortest path (SSP) algorithms."
+    },
+    {
+        "title": "Filter‑and‑Refinement Framework",
+        "node_id": "2.2",
+        "page_number": 3,
+        "summary": "Explains the two‑phase search process, definitions of feasible edges, and the role of lower‑bound filters."
+    },
+    {
+        "title": "Scaling up SSP",
+        "node_id": "3",
+        "page_number": 4,
+        "summary": "Introduces the Simplified Incremental Algorithm (SIA) for incremental graph construction and its integration with SSP."
+    },
+    {
+        "title": "Boosting the Refinement Phase",
+        "node_id": "4",
+        "page_number": 5,
+        "summary": "Presents two novel techniques—Progressive Bounding (PB) and Dynamic Refinement Ordering (DRO)—to accelerate the refinement stage."
+    },
+    {
+        "title": "Analysis of EMD Calculation",
+        "node_id": "4.1",
+        "page_number": 5,
+        "summary": "Analyzes the runtime behavior of SIA and motivates early termination of EMD computation."
+    },
+    {
+        "title": "Progressive Bounding",
+        "node_id": "4.2",
+        "page_number": 5,
+        "summary": "Defines a running lower bound (emd−) that tightens during SIA and enables early pruning of candidates."
+    },
+    {
+        "title": "Sensitivity to Refinement Order",
+        "node_id": "4.3",
+        "page_number": 6,
+        "summary": "Discusses how the order of candidate processing affects overall query cost and introduces lemmas supporting PB."
+    },
+    {
+        "title": "Dynamic Refinement Ordering",
+        "node_id": "4.4",
+        "page_number": 6,
+        "summary": "Describes the DRO algorithm that dynamically reorders candidates based on emd− to improve pruning efficiency."
+    },
+    {
+        "title": "Running Upper Bound",
+        "node_id": "4.5",
+        "page_number": 8,
+        "summary": "Introduces emd+ as a running upper bound, computed via a greedy maximum‑flow approach, to further tighten pruning."
+    },
+    {
+        "title": "Experimental Evaluation",
+        "node_id": "5",
+        "page_number": 8,
+        "summary": "Details the experimental setup, datasets, and compares various EMD computation methods and the proposed PB/DRO techniques."
+    },
+    {
+        "title": "Performance Improvement",
+        "node_id": "5.1",
+        "page_number": 9,
+        "summary": "Presents query‑time results showing SIA’s superiority and the additional gains from PB and DRO."
+    },
+    {
+        "title": "Scalability Experiments",
+        "node_id": "5.2",
+        "page_number": 9,
+        "summary": "Evaluates how PB and DRO scale with dataset size and k, demonstrating near‑optimal performance."
+    },
+    {
+        "title": "Related Work",
+        "node_id": "6",
+        "page_number": 9,
+        "summary": "Reviews prior research on EMD‑based similarity search, filtering techniques, and refinement methods."
+    },
+    {
+        "title": "Conclusion",
+        "node_id": "7",
+        "page_number": 10,
+        "summary": "Summarizes contributions, highlights the effectiveness of PB and DRO, and outlines future research directions."
+    },
+    {
+        "title": "Parameter Tuning in DRO",
+        "node_id": "8",
+        "page_number": 11,
+        "summary": "Analyzes the impact of two sensitive parameters in DRO: the maximum number of concurrently refined objects (size of PL) and the function used to prioritize objects."
+    },
+    {
+        "title": "Acknowledgment",
+        "node_id": "9",
+        "page_number": 12,
+        "summary": "Acknowledges funding sources, grants, and individuals who contributed code and feedback."
+    },
+    {
+        "title": "References",
+        "node_id": "10",
+        "page_number": 12,
+        "summary": "Lists cited works covering EMD theory, applications, approximation algorithms, and related indexing techniques."
+    }
+]

@@ -1,0 +1,52 @@
+[
+    {
+        "query": "What is the reward design",
+        "selected_node": {
+            "node_id": "0004.6",
+            "title": "Reward Design",
+            "start_index": 3,
+            "end_index": 4
+        },
+        "answer": "The reward design assigns numeric values to specific in‑game events:\n\n- Scoring a goal: +1.0  \n- Successful pass: +0.2  \n- Ball interception: +0.3  \n- Losing possession: ‑0.2  \n- Opponent scoring: ‑1.0  \n\nThese rewards guide agents toward cooperative play, ball control, and defensive behavior."
+    },
+    {
+        "query": "What is the Role of Document Re-Ranking and Exact Phase Verification",
+        "selected_node": {
+            "node_id": "0013",
+            "title": "The Role of Document Re-Ranking and Exact Phase Verification",
+            "start_index": 9,
+            "end_index": 10
+        },
+        "answer": "Document re‑ranking and exact phrase verification serve as the precise, final filtering stage in a multi‑stage retrieval pipeline. After an initial high‑recall scan that quickly narrows millions of documents to a few hundred candidates, the re‑ranking engine performs a computationally intensive analysis to confirm that query terms appear in the exact order required and to respect structural constraints (such as sentence boundaries, table headers, or section summaries). It uses positional offsets from the postings lists to check that each term follows the previous one with the correct offset; documents that fail this strict test are dropped or heavily penalized. By combining this exact, position‑aware verification with structural metadata analysis, the system balances high query throughput with highly accurate results."
+    },
+    {
+        "query": "what is mean by scaling up ssp",
+        "selected_node": {
+            "node_id": "0003",
+            "title": "Scaling up SSP",
+            "start_index": 4,
+            "end_index": 5
+        },
+        "answer": "Scaling up SSP refers to extending the basic SSP (Shortest‑Path‑based) computation so that it can handle larger, more complex spatial‑matching problems—such as histograms with many bins—by incrementally building a partial flow graph with the Simplified Incremental Algorithm (SIA). Instead of constructing the full bipartite graph up front, SIA inserts edges gradually, expanding the graph only as needed, which reduces the search cost and makes the SSP computation scalable to larger datasets."
+    },
+    {
+        "query": "what is this document is about ?",
+        "selected_node": {
+            "node_id": "0001.9",
+            "title": "Conclusions",
+            "start_index": 8,
+            "end_index": 9
+        },
+        "answer": "The document outlines an architectural blueprint for building a large‑scale ride‑hailing platform in India. It discusses system performance, real‑time telemetry, AI‑driven predictive features, distributed microservices, dynamic pricing models, fairness and compliance considerations, and the technologies (such as Bun, FastAPI, Kafka, PostgreSQL, ScyllaDB, Redis, and HE3) needed to support millions of users."
+    },
+    {
+        "query": "explaiin me how the dynamic pricing works in this document.",
+        "selected_node": {
+            "node_id": "0001.5",
+            "title": "Dynamic Pricing Engine",
+            "start_index": 4,
+            "end_index": 6
+        },
+        "answer": "Dynamic pricing balances rider demand with driver supply in real time by calculating a final fare with the formula:\n\n**Final Fare = Base + (Dist ₍Total₎ × distance rate) + (Time ₍Total₎ × time rate) × μ₍surge₎ + δ₍offer₎**\n\n- **Base** is the starting fare (e.g., ₹12 for bikes, ₹50 for prime cabs).  \n- **Dist ₍Total₎** and **Time ₍Total₎** are estimated distances and times from the mapping provider.  \n- **μ₍surge₎** is a dynamic multiplier produced by an AI service.  \n- **δ₍offer₎** reflects active promotions or discounts.\n\nThe surge multiplier μ₍surge₎ is adjusted continuously based on several monitored signals:\n\n1. **Demand‑Supply Ratio** – Calculated per H3 cell. A 2:1 ratio may set μ₍surge₎ to 1.2×; a 10:1 ratio can push it to 2.0× or higher.  \n2. **Environmental Factors** – Weather APIs feed data; monsoon rain can raise demand 30‑50 % and reduce supply, prompting a higher μ₍surge₎.  \n3. **Traffic Congestion** – Real‑time traffic metadata modifies the time‑related component, increasing fares when congestion raises driver opportunity cost.  \n4. **Temporal and Event‑Based Context** – Morning peak hours, night surcharges (+10‑18 % base increase), and localized events (cricket matches, festivals, transit strikes) add baseline adjustments.\n\nAI models forecast short‑term demand and inform μ₍surge₎:\n\n- **Random Forest / Gradient Boosting** predict fare amounts using features like distance, time of day, demand‑supply ratio, and weather.  \n- **LSTM / ConvLSTM** forecast demand heatmaps for the next 10‑30 minutes from historical request sequences.  \n- **BiLSTM with Attention** identifies the most relevant past events (e.g., a similar rainy Thursday) to refine pricing.  \n- **Reinforcement Learning (future outlook)** may explore strategies that maximize long‑term driver retention and rider lifetime value.\n\nTogether, these variables, triggers, and AI predictions continuously update the surge multiplier, which is then applied in the pricing formula to produce the final fare for each ride."
+    }
+]

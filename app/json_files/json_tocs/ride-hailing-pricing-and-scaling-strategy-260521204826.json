@@ -1,0 +1,80 @@
+[
+    {
+        "title": "Introduction and Architectural Overview",
+        "node_id": "1",
+        "page_number": 1,
+        "summary": "Sets the context for a scalable ride‑hailing platform in India, outlines performance goals and technology stack."
+    },
+    {
+        "title": "High‑Performance Runtime Environment",
+        "node_id": "1.1",
+        "page_number": 1,
+        "summary": "Discusses the choice of Bun for core microservices and Python/FastAPI for AI workloads, with performance comparison."
+    },
+    {
+        "title": "Service Communication via gRPC and Protocol Buffers",
+        "node_id": "1.2",
+        "page_number": 2,
+        "summary": "Describes the use of gRPC/Protobuf for low‑latency, type‑safe inter‑service calls."
+    },
+    {
+        "title": "Event‑Driven Backbone: Apache Kafka",
+        "node_id": "1.3",
+        "page_number": 2,
+        "summary": "Explains Kafka’s role in telemetry ingestion, multi‑tier event processing, and exactly‑once semantics."
+    },
+    {
+        "title": "Hybrid Database Strategy",
+        "node_id": "1.4",
+        "page_number": 3,
+        "summary": "Details the combined use of PostgreSQL, ScyllaDB, Redis, and HE3DB for ACID consistency, high‑throughput, caching, and encrypted analytics."
+    },
+    {
+        "title": "Dynamic Pricing Engine",
+        "node_id": "1.5",
+        "page_number": 4,
+        "summary": "Presents the pricing formula, variables, external triggers, and AI models used for surge calculation."
+    },
+    {
+        "title": "Pricing Data Schema and Analytics",
+        "node_id": "1.5.1",
+        "page_number": 5,
+        "summary": "Defines transactional tables (Trips, Payments, Driver Earnings) and promotional tables for user‑savings analytics."
+    },
+    {
+        "title": "Abstract Mapping Layer (Google vs. Ola)",
+        "node_id": "1.6",
+        "page_number": 6,
+        "summary": "Shows the strategy‑pattern implementation that enables runtime switching between mapping providers."
+    },
+    {
+        "title": "Scaling Strategies and Fault Isolation",
+        "node_id": "1.7",
+        "page_number": 7,
+        "summary": "Covers horizontal scaling, stateless services, distributed locking, regional fault domains, and Kafka MirrorMaker replication."
+    },
+    {
+        "title": "Driver Telemetry Management",
+        "node_id": "1.7.1",
+        "page_number": 7,
+        "summary": "Describes down‑sampling, dead‑reckoning, and GPS cleaning to handle network volatility."
+    },
+    {
+        "title": "Pricing Fairness and Compliance",
+        "node_id": "1.8",
+        "page_number": 8,
+        "summary": "Discusses surge caps, fare transparency, algorithmic fairness, and driver incentive mechanisms."
+    },
+    {
+        "title": "Conclusions",
+        "node_id": "1.9",
+        "page_number": 8,
+        "summary": "Summarizes the architectural blueprint, emphasizing performance, AI integration, and fairness."
+    },
+    {
+        "title": "References",
+        "node_id": "1.10",
+        "page_number": 9,
+        "summary": "Lists all cited works, articles, and resources supporting the design."
+    }
+]

@@ -1,0 +1,122 @@
+[
+    {
+        "node_id": "0001",
+        "title": "Fundamental Paradigms of Distributed Computing",
+        "start_index": 1,
+        "end_index": 2,
+        "summary": "Discusses core concepts of consensus, CAP theorem, consistency models, sharding and hashing in distributed systems.",
+        "sub_nodes": []
+    },
+    {
+        "node_id": "0002",
+        "title": "Memory Hierarchies, Caching Dynamics, and Volatile Storage",
+        "start_index": 2,
+        "end_index": 2,
+        "summary": "Explores multi‑tiered CPU caches, locality principles, eviction policies, and concurrency control in memory.",
+        "sub_nodes": []
+    },
+    {
+        "node_id": "0003",
+        "title": "Algorithmic Mechanics of Non-Vectorized Text Processing",
+        "start_index": 2,
+        "end_index": 3,
+        "summary": "Covers tokenization, normalization, stemming, lemmatization, and construction of inverted indexes.",
+        "sub_nodes": []
+    },
+    {
+        "node_id": "0004",
+        "title": "Mathematical Foundations of Textual Retrieval Metrics",
+        "start_index": 3,
+        "end_index": 4,
+        "summary": "Introduces TF‑IDF formulation and its role in scoring document relevance.",
+        "sub_nodes": []
+    },
+    {
+        "node_id": "0005",
+        "title": "Structural Foundations of Document Parsing and Document Object Models",
+        "start_index": 4,
+        "end_index": 4,
+        "summary": "Describes parsing of hierarchical document formats, DOM construction, encoding issues, and structural metadata.",
+        "sub_nodes": []
+    },
+    {
+        "node_id": "0006",
+        "title": "Lexical Proximity, Collocation, and Windowing Methodologies",
+        "start_index": 4,
+        "end_index": 5,
+        "summary": "Explains proximity scoring, collocation detection, and sliding‑window techniques for phrase relevance.",
+        "sub_nodes": []
+    },
+    {
+        "node_id": "0007",
+        "title": "Comparative Analysis of Indexing Strategies: B-Trees vs. Inverted Files",
+        "start_index": 5,
+        "end_index": 6,
+        "summary": "Compares B‑Tree/B+Tree structures with inverted file indexes for read/write performance in retrieval.",
+        "sub_nodes": []
+    },
+    {
+        "node_id": "0008",
+        "title": "Algorithmic Complexity of Deterministic Finite Automata in String Matching",
+        "start_index": 6,
+        "end_index": 7,
+        "summary": "Details DFA/KMP/Aho‑Corasick algorithms, linear‑time matching, and memory trade‑offs of state explosion.",
+        "sub_nodes": []
+    },
+    {
+        "node_id": "0009",
+        "title": "Natural Language Syntax, Part-of-Speech Tagging, and N-Gram Distribution",
+        "start_index": 7,
+        "end_index": 7,
+        "summary": "Covers POS tagging with HMM/CRF, Viterbi decoding, and n‑gram frequency analysis for linguistic patterns.",
+        "sub_nodes": []
+    },
+    {
+        "node_id": "0010",
+        "title": "Boolean Retrieval Algebra and Query Optimization Frameworks",
+        "start_index": 7,
+        "end_index": 8,
+        "summary": "Describes Boolean query processing, set operations, and optimization techniques such as posting‑list ordering.",
+        "sub_nodes": []
+    },
+    {
+        "node_id": "0011",
+        "title": "Storage Topologies for Large-Scale Textual Corpora",
+        "start_index": 8,
+        "end_index": 9,
+        "summary": "Discusses LSM‑Tree architecture, SSTables, compaction, and Bloom filter usage for efficient large‑scale indexing.",
+        "sub_nodes": []
+    },
+    {
+        "node_id": "0012",
+        "title": "Compression Mechanics for Postings Lists and Word Dictionaries",
+        "start_index": 9,
+        "end_index": 9,
+        "summary": "Explains delta encoding, variable‑byte, Elias‑Gamma/Delta, and frame‑of‑reference compression techniques.",
+        "sub_nodes": []
+    },
+    {
+        "node_id": "0013",
+        "title": "The Role of Document Re-Ranking and Exact Phase Verification",
+        "start_index": 9,
+        "end_index": 10,
+        "summary": "Outlines multi‑stage retrieval pipelines with high‑recall filtering followed by exact phrase verification and re‑ranking.",
+        "sub_nodes": []
+    },
+    {
+        "node_id": "0014",
+        "title": "Evaluating Non-Vectorized Retrieval Performance Metrics",
+        "start_index": 10,
+        "end_index": 11,
+        "summary": "Presents precision, recall, F‑score, MAP, DCG/NDCG and operational latency benchmarks for retrieval systems.",
+        "sub_nodes": []
+    },
+    {
+        "node_id": "0015",
+        "title": "Conclusion and Future Horizons of Retrieval Architecture",
+        "start_index": 11,
+        "end_index": 11,
+        "summary": "Summarizes the enduring relevance of deterministic indexing and hybrid approaches with vector embeddings.",
+        "sub_nodes": []
+    }
+]
