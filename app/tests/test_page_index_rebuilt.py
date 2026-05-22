@@ -136,10 +136,10 @@ class TreeConstructionTests(unittest.TestCase):
         self.assertEqual(len(tree), 2)
         self.assertEqual(tree[0]["node_id"], "0001")
         self.assertEqual(tree[0]["start_index"], 1)
-        self.assertEqual(tree[0]["end_index"], 5)
+        self.assertEqual(tree[0]["end_index"], 6)
         self.assertEqual([child["node_id"] for child in tree[0]["sub_nodes"]], ["0001.1", "0001.2"])
-        self.assertEqual(tree[0]["sub_nodes"][0]["end_index"], 3)
-        self.assertEqual(tree[0]["sub_nodes"][1]["end_index"], 5)
+        self.assertEqual(tree[0]["sub_nodes"][0]["end_index"], 4)
+        self.assertEqual(tree[0]["sub_nodes"][1]["end_index"], 6)
         self.assertEqual(tree[1]["node_id"], "0002")
         self.assertEqual(tree[1]["start_index"], 6)
         self.assertEqual(tree[1]["end_index"], 8)
@@ -217,7 +217,11 @@ class RetrievalTests(unittest.TestCase):
         }
         mock_generate_response.return_value = "Grounded answer"
 
-        result = retriever.answer_query("What is covered?")
+        result = retriever.answer_query(
+            "What is covered?",
+            tree_path="dummy_tree.json",
+            pages_path="dummy_pages.json",
+        )
 
         self.assertEqual(result["selected_node"]["node_id"], "0001")
         self.assertEqual(result["answer"], "Grounded answer")

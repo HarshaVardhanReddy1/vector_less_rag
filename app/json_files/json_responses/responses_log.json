@@ -48,5 +48,25 @@
             "end_index": 6
         },
         "answer": "Dynamic pricing balances rider demand with driver supply in real time by calculating a final fare with the formula:\n\n**Final Fare = Base + (Dist ₍Total₎ × distance rate) + (Time ₍Total₎ × time rate) × μ₍surge₎ + δ₍offer₎**\n\n- **Base** is the starting fare (e.g., ₹12 for bikes, ₹50 for prime cabs).  \n- **Dist ₍Total₎** and **Time ₍Total₎** are estimated distances and times from the mapping provider.  \n- **μ₍surge₎** is a dynamic multiplier produced by an AI service.  \n- **δ₍offer₎** reflects active promotions or discounts.\n\nThe surge multiplier μ₍surge₎ is adjusted continuously based on several monitored signals:\n\n1. **Demand‑Supply Ratio** – Calculated per H3 cell. A 2:1 ratio may set μ₍surge₎ to 1.2×; a 10:1 ratio can push it to 2.0× or higher.  \n2. **Environmental Factors** – Weather APIs feed data; monsoon rain can raise demand 30‑50 % and reduce supply, prompting a higher μ₍surge₎.  \n3. **Traffic Congestion** – Real‑time traffic metadata modifies the time‑related component, increasing fares when congestion raises driver opportunity cost.  \n4. **Temporal and Event‑Based Context** – Morning peak hours, night surcharges (+10‑18 % base increase), and localized events (cricket matches, festivals, transit strikes) add baseline adjustments.\n\nAI models forecast short‑term demand and inform μ₍surge₎:\n\n- **Random Forest / Gradient Boosting** predict fare amounts using features like distance, time of day, demand‑supply ratio, and weather.  \n- **LSTM / ConvLSTM** forecast demand heatmaps for the next 10‑30 minutes from historical request sequences.  \n- **BiLSTM with Attention** identifies the most relevant past events (e.g., a similar rainy Thursday) to refine pricing.  \n- **Reinforcement Learning (future outlook)** may explore strategies that maximize long‑term driver retention and rider lifetime value.\n\nTogether, these variables, triggers, and AI predictions continuously update the surge multiplier, which is then applied in the pricing formula to produce the final fare for each ride."
+    },
+    {
+        "query": "can i know about multiy agentic systems",
+        "selected_node": {
+            "node_id": "0002",
+            "title": "Related Work",
+            "start_index": 2,
+            "end_index": 2
+        },
+        "answer": "Multi‑agent systems involve multiple interacting agents that must make decisions in dynamic environments. They are used in areas such as robotics, autonomous vehicles, and complex decision‑making systems. In these settings, agents continuously observe the state of the environment, select actions, and improve their behavior over time through reinforcement learning, enabling collaboration and adaptive intelligence."
+    },
+    {
+        "query": "can i know how the multi agentic flow will work and how they communicate each orther",
+        "selected_node": {
+            "node_id": "0008",
+            "title": "Future Scope",
+            "start_index": 5,
+            "end_index": 5
+        },
+        "answer": "I could not find the answer in the provided context."
     }
 ]

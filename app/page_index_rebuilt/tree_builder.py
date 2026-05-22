@@ -52,15 +52,11 @@ def rebuild_node_ids(nodes: list[dict], parent_id: str = "") -> None:
 
 
 def build_tree_from_toc(toc_data: list[dict], document_end_index: int | None = None) -> list[dict]:
-    print("entry")
     if not toc_data:
         return []
-    print(1)
     sorted_toc = sort_toc_nodes(validate_toc_nodes(toc_data))
-    print(2)
     if document_end_index is None:
         document_end_index = get_document_end_index(sorted_toc)
-    print(3)
     root_nodes: list[dict] = []
     stack: list[tuple[int, dict]] = []
 
@@ -86,11 +82,8 @@ def build_tree_from_toc(toc_data: list[dict], document_end_index: int | None = N
 
         stack.append((level, node))
 
-    print(4)
     assign_end_indexes(root_nodes, document_end_index)
-    print(5)
     rebuild_node_ids(root_nodes)
-    print(6)
     return root_nodes
 
 
@@ -102,13 +95,8 @@ def generate_tree_from_toc(
     try:
     
         toc_data = load_json_data(toc_path)
-        print("building tree from toc started...")
         tree = build_tree_from_toc(toc_data, document_end_index=document_end_index)
-        print("building tree from toc completed.")
-        print()
-        print("saving tree json data")
         save_json_data(tree, output_path)
-        print(f"tree json data saved to {output_path}")
         return tree
     except Exception as error:
         raise RuntimeError(
