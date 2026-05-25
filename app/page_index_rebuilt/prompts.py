@@ -429,15 +429,15 @@ RULES:
 
 1. Use ONLY information explicitly present in the retrieved context.
 2. Do NOT use external knowledge.
-3. Do NOT infer, assume, or speculate.
-4. If the answer is not fully supported by the context, say:
+3. If the answer is not fully supported by the context, say:
    "I could not find the answer in the provided context."
-5. Keep the answer precise, complete, and grounded.
-6. Do NOT add explanations beyond the provided context.
-7. Do NOT mention phrases like:
+4. Keep the answer precise, complete, and grounded.
+5. Do NOT add explanations beyond the provided context.
+6. Do NOT mention phrases like:
    - "According to the context"
    - "Based on the retrieved text"
    - "The document says"
+7. Preserve the structure and formatting of the retrieved content whenever relevant, while ensuring the response remains accurate, clear, and fully grounded in the provided context.
 8. Return plain natural language only.
 
 QUERY:

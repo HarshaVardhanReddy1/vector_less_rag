@@ -68,5 +68,190 @@
             "end_index": 5
         },
         "answer": "I could not find the answer in the provided context."
+    },
+    {
+        "query": "What is abstrct maping layer?",
+        "selected_node": null,
+        "answer": "No relevant nodes were found for the query."
+    },
+    {
+        "query": "What is abstract mapping",
+        "selected_node": null,
+        "answer": "No relevant nodes were found for the query."
+    },
+    {
+        "query": "What is abstract mapping",
+        "selected_node": {
+            "node_id": "0001.6",
+            "title": "Abstract Mapping Layer (Google vs. Ola)",
+            "start_index": 6,
+            "end_index": 7
+        },
+        "answer": "An abstract mapping layer is an abstract interface that defines common mapping operations (such as getting a route, ETA, or distance) so that the application can switch between different concrete map providers (e.g., Google Maps or Ola Maps) at runtime. It decouples business logic from the specific API implementations."
+    },
+    {
+        "query": "how the switching between two map providers is happen",
+        "selected_node": {
+            "node_id": "0001.6",
+            "title": "Abstract Mapping Layer (Google vs. Ola)",
+            "start_index": 6,
+            "end_index": 7
+        },
+        "answer": "The application defines a common `IMapProvider` interface that declares methods such as `getRoute`, `getETA`, and `getDistance`. Two concrete classes implement this interface: `GoogleMapsProvider` (which calls the Google Directions API) and `OlaMapsProvider` (which calls Ola Maps REST APIs with bearer‑token authentication).\n\nA `MapStrategyManager` holds the logic for choosing which implementation to use at runtime. When a request for a route, ETA, or distance arrives, the manager evaluates criteria—such as cost efficiency, data accuracy, or regional specialization—and selects the appropriate provider. For example, in high‑volume Tier‑1 city requests the manager may default to Ola Maps to reduce API fees, while if Ola Maps lacks data for a newly developed area it transparently falls back to Google Maps for that specific request. This strategy‑pattern approach decouples the business logic from the underlying map service, enabling dynamic switching between Google and Ola maps."
+    },
+    {
+        "query": "Can you tell me about demand supply ratio",
+        "selected_node": {
+            "node_id": "0001.5",
+            "title": "Dynamic Pricing Engine",
+            "start_index": 4,
+            "end_index": 6
+        },
+        "answer": "The demand‑supply ratio is the main factor that drives the surge multiplier in the dynamic pricing engine. It is calculated for each H3 cell index and reflects how many riders are searching for rides compared to the number of available drivers. For example, a ratio of 2 riders to 1 driver (2:1) may trigger a 1.2× surge, while a much higher ratio such as 10:1 can push the multiplier to 2.0× or more. This ratio is used by the AI service to adjust pricing in real time."
+    },
+    {
+        "query": "What are the tools used for demand forecasting and surge value",
+        "selected_node": {
+            "node_id": "0001.5",
+            "title": "Dynamic Pricing Engine",
+            "start_index": 4,
+            "end_index": 6
+        },
+        "answer": "The tools mentioned for demand forecasting and calculating surge values are:\n\n- Random Forest  \n- Gradient Boosting (GBDT)  \n- Long Short‑Term Memory (LSTM) networks and ConvLSTM  \n- Bidirectional LSTM with Attention  \n- Reinforcement Learning (future outlook)"
+    },
+    {
+        "query": "What is payment table",
+        "selected_node": {
+            "node_id": "0001.5.1",
+            "title": "Pricing Data Schema and Analytics",
+            "start_index": 5,
+            "end_index": 6
+        },
+        "answer": "The Payment Table records each ride’s financial transaction details. It includes fields such as payment_uuid, amount_paid, payment method (e.g., UPI, Card, Cash), tax_amount (GST), platform_fee (commission), and third_party_fee (e.g., payment‑gateway charges)."
+    },
+    {
+        "query": "What is the techstack used in this project",
+        "selected_node": {
+            "node_id": "0001.1",
+            "title": "High‑Performance Runtime Environment",
+            "start_index": 1,
+            "end_index": 2
+        },
+        "answer": "The project uses a high‑performance technology stack that includes:\n\n- **Bun runtime** for the majority of microservices (with native TypeScript support)  \n- **Python** with the **FastAPI** framework for AI and machine learning workloads  \n- **gRPC** and **Protocol Buffers** for service communication  \n- **Apache Kafka** for event‑driven messaging and telemetry  \n- A hybrid database layer comprising **PostgreSQL**, **ScyllaDB**, **Redis**, and **HE3**."
+    },
+    {
+        "query": "What is Distributed Microservices and the High-Performance \nRuntime Environment",
+        "selected_node": {
+            "node_id": "0001.1",
+            "title": "High‑Performance Runtime Environment",
+            "start_index": 1,
+            "end_index": 2
+        },
+        "answer": "Distributed Microservices refer to a collection of loosely coupled services that run across multiple machines, each handling a specific business capability such as API gateway, rider/driver management, dispatch engine, or live tracking. They communicate efficiently using gRPC and Protocol Buffers, which provide binary serialization, reduced payload sizes, multiplexing, and bidirectional streaming over HTTP/2, ensuring type‑safe contracts between services written in different languages (e.g., Bun/TypeScript and Python).\n\nThe High‑Performance Runtime Environment is built around the Bun runtime for the majority of these microservices. Bun, engineered in Zig and using the JavaScriptCore engine, offers exceptional I/O performance, low memory usage, fast startup, and high requests‑per‑second throughput compared with traditional Node.js runtimes. This environment enables real‑time APIs to handle massive concurrency with sub‑second latency, while a dedicated Python/FastAPI service handles AI and machine‑learning workloads, interfacing with the Bun‑based services via asynchronous gRPC calls."
+    },
+    {
+        "query": "What is reward design",
+        "selected_node": null,
+        "answer": "No relevant nodes were found for the query."
+    },
+    {
+        "query": "What is reward design",
+        "selected_node": {
+            "node_id": "0004.6",
+            "title": "Reward Design",
+            "start_index": 3,
+            "end_index": 4
+        },
+        "answer": "Reward design is the process of defining a reward table that assigns specific numeric values to key game events—such as scoring a goal (+1.0), successful passes (+0.2), ball interceptions (+0.3), losing possession (‑0.2), and opponent scoring (‑1.0). These rewards guide agent behavior by encouraging scoring, ball control, cooperative passing, and defensive actions while penalizing losing possession and allowing opponents to score."
+    },
+    {
+        "query": "What is Atomic Lock Acquisition:",
+        "selected_node": {
+            "node_id": "0001.7",
+            "title": "Scaling Strategies and Fault Isolation",
+            "start_index": 7,
+            "end_index": 8
+        },
+        "answer": "Atomic Lock Acquisition is the step where the first driver who sends an “Accept” signal performs a Redis SETNX operation on the trip token, creating a lock that ensures only that driver is assigned the ride."
+    },
+    {
+        "query": "What is down sampling",
+        "selected_node": {
+            "node_id": "0001.7.1",
+            "title": "Driver Telemetry Management",
+            "start_index": 7,
+            "end_index": 8
+        },
+        "answer": "Down sampling is the practice of reducing the frequency of GPS data sent by drivers. Instead of constantly transmitting full position pings, the drivers stream only the changes (GPS deltas) and throttle updates—typically to once every 5 seconds while a trip is active and every 15 seconds when idle. This lowers backend load while still providing sufficient tracking information."
+    },
+    {
+        "query": "What are the model types using in this and tell me their primary task with data features and outputs of that model",
+        "selected_node": {
+            "node_id": "0001.5",
+            "title": "Dynamic Pricing Engine",
+            "start_index": 4,
+            "end_index": 6
+        },
+        "answer": "- **Random Forest**  \n  - **Primary task:** Predict the surge multiplier.  \n  - **Data features:** Demand‑supply ratio, time, weather.  \n  - **Output:** Surge multiplier ( μ₍surge₎ ).\n\n- **Gradient Boosting (GBDT)** – mentioned together with Random Forest as a baseline model for fare prediction; its primary task is similar (predict fare amounts) using the same features, producing predicted fare values.\n\n- **LSTM / ConvLSTM**  \n  - **Primary task:** Forecast short‑term demand (10–30 minute intervals).  \n  - **Data features:** Historical request counts, location (used to build a demand heatmap).  \n  - **Output:** Predicted demand heatmap.\n\n- **BiLSTM with Attention**  \n  - **Primary task:** Improve demand forecasting in high‑volatility conditions by identifying the most relevant historical factors.  \n  - **Data features:** Sequences of past ride requests, contextual factors such as weather and events.  \n  - **Output:** Refined demand predictions (enhanced accuracy).\n\n- **Reinforcement Learning** (future outlook)  \n  - **Primary task:** Explore pricing strategies that maximize long‑term driver retention and rider lifetime value.  \n  - **Data features:** Rewards based on driver and rider metrics, pricing actions, and resulting outcomes.  \n  - **Output:** Optimized pricing policy (pricing actions that maximize cumulative reward)."
+    },
+    {
+        "query": "give the implementation of abstract layer",
+        "selected_node": {
+            "node_id": "0001.6",
+            "title": "Abstract Mapping Layer (Google vs. Ola)",
+            "start_index": 6,
+            "end_index": 7
+        },
+        "answer": "```ts\n// Abstract Strategy for Mapping\ninterface IMapProvider {\n  getRoute(origin: LatLng, destination: LatLng): Promise<RouteResult>;\n  getETA(origin: LatLng, destination: LatLng): Promise<number>;\n  getDistance(origin: LatLng, destination: LatLng): Promise<number>;\n}\n\n// Concrete Google Maps Implementation\nclass GoogleMapsProvider implements IMapProvider {\n  private client = new Client({}); // from @googlemaps/google-maps-services-js\n\n  async getRoute(origin, destination) {\n    /* implementation that calls Google Directions API */\n  }\n\n  async getETA(origin, destination) {\n    /* implementation that calls Google ETA endpoint */\n  }\n\n  async getDistance(origin, destination) {\n    /* implementation that calls Google Distance Matrix API */\n  }\n}\n\n// Concrete Ola Maps Implementation\nclass OlaMapsProvider implements IMapProvider {\n  // Uses Ola Maps REST APIs with Bearer token authentication\n\n  async getRoute(origin, destination) {\n    /* implementation that calls Ola Maps routing API */\n  }\n\n  async getETA(origin, destination) {\n    /* implementation that calls Ola Maps ETA endpoint */\n  }\n\n  async getDistance(origin, destination) {\n    /* implementation that calls Ola Maps distance endpoint */\n  }\n}\n\n// Strategy manager to switch providers at runtime\nclass MapStrategyManager {\n  private provider: IMapProvider;\n\n  constructor(initialProvider: IMapProvider) {\n    this.provider = initialProvider;\n  }\n\n  setProvider(provider: IMapProvider) {\n    this.provider = provider;\n  }\n\n  getRoute(origin: LatLng, destination: LatLng) {\n    return this.provider.getRoute(origin, destination);\n  }\n\n  getETA(origin: LatLng, destination: LatLng) {\n    return this.provider.getETA(origin, destination);\n  }\n\n  getDistance(origin: LatLng, destination: LatLng) {\n    return this.provider.getDistance(origin, destination);\n  }\n}\n```"
+    },
+    {
+        "query": "give the implementation of abstract layer",
+        "selected_node": null,
+        "answer": "No relevant nodes were found for the query."
+    },
+    {
+        "query": "give the implementation of abstract layer",
+        "selected_node": null,
+        "answer": "No relevant nodes were found for the query."
+    },
+    {
+        "query": "give the implementation of abstract layer",
+        "selected_node": {
+            "node_id": "0001.6",
+            "title": "Abstract Mapping Layer (Google vs. Ola)",
+            "start_index": 6,
+            "end_index": 7
+        },
+        "answer": "```ts\n// Abstract Strategy for Mapping\ninterface IMapProvider {\n  getRoute(origin: LatLng, destination: LatLng): Promise<RouteResult>;\n  getETA(origin: LatLng, destination: LatLng): Promise<number>;\n  getDistance(origin: LatLng, destination: LatLng): Promise<number>;\n}\n\n// Concrete Google Maps Implementation\nclass GoogleMapsProvider implements IMapProvider {\n  private client = new Client({}); // from @googlemaps/google-maps-services-js\n\n  async getRoute(origin, destination) {\n    /* implementation that calls Google Directions API */\n  }\n\n  async getETA(origin, destination) {\n    /* implementation that calls Google ETA endpoint */\n  }\n\n  async getDistance(origin, destination) {\n    /* implementation that calls Google Distance Matrix API */\n  }\n}\n\n// Concrete Ola Maps Implementation\nclass OlaMapsProvider implements IMapProvider {\n  // Uses Ola Maps REST APIs with Bearer token authentication\n\n  async getRoute(origin, destination) {\n    /* implementation that calls Ola Maps routing API */\n  }\n\n  async getETA(origin, destination) {\n    /* implementation that calls Ola Maps ETA endpoint */\n  }\n\n  async getDistance(origin, destination) {\n    /* implementation that calls Ola Maps distance endpoint */\n  }\n}\n\n// Strategy manager to switch providers at runtime\nclass MapStrategyManager {\n  private provider: IMapProvider;\n\n  constructor(initialProvider: IMapProvider) {\n    this.provider = initialProvider;\n  }\n\n  setProvider(provider: IMapProvider) {\n    this.provider = provider;\n  }\n\n  getRoute(origin: LatLng, destination: LatLng) {\n    return this.provider.getRoute(origin, destination);\n  }\n\n  getETA(origin: LatLng, destination: LatLng) {\n    return this.provider.getETA(origin, destination);\n  }\n\n  getDistance(origin: LatLng, destination: LatLng) {\n    return this.provider.getDistance(origin, destination);\n  }\n}\n\n// Example usage:\n// Default to Ola Maps for cost efficiency, fallback to Google Maps if needed\nconst manager = new MapStrategyManager(new OlaMapsProvider());\n\n// If a request fails or data is missing, switch to Google Maps\nif (needsFallback) {\n  manager.setProvider(new GoogleMapsProvider());\n}\n```"
+    },
+    {
+        "query": "give the implementation of abstract layer",
+        "selected_node": null,
+        "answer": "No relevant nodes were found for the query."
+    },
+    {
+        "query": "give the implementation of abstract layer",
+        "selected_node": {
+            "node_id": "0001.6",
+            "title": "Abstract Mapping Layer (Google vs. Ola)",
+            "start_index": 6,
+            "end_index": 7
+        },
+        "answer": "```ts\n// Abstract Strategy for Mapping\ninterface IMapProvider {\n  getRoute(origin: LatLng, destination: LatLng): Promise<RouteResult>;\n  getETA(origin: LatLng, destination: LatLng): Promise<number>;\n  getDistance(origin: LatLng, destination: LatLng): Promise<number>;\n}\n\n// Concrete Google Maps Implementation\nclass GoogleMapsProvider implements IMapProvider {\n  private client = new Client({}); // from @googlemaps/google-maps-services-js\n\n  async getRoute(origin, destination) {\n    /* implementation that calls Google Directions API */\n  }\n\n  async getETA(origin, destination) {\n    /* implementation that calls Google ETA endpoint */\n  }\n\n  async getDistance(origin, destination) {\n    /* implementation that calls Google Distance Matrix API */\n  }\n}\n\n// Concrete Ola Maps Implementation\nclass OlaMapsProvider implements IMapProvider {\n  // Uses Ola Maps REST APIs with Bearer token authentication\n\n  async getRoute(origin, destination) {\n    /* implementation that calls Ola Maps routing API */\n  }\n\n  async getETA(origin, destination) {\n    /* implementation that calls Ola Maps ETA endpoint */\n  }\n\n  async getDistance(origin, destination) {\n    /* implementation that calls Ola Maps distance endpoint */\n  }\n}\n\n// Strategy manager to switch providers at runtime\nclass MapStrategyManager {\n  private provider: IMapProvider;\n\n  constructor(provider: IMapProvider) {\n    this.provider = provider;\n  }\n\n  setProvider(provider: IMapProvider) {\n    this.provider = provider;\n  }\n\n  getRoute(origin: LatLng, destination: LatLng) {\n    return this.provider.getRoute(origin, destination);\n  }\n\n  getETA(origin: LatLng, destination: LatLng) {\n    return this.provider.getETA(origin, destination);\n  }\n\n  getDistance(origin: LatLng, destination: LatLng) {\n    return this.provider.getDistance(origin, destination);\n  }\n}\n```"
+    },
+    {
+        "query": "Who is  R. S. Sutton",
+        "selected_node": null,
+        "answer": "No relevant nodes were found for the query."
+    },
+    {
+        "query": "who is  R. S. Sutton",
+        "selected_node": null,
+        "answer": "No relevant nodes were found for the query."
+    },
+    {
+        "query": "who is  J. Schulman",
+        "selected_node": null,
+        "answer": "No relevant nodes were found for the query."
     }
 ]
