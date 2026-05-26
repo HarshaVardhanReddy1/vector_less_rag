@@ -80,8 +80,6 @@ _Figure 1: Quarterly sales data showing the highest performance in Q4 with $61,0
 Line charts are commonly used to display trends over time. This example shows website and mobile traffic metrics across a six-month period, demonstrating a general upward trend with seasonal variations. 
 
 
-
-
 <IMAGE_CONTEXT src='document_processing/docs/outputs/extracted_images/comprehensive_test_document/comprehensive_test_document.pdf-0005-02.png'>
 The image is a line graph titled "Traffic Trends - 2024". It shows the traffic trends for two categories: Website and Mobile, over a six-month period from January to June.
 

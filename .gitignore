@@ -36,5 +36,14 @@ dist/
 .DS_Store
 Thumbs.db
 
-# Generated project outputs
- 
+# Generated project outputs — data is not source code
+data/docs/
+data/pages/
+data/tocs/
+data/trees/
+data/responses/
+
+# Frontend build
+frontend/node_modules/
+frontend/dist/
+

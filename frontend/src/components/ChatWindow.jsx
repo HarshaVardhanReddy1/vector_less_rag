@@ -1,10 +1,28 @@
+import { useEffect, useRef } from "react";
+import ReactMarkdown from "react-markdown";
+
 function ChatWindow({ selectedDocument, history, query, setQuery, onSend, isQuerying }) {
+  const bottomRef = useRef(null);
+
+  // Auto-scroll to latest message
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [history]);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (!query.trim()) {
-      return;
-    }
+    if (!query.trim()) return;
     await onSend(query.trim());
+  };
+
+  // Enter to send, Shift+Enter for newline
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter" && !event.shiftKey) {
+      event.preventDefault();
+      if (query.trim() && selectedDocument && !isQuerying) {
+        onSend(query.trim());
+      }
+    }
   };
 
   return (
@@ -30,7 +48,43 @@ function ChatWindow({ selectedDocument, history, query, setQuery, onSend, isQuer
                 </div>
                 <div className="chat-bubble chat-bubble--assistant">
                   <span className="chat-label">Assistant</span>
-                  <p>{entry.answer}</p>
+                  <div className="markdown-body">
+                    <ReactMarkdown>{entry.answer}</ReactMarkdown>
+                  </div>
+
+                  {entry.reasoning && (
+                    <div className="reasoning-panel">
+                      <span className="reasoning-panel__label">Reasoning</span>
+                      <p className="reasoning-panel__text">{entry.reasoning}</p>
+                    </div>
+                  )}
+
+                  {(entry.confidence || entry.metrics) && (
+                    <div className="metrics-row">
+                      {entry.confidence && (
+                        <span className={`confidence-badge confidence-badge--${entry.confidence}`}>
+                          {entry.confidence} confidence
+                        </span>
+                      )}
+                      {entry.metrics && (
+                        <>
+                          <div className="metric-chip">
+                            <span className="metric-chip__label">Accuracy</span>
+                            <span className="metric-chip__value">{entry.metrics.accuracy_score ?? "—"}</span>
+                          </div>
+                          <div className="metric-chip">
+                            <span className="metric-chip__label">Groundedness</span>
+                            <span className="metric-chip__value">{entry.metrics.groundedness_score ?? "—"}</span>
+                          </div>
+                          <div className="metric-chip">
+                            <span className="metric-chip__label">Relevance</span>
+                            <span className="metric-chip__value">{entry.metrics.relevance_score ?? "—"}</span>
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  )}
+
                   {entry.selectedNode ? (
                     <div className="node-summary">
                       <div className="node-summary__title">{entry.selectedNode.title}</div>
@@ -47,6 +101,7 @@ function ChatWindow({ selectedDocument, history, query, setQuery, onSend, isQuer
                 </div>
               </div>
             ))}
+            <div ref={bottomRef} />
           </div>
         ) : (
           <div className="chat-empty">
@@ -59,11 +114,20 @@ function ChatWindow({ selectedDocument, history, query, setQuery, onSend, isQuer
         <textarea
           value={query}
           onChange={(event) => setQuery(event.target.value)}
-          placeholder={selectedDocument ? "Ask a question about the selected document..." : "Select a document first."}
+          onKeyDown={handleKeyDown}
+          placeholder={
+            selectedDocument
+              ? "Ask a question… (Enter to send, Shift+Enter for new line)"
+              : "Select a document first."
+          }
           disabled={!selectedDocument || isQuerying}
           rows={4}
         />
-        <button className="button button--primary" type="submit" disabled={!selectedDocument || isQuerying || !query.trim()}>
+        <button
+          className="button button--primary"
+          type="submit"
+          disabled={!selectedDocument || isQuerying || !query.trim()}
+        >
           {isQuerying ? "Thinking..." : "Send question"}
         </button>
       </form>

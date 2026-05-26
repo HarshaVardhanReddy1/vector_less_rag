@@ -132,6 +132,9 @@ function App() {
           query: message,
           answer: response.answer,
           selectedNode: response.selected_node,
+          reasoning: response.reasoning || "",
+          confidence: response.confidence || "",
+          metrics: response.metrics || {},
         },
       ]);
       setQuery("");

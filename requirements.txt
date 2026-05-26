@@ -1,0 +1,24 @@
+# Web framework
+fastapi
+uvicorn[standard]
+python-multipart
+
+# Database
+pymongo
+
+# LLM / AI
+openai
+tiktoken
+
+# PDF processing
+pdfplumber
+pymupdf4llm
+
+# HTTP client
+requests
+
+# Environment variables
+python-dotenv
+
+# Tracing
+langsmith
