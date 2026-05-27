@@ -1,10 +1,10 @@
-from .config import  DEFAULT_QUERY_LOG_PATH
+from .config import DEFAULT_QUERY_LOG_PATH
+from .evaluator import evaluate_answer
 from .llm import generate_response
 from langsmith import traceable
 from .prompts import (
     generate_context_grounded_answer_prompt,
     generate_full_tree_node_selection_prompt,
-    generate_judge_prompt,
     generate_single_level_node_selection_prompt,
 )
 from .utils import (
@@ -225,34 +225,12 @@ def answer_query(
         answer_prompt = generate_answer_prompt(query, retrieved_context)
         answer_text = generate_response(answer_prompt)
 
-        # Step 2: independent judge evaluates the answer against the context
+        # Step 2: RAGAS evaluates the answer against the retrieved context
         retrieved_context_text = format_retrieved_context(retrieved_context)
-        judge_prompt = generate_judge_prompt(
+        judgment = evaluate_answer(
             query=query,
             answer=answer_text,
-            retrieved_context_text=retrieved_context_text,
-        )
-        raw_judgment = generate_response(judge_prompt)
-
-        def validate_judgment(data: dict) -> dict:
-            if not isinstance(data, dict):
-                raise ValueError("Expected a JSON object.")
-            if "reasoning" not in data or not isinstance(data["reasoning"], str):
-                raise ValueError("Missing or invalid 'reasoning' field.")
-            if "confidence" not in data or data["confidence"] not in {"high", "medium", "low"}:
-                raise ValueError("Missing or invalid 'confidence' field.")
-            if "metrics" not in data or not isinstance(data["metrics"], dict):
-                raise ValueError("Missing or invalid 'metrics' field.")
-            return data
-
-        judgment = ensure_valid_json(
-            raw_judgment,
-            validator=validate_judgment,
-            validation_requirements=(
-                "Return a JSON object with: reasoning (string), "
-                "confidence ('high'|'medium'|'low'), "
-                "metrics (object with accuracy_score, groundedness_score, relevance_score integers)."
-            ),
+            context_text=retrieved_context_text,
         )
 
         result = {

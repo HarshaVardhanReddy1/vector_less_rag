@@ -86,9 +86,6 @@ def merge_tocs(existing_toc: list[dict], new_toc: list[dict]) -> list[dict]:
         raise RuntimeError("Failed to merge partial TOCs.") from error
 
 
-
-
-
 @traceable(run_type="chain", name="TOC · build_toc")
 def build_toc(contexts: list[str]) -> list[dict]:
     if not contexts:
@@ -104,6 +101,7 @@ def build_toc(contexts: list[str]) -> list[dict]:
         return deduplicate_toc(toc)
     except Exception as error:
         raise RuntimeError(f"Failed to build TOC from {len(contexts)} context chunk(s).") from error
+
 
 def deduplicate_toc(toc: list[dict]) -> list[dict]:
     seen = set()
@@ -134,6 +132,3 @@ def generate_toc(
         raise RuntimeError(
             f"Failed to generate TOC from pages file '{pages_path}' into '{output_path}'."
         ) from error
-
-  
-  

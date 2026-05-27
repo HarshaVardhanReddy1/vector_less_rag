@@ -22,3 +22,5 @@ python-dotenv
 
 # Tracing
 langsmith
+
+# Evaluation is handled by the existing openai + langsmith stack (LLM-as-Judge)

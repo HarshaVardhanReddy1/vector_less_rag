@@ -48,6 +48,3 @@ export async function queryDocument({ query, treePath, pagesPath }) {
   const response = await fetch(`${API_BASE_URL}/documents/query?${params.toString()}`);
   return parseResponse(response);
 }
-
-
-export { API_BASE_URL };

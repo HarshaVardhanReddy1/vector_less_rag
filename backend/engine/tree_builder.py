@@ -1,6 +1,5 @@
 from pathlib import Path
 
- 
 from .utils import load_json_data, save_json_data, validate_page_items, validate_toc_nodes
 
 
@@ -93,7 +92,6 @@ def generate_tree_from_toc(
     document_end_index: int | None = None,
 ) -> list[dict]:
     try:
-    
         toc_data = load_json_data(toc_path)
         tree = build_tree_from_toc(toc_data, document_end_index=document_end_index)
         save_json_data(tree, output_path)

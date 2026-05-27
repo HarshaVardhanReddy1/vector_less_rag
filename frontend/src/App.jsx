@@ -190,6 +190,7 @@ function App() {
               setQuery={setQuery}
               onSend={handleSend}
               isQuerying={isQuerying}
+              onClearChat={() => setChatHistory([])}
             />
           )}
         </div>

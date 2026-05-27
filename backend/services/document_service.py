@@ -139,7 +139,7 @@ async def upload_and_index_document(file: UploadFile) -> dict:
             document_id = create_document_record(
                 document_name=file.filename,
                 original_file_path=str(document_paths["pdf_path"]),
-                pages_json_path=str(document_paths["pages_json_path"]),
+                pages_json_path=str(document_paths["pages_path"]),
                 toc_json_path=str(document_paths["toc_path"]),
                 tree_json_path=str(document_paths["tree_path"]),
                 total_pages=len(pages_data),

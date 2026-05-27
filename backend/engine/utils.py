@@ -98,7 +98,7 @@ def get_pages_in_range(pages: list[dict], start_page: int, end_page: int) -> lis
 
     return selected_pages
 
-# converts python objects to json strings for llm prompts.
+
 def _serialize_json_candidate(json_candidate: Any) -> str:
     if isinstance(json_candidate, str):
         return json_candidate

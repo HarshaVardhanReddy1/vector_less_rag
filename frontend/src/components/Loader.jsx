@@ -7,5 +7,4 @@ function Loader({ label = "Loading..." }) {
   );
 }
 
-
 export default Loader;
