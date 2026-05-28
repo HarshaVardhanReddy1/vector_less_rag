@@ -110,7 +110,7 @@ function App() {
   };
 
   const handleSend = async (message) => {
-    if (!selectedDocument?.tree_json_path || !selectedDocument?.pages_json_path) {
+    if (!selectedDocument?.tree_json_path || !selectedDocument?.nodes_json_path) {
       setErrorMessage("Please select a valid indexed document before asking a question.");
       return;
     }
@@ -123,7 +123,7 @@ function App() {
       const response = await queryDocument({
         query: message,
         treePath: selectedDocument.tree_json_path,
-        pagesPath: selectedDocument.pages_json_path,
+        nodesPath: selectedDocument.nodes_json_path,
       });
 
       setChatHistory((history) => [
@@ -169,8 +169,8 @@ function App() {
               <span>Indexed docs</span>
             </div>
             <div>
-              <strong>{selectedDocument?.total_pages || 0}</strong>
-              <span>Pages loaded</span>
+              <strong>{selectedDocument?.total_nodes || 0}</strong>
+              <span>Sections indexed</span>
             </div>
           </div>
         </div>

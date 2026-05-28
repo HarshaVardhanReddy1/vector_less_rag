@@ -51,7 +51,7 @@ function Sidebar({
                   >
                     <div>
                       <strong>{document.document_name}</strong>
-                      <span>{document.total_pages || 0} pages</span>
+                      <span>{document.total_nodes || 0} sections</span>
                     </div>
                     <span className="status-pill">{document.status || "READY"}</span>
                   </button>

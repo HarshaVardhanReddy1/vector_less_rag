@@ -1,7 +1,11 @@
 from fastapi import APIRouter, File, HTTPException, UploadFile
 
 from backend.repositories.document_repository import fetch_document_by_id, list_documents
-from backend.services.document_service import answer_document_query, upload_and_index_document
+from backend.services.document_service import (
+    answer_document_query,
+    build_document_index,
+    process_and_save_document,
+)
 
 
 router = APIRouter()
@@ -14,7 +18,14 @@ def read_root():
 
 @router.post("/documents/upload")
 async def upload_document_endpoint(file: UploadFile = File(...)):
-    return await upload_and_index_document(file)
+    """Step 1 — PDF → enriched nodes JSON."""
+    return await process_and_save_document(file)
+
+
+@router.post("/documents/{document_id}/index")
+def index_document_endpoint(document_id: str):
+    """Step 2 — nodes JSON → retrieval tree JSON."""
+    return build_document_index(document_id)
 
 
 @router.get("/documents")
@@ -23,8 +34,8 @@ async def list_documents_endpoint():
 
 
 @router.get("/documents/query")
-async def query_document_endpoint(query: str, tree_path: str, pages_path: str):
-    return answer_document_query(query=query, tree_path=tree_path, pages_path=pages_path)
+async def query_document_endpoint(query: str, tree_path: str, nodes_path: str):
+    return answer_document_query(query=query, tree_path=tree_path, nodes_path=nodes_path)
 
 
 @router.get("/documents/{document_id}")

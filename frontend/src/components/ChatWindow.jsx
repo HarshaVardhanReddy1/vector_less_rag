@@ -119,7 +119,7 @@ function ChatWindow({ selectedDocument, history, query, setQuery, onSend, isQuer
         </div>
         <div className="chat-header__right">
           <span className="chat-meta">
-            {selectedDocument ? `${selectedDocument.total_pages || 0} pages indexed` : "No document selected"}
+            {selectedDocument ? `${selectedDocument.total_nodes || 0} sections indexed` : "No document selected"}
           </span>
           {history.length > 0 && (
             <button className="button button--ghost button--sm" type="button" onClick={onClearChat}>

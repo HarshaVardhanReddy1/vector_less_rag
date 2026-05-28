@@ -38,11 +38,11 @@ export async function uploadDocument(file) {
 }
 
 
-export async function queryDocument({ query, treePath, pagesPath }) {
+export async function queryDocument({ query, treePath, nodesPath }) {
   const params = new URLSearchParams({
     query,
     tree_path: treePath,
-    pages_path: pagesPath,
+    nodes_path: nodesPath,
   });
 
   const response = await fetch(`${API_BASE_URL}/documents/query?${params.toString()}`);

@@ -39,6 +39,7 @@ Thumbs.db
 
 # Generated project outputs — data is not source code
 data/docs/
+data/nodes/
 data/pages/
 data/tocs/
 data/trees/
