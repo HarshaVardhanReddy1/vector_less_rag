@@ -11,11 +11,7 @@ openai
 tiktoken
 
 # PDF processing
-pdfplumber
 pymupdf4llm
-
-# HTTP client
-requests
 
 # Environment variables
 python-dotenv

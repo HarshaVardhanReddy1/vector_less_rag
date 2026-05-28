@@ -33,9 +33,9 @@ def answer_query(
 
         if retrieved_context is None:
             result = {
-                "query":         query,
-                "selected_node": None,
-                "answer":        "No relevant nodes were found for the query.",
+                "query":          query,
+                "selected_nodes": [],
+                "answer":         "No relevant nodes were found for the query.",
             }
             append_query_response(result, log_path)
             return result
@@ -50,15 +50,18 @@ def answer_query(
 
         result = {
             "query": query,
-            "selected_node": {
-                "node_id":     retrieved_context["node_id"],
-                "title":       retrieved_context["title"],
-                "start_index": retrieved_context["start_index"],
-            },
-            "answer":     answer_text,
-            "reasoning":  judgment.get("reasoning", ""),
-            "confidence": judgment.get("confidence", ""),
-            "metrics":    judgment.get("metrics", {}),
+            "selected_nodes": [
+                {"node_id": nid, "title": title}
+                for nid, title in zip(
+                    retrieved_context["node_ids"],
+                    retrieved_context["titles"],
+                )
+            ],
+            "start_index": retrieved_context["start_index"],
+            "answer":      answer_text,
+            "reasoning":   judgment.get("reasoning", ""),
+            "confidence":  judgment.get("confidence", ""),
+            "metrics":     judgment.get("metrics", {}),
         }
         append_query_response(result, log_path)
         return result

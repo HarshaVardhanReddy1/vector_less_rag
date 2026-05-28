@@ -1,85 +1,81 @@
+import { Loader2, UploadCloud } from "lucide-react";
 import { useRef, useState } from "react";
 
 function UploadBox({ onUpload, isUploading }) {
   const fileInputRef = useRef(null);
-  const [selectedFileName, setSelectedFileName] = useState("");
+  const [selectedFile, setSelectedFile] = useState(null);
   const [isDragging, setIsDragging] = useState(false);
 
   const applyFile = (file) => {
     if (!file || file.type !== "application/pdf") return;
-    setSelectedFileName(file.name);
-    // Sync file to the hidden input so the form submit path still works
+    setSelectedFile(file);
     const dt = new DataTransfer();
     dt.items.add(file);
     fileInputRef.current.files = dt.files;
   };
 
-  const handleFileChange = (event) => {
-    applyFile(event.target.files?.[0]);
-  };
-
-  const handleDragOver = (event) => {
-    event.preventDefault();
-    setIsDragging(true);
-  };
-
+  const handleDragOver = (e) => { e.preventDefault(); setIsDragging(true); };
   const handleDragLeave = () => setIsDragging(false);
-
-  const handleDrop = (event) => {
-    event.preventDefault();
+  const handleDrop = (e) => {
+    e.preventDefault();
     setIsDragging(false);
-    applyFile(event.dataTransfer.files?.[0]);
+    applyFile(e.dataTransfer.files?.[0]);
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     const file = fileInputRef.current?.files?.[0];
     if (!file) return;
     await onUpload(file);
-    event.target.reset();
-    setSelectedFileName("");
+    e.target.reset();
+    setSelectedFile(null);
   };
 
   return (
-    <section className="upload-card">
-      <div className="upload-card__header">
-        <div>
-          <p className="eyebrow">Upload</p>
-          <h2>New PDF</h2>
+    <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "7px" }}>
+      <label
+        className={`upload-zone${isDragging ? " upload-zone--dragging" : ""}`}
+        onDragOver={handleDragOver}
+        onDragLeave={handleDragLeave}
+        onDrop={handleDrop}
+      >
+        <input
+          ref={fileInputRef}
+          id="document-upload"
+          type="file"
+          name="file"
+          accept="application/pdf"
+          onChange={(e) => applyFile(e.target.files?.[0])}
+          disabled={isUploading}
+        />
+        <div className="upload-zone__icon-wrap">
+          <UploadCloud size={16} />
         </div>
-      </div>
+        <span className="upload-zone__title">
+          {isDragging ? "Drop PDF here" : "Upload PDF"}
+        </span>
+        {selectedFile ? (
+          <span className="upload-zone__filename">{selectedFile.name}</span>
+        ) : (
+          <span className="upload-zone__sub">Drag & drop or click · PDF only</span>
+        )}
+      </label>
 
-      <form className="upload-card__form" onSubmit={handleSubmit}>
-        <label
-          className={`upload-box${isDragging ? " upload-box--dragging" : ""}`}
-          htmlFor="document-upload"
-          onDragOver={handleDragOver}
-          onDragLeave={handleDragLeave}
-          onDrop={handleDrop}
-        >
-          <input
-            id="document-upload"
-            ref={fileInputRef}
-            type="file"
-            name="file"
-            accept="application/pdf"
-            onChange={handleFileChange}
-            disabled={isUploading}
-          />
-          <span className="upload-box__icon">📄</span>
-          <span className="upload-box__title">
-            {isDragging ? "Drop it here!" : "Select or drag a PDF"}
-          </span>
-          <span className="upload-box__subtitle">
-            {selectedFileName || "PDF files only · will be indexed for chat"}
-          </span>
-        </label>
-
-        <button className="button" type="submit" disabled={isUploading || !selectedFileName}>
-          {isUploading ? "Uploading…" : "Upload PDF"}
-        </button>
-      </form>
-    </section>
+      <button
+        className="btn btn--primary btn--full btn--sm"
+        type="submit"
+        disabled={isUploading || !selectedFile}
+      >
+        {isUploading ? (
+          <>
+            <Loader2 size={13} className="spin-icon" />
+            Indexing…
+          </>
+        ) : (
+          "Index document"
+        )}
+      </button>
+    </form>
   );
 }
 
