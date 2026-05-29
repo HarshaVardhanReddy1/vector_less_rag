@@ -6,6 +6,7 @@ function Sidebar({
   open,
   documents,
   selectedDocumentId,
+  lastQueriedDocId,
   onSelectDocument,
   onRefreshDocuments,
   onUpload,
@@ -60,7 +61,7 @@ function Sidebar({
                   return (
                     <button
                       key={doc._id}
-                      className={`doc-card${active ? " doc-card--active" : ""}`}
+                      className={`doc-card${active ? " doc-card--active" : ""}${doc._id === lastQueriedDocId ? " doc-card--queried" : ""}`}
                       onClick={() => onSelectDocument(doc._id)}
                       type="button"
                     >

@@ -54,10 +54,11 @@ def get_context_from_node_ids(
     )
 
     return {
-        "node_ids":    [n["node_id"] for n in tree_nodes],
-        "titles":      [n["title"] for n in tree_nodes],
-        "start_index": min(n["start_index"] for n in tree_nodes),
-        "context":     context,
+        "node_ids":      [n["node_id"] for n in tree_nodes],
+        "titles":        [n["title"] for n in tree_nodes],
+        "start_indices": [n["start_index"] for n in tree_nodes],
+        "start_index":   min(n["start_index"] for n in tree_nodes),
+        "context":       context,
     }
 
 

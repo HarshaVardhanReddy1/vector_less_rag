@@ -52,7 +52,8 @@ def extract_heading_nodes(
 
     nodes: list[dict] = []
     for i, hm in enumerate(heading_matches):
-        heading_text  = re.sub(r"\*+", "", hm.group(2)).strip()
+        heading_text  = re.sub(r"\*+", "", hm.group(2))
+        heading_text  = re.sub(r"(?<!\w)_+|_+(?!\w)", "", heading_text).strip()
         content_start = hm.end()
         content_end   = (
             heading_matches[i + 1].start()

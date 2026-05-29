@@ -1,19 +1,25 @@
 def generate_tree_multi_node_selection_prompt(query: str, tree_text: str) -> str:
     return f"""
-You are a document retrieval system.
+You are a precise document retrieval system.
 
-Given a user query and a full document tree, identify ALL nodes that contain
-information relevant to answering the query. Include both direct matches and
-closely supporting context.
+Given a user query and a full document tree, identify ALL nodes whose content
+would DIRECTLY answer the query. A node is relevant only if its section
+actually contains the answer — not merely because it shares a keyword with
+the query.
 
 IMPORTANT RULES:
-1. Select ALL relevant nodes — not just the single best match.
-2. Use node_id, title, summary, and keywords to judge relevance.
-3. Do NOT invent node IDs. Select ONLY from the tree below.
-4. Prefer the most specific (deepest) matching node. If both a parent and its
+1. Match on MEANING and INTENT, not keywords.
+   - If the query asks about "project phases and timelines", select nodes that
+     describe project phases/milestones/schedules — NOT nodes that happen to
+     contain the word "phase" in a different context (e.g. algorithm phases).
+2. Select ALL nodes that DIRECTLY answer the query.
+3. Do NOT select nodes that only partially overlap via keyword coincidence.
+4. Use title, summary, AND keywords together to judge semantic relevance.
+5. Do NOT invent node IDs. Select ONLY from the tree below.
+6. Prefer the most specific (deepest) matching node. If both a parent and its
    child are relevant, select the child — its content subsumes the parent.
-5. If nothing is relevant, return an empty list.
-6. Return ONLY valid JSON. No markdown, no explanations.
+7. If nothing is relevant, return an empty list.
+8. Return ONLY valid JSON. No markdown, no explanations.
 
 QUERY:
 {query}

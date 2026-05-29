@@ -3,6 +3,8 @@
 build_tree_from_nodes — nests flat heading nodes into a tree using their node_id field
 """
 
+from backend.utils.node_utils import normalize_title
+
 
 def build_tree_from_nodes(nodes: list[dict]) -> list[dict]:
     """Build a nested retrieval tree from enriched heading nodes.
@@ -25,7 +27,7 @@ def build_tree_from_nodes(nodes: list[dict]) -> list[dict]:
         node_id = node["node_id"]
         tree_node = {
             "node_id":     node_id,
-            "title":       node["heading"],
+            "title":       normalize_title(node["heading"]),
             "start_index": node["page"],
             "summary":     node.get("summary", ""),
             "keywords":    node.get("keywords", []),

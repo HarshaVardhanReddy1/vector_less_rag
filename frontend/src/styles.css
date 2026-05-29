@@ -33,9 +33,9 @@ html, body, #root { height: 100%; }
   --purple: #a855f7;
 
   --text-1: #eef2fc;
-  --text-2: #8496b8;
-  --text-3: #3e5070;
-  --text-4: #243350;
+  --text-2: #96aacb;
+  --text-3: #6888b0;
+  --text-4: #4a6890;
 
   --sidebar-w: 272px;
   --insights-w: 288px;
@@ -636,7 +636,9 @@ button, input, textarea { font: inherit; }
 /* User bubble */
 .user-msg {
   display: flex;
-  justify-content: flex-end;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 3px;
 }
 .user-msg__bubble {
   max-width: 80%;
@@ -844,6 +846,13 @@ button, input, textarea { font: inherit; }
   font-size: 10px;
   font-weight: 700;
   color: var(--blue);
+  flex-shrink: 0;
+}
+.source-chip > span:not(.source-chip__id) {
+  max-width: 160px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 /* Metrics row */
@@ -1192,6 +1201,118 @@ button, input, textarea { font: inherit; }
 @keyframes toast-slide {
   from { opacity: 0; transform: translateX(18px); }
   to   { opacity: 1; transform: translateX(0); }
+}
+
+/* ── Empty state ────────────────────────────────────── */
+.chat-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  height: 100%;
+  padding: 0 24px;
+  text-align: center;
+}
+.chat-empty__orb {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--r-xl);
+  background: linear-gradient(135deg, rgba(59,130,246,0.12), rgba(99,102,241,0.07));
+  border: 1px solid rgba(59,130,246,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--blue);
+}
+.chat-empty__text {
+  font-size: 13px;
+  color: var(--text-3);
+  max-width: 320px;
+  line-height: 1.55;
+}
+
+/* ── Message timestamp ──────────────────────────────── */
+.msg-timestamp {
+  font-size: 10px;
+  color: var(--text-4);
+  opacity: 0;
+  transition: opacity var(--t);
+  padding-right: 4px;
+}
+.message-pair:hover .msg-timestamp { opacity: 1; }
+
+/* ── Answer card accent bar ─────────────────────────── */
+.answer-card { border-left: 2px solid var(--blue); }
+
+/* ── Table row striping ─────────────────────────────── */
+.markdown-body tbody tr:nth-child(even) { background: rgba(19,30,50,0.6); }
+.markdown-body tbody tr:hover { background: var(--bg-4) !important; }
+
+/* ── Source chip page number ────────────────────────── */
+.source-chip__page {
+  font-size: 10px;
+  color: var(--text-3);
+  flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Input clear button ─────────────────────────────── */
+.input-clear-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-3);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: var(--r-xs);
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  transition: color var(--t), background var(--t);
+}
+.input-clear-btn:hover { color: var(--text-1); background: var(--bg-3); }
+
+/* ── Scroll-to-top button ───────────────────────────── */
+.chat-area { position: relative; }
+.scroll-top-btn {
+  position: sticky;
+  bottom: 14px;
+  float: right;
+  margin-right: 14px;
+  width: 30px;
+  height: 30px;
+  background: var(--bg-3);
+  border: 1px solid var(--border-2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text-2);
+  box-shadow: var(--shadow-md);
+  transition: background var(--t), color var(--t), opacity var(--t-md);
+  opacity: 0;
+  pointer-events: none;
+}
+.scroll-top-btn--visible { opacity: 1; pointer-events: all; }
+.scroll-top-btn:hover { background: var(--bg-4); color: var(--text-1); }
+
+/* ── Typing avatar pulse ────────────────────────────── */
+.typing-avatar-pulse {
+  animation: avatar-pulse 1.4s ease-in-out infinite;
+}
+@keyframes avatar-pulse {
+  0%, 100% { box-shadow: var(--blue-glow); }
+  50% { box-shadow: none; opacity: 0.75; }
+}
+
+/* ── Sidebar queried highlight ──────────────────────── */
+@keyframes doc-queried {
+  0%   { background: rgba(59,130,246,0.18); border-color: rgba(59,130,246,0.4); }
+  100% { background: transparent; border-color: transparent; }
+}
+.doc-card--queried:not(.doc-card--active) {
+  animation: doc-queried 2s ease forwards;
 }
 
 /* ── Responsive ─────────────────────────────────────── */

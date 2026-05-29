@@ -7,7 +7,7 @@ from backend.core.llm import generate_response
 from backend.evaluation.evaluator import evaluate_answer
 from backend.prompts.answer import generate_context_grounded_answer_prompt
 from backend.retrieval.context_retriever import retrieve_context_for_query
-from backend.utils.node_utils import append_query_response, format_retrieved_context
+from backend.utils.node_utils import append_query_response, format_retrieved_context, normalize_title
 
 
 def _build_answer_prompt(query: str, retrieved_context: dict) -> str:
@@ -33,9 +33,9 @@ def answer_query(
 
         if retrieved_context is None:
             result = {
-                "query":          query,
+                "query":query,
                 "selected_nodes": [],
-                "answer":         "No relevant nodes were found for the query.",
+                "answer":"No relevant nodes were found for the query.",
             }
             append_query_response(result, log_path)
             return result
@@ -48,13 +48,18 @@ def answer_query(
             context_text=context_text,
         )
 
+        _start_indices = retrieved_context.get(
+            "start_indices",
+            [retrieved_context["start_index"]] * len(retrieved_context["node_ids"]),
+        )
         result = {
             "query": query,
             "selected_nodes": [
-                {"node_id": nid, "title": title}
-                for nid, title in zip(
+                {"node_id": nid, "title": normalize_title(title), "page": page}
+                for nid, title, page in zip(
                     retrieved_context["node_ids"],
                     retrieved_context["titles"],
+                    _start_indices,
                 )
             ],
             "start_index": retrieved_context["start_index"],

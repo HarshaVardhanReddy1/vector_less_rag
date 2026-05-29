@@ -27,6 +27,7 @@ function App() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [insightsPanelOpen, setInsightsPanelOpen] = useState(true);
   const [activeInsightsEntry, setActiveInsightsEntry] = useState(null);
+  const [lastQueriedDocId, setLastQueriedDocId] = useState(null);
 
   const clearMessages = () => {
     setErrorMessage("");
@@ -113,9 +114,12 @@ function App() {
         reasoning: response.reasoning || "",
         confidence: response.confidence || "",
         metrics: response.metrics || {},
+        timestamp: new Date().toISOString(),
       };
       setChatHistory((h) => [...h, entry]);
       setActiveInsightsEntry(entry);
+      setLastQueriedDocId(selectedDocumentId);
+      setTimeout(() => setLastQueriedDocId(null), 2000);
       setQuery("");
     } catch (err) {
       setErrorMessage(err.message);
@@ -149,6 +153,7 @@ function App() {
           open={sidebarOpen}
           documents={documents}
           selectedDocumentId={selectedDocumentId}
+          lastQueriedDocId={lastQueriedDocId}
           onSelectDocument={handleSelectDocument}
           onRefreshDocuments={() => void loadDocuments()}
           onUpload={handleUpload}

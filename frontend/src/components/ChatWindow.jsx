@@ -1,14 +1,13 @@
-import { ArrowUp, BookOpen, Brain, ChevronDown, ChevronUp, Copy, FileText, Layers, MessageSquare, Sparkles, Zap } from "lucide-react";
+import { ArrowUp, BookOpen, Brain, ChevronDown, ChevronUp, Copy, MessageSquare, Sparkles, X, ChevronUp as ScrollUp } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
-const SUGGESTIONS = [
-  { icon: <FileText size={12} />, text: "What is this document about?" },
-  { icon: <Layers size={12} />, text: "Summarize the key sections." },
-  { icon: <Zap size={12} />, text: "What are the main risks?" },
-  { icon: <Brain size={12} />, text: "List all phases and timelines." },
-];
+function formatTime(iso) {
+  if (!iso) return "";
+  const d = new Date(iso);
+  return d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+}
 
 function MetricChipSm({ label, value }) {
   const score = parseFloat(value);
@@ -73,6 +72,7 @@ function AssistantMessage({ entry }) {
                 <div className="source-chip" key={node.node_id}>
                   <span className="source-chip__id">{node.node_id}</span>
                   <span>{node.title}</span>
+                  {node.page && <span className="source-chip__page">p.{node.page}</span>}
                 </div>
               ))}
             </div>
@@ -128,10 +128,22 @@ function ChatWindow({
 }) {
   const bottomRef = useRef(null);
   const textareaRef = useRef(null);
+  const chatAreaRef = useRef(null);
+  const [showScrollTop, setShowScrollTop] = useState(false);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [history, isQuerying]);
+
+  const handleScroll = () => {
+    const el = chatAreaRef.current;
+    if (!el) return;
+    setShowScrollTop(el.scrollTop > 300);
+  };
+
+  const scrollToTop = () => {
+    chatAreaRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -148,11 +160,6 @@ function ChatWindow({
     }
   };
 
-  const handleSuggestion = (text) => {
-    setQuery(text);
-    textareaRef.current?.focus();
-  };
-
   const handleTextareaInput = (e) => {
     const el = e.target;
     el.style.height = "auto";
@@ -160,39 +167,29 @@ function ChatWindow({
     setQuery(el.value);
   };
 
-  const showWelcome = !history.length && !isQuerying;
+  const handleClearInput = () => {
+    setQuery("");
+    if (textareaRef.current) {
+      textareaRef.current.style.height = "auto";
+      textareaRef.current.focus();
+    }
+  };
+
+  const showEmpty = !history.length && !isQuerying;
 
   return (
     <>
-      <div className="chat-area">
-        {showWelcome ? (
-          <div className="chat-welcome">
-            <div className="chat-welcome__orb">
-              <MessageSquare size={22} />
+      <div className="chat-area" ref={chatAreaRef} onScroll={handleScroll}>
+        {showEmpty ? (
+          <div className="chat-empty">
+            <div className="chat-empty__orb">
+              <MessageSquare size={20} />
             </div>
-            <h2 className="chat-welcome__title">
-              {selectedDocument ? `Ask about ${selectedDocument.document_name}` : "Select a document"}
-            </h2>
-            <p className="chat-welcome__sub">
+            <p className="chat-empty__text">
               {selectedDocument
-                ? "Ask anything about the indexed content. Answers are grounded in the source document."
-                : "Choose a document from the sidebar to start a conversation."}
+                ? `Ask anything about "${selectedDocument.document_name}"`
+                : "Select a document from the sidebar to begin."}
             </p>
-            {selectedDocument && (
-              <div className="suggestion-grid">
-                {SUGGESTIONS.map((s) => (
-                  <button
-                    key={s.text}
-                    className="suggestion-chip"
-                    onClick={() => handleSuggestion(s.text)}
-                    type="button"
-                  >
-                    <span className="suggestion-chip__icon">{s.icon}</span>
-                    {s.text}
-                  </button>
-                ))}
-              </div>
-            )}
           </div>
         ) : (
           <div className="chat-thread">
@@ -200,6 +197,9 @@ function ChatWindow({
               <div className="message-pair" key={i}>
                 <div className="user-msg">
                   <div className="user-msg__bubble">{entry.query}</div>
+                  {entry.timestamp && (
+                    <span className="msg-timestamp">{formatTime(entry.timestamp)}</span>
+                  )}
                 </div>
                 <AssistantMessage entry={entry} />
               </div>
@@ -207,7 +207,7 @@ function ChatWindow({
 
             {isQuerying && (
               <div className="typing-bubble">
-                <div className="assistant-msg__avatar">
+                <div className="assistant-msg__avatar typing-avatar-pulse">
                   <Sparkles size={12} color="#fff" />
                 </div>
                 <div className="typing-dots">
@@ -219,6 +219,15 @@ function ChatWindow({
             <div ref={bottomRef} />
           </div>
         )}
+
+        <button
+          className={`scroll-top-btn${showScrollTop ? " scroll-top-btn--visible" : ""}`}
+          onClick={scrollToTop}
+          type="button"
+          title="Scroll to top"
+        >
+          <ScrollUp size={14} />
+        </button>
       </div>
 
       <div className="chat-input-zone">
@@ -232,12 +241,22 @@ function ChatWindow({
                 onKeyDown={handleKeyDown}
                 placeholder={
                   selectedDocument
-                    ? "Ask a question… (Enter to send, Shift+Enter for newline)"
+                    ? "Ask a question…"
                     : "Select a document first."
                 }
                 disabled={!selectedDocument || isQuerying}
                 rows={1}
               />
+              {query && (
+                <button
+                  type="button"
+                  className="input-clear-btn"
+                  onClick={handleClearInput}
+                  tabIndex={-1}
+                >
+                  <X size={13} />
+                </button>
+              )}
               <button
                 className="send-btn"
                 type="submit"
@@ -247,11 +266,6 @@ function ChatWindow({
               </button>
             </div>
           </form>
-          <p className="input-hint">
-            {selectedDocument
-              ? `${selectedDocument.total_nodes || 0} sections indexed · context-grounded answers`
-              : "No document selected"}
-          </p>
         </div>
       </div>
     </>

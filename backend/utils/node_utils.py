@@ -8,6 +8,15 @@ from backend.utils.json_utils import load_json_data, save_json_data
 
 NODE_ID_PATTERN = re.compile(r"^\d+(?:\.\d+)*$")
 
+_MD_BOLD_RE   = re.compile(r"\*+")
+_MD_ITALIC_RE = re.compile(r"(?<!\w)_+|_+(?!\w)")
+
+
+def normalize_title(text: str) -> str:
+    text = _MD_BOLD_RE.sub("", text)
+    text = _MD_ITALIC_RE.sub("", text)
+    return text.strip()
+
 
 # ---------------------------------------------------------------------------
 # Validation helpers
