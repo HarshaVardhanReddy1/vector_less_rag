@@ -6,11 +6,27 @@ Each section in <INPUT> has a "seq_id" integer. For EACH section generate:
 
 "seq_id"   — Copy the seq_id from the input exactly. Do NOT change or omit it.
 
-"summary"  — Complete summary of ALL content. Include every topic, feature, and detail present.
-             Do NOT omit anything. If the section spans multiple topics, cover all of them.
+"summary"  — Answer the question "What does this section cover and what does it say?"
+             Write 2–4 sentences. Be specific: name the exact methods, models, algorithms,
+             results, or concepts discussed. A reader must be able to judge from the summary
+             alone whether this section answers their question.
+             Rules:
+             • State what the section IS about, not that it "discusses" or "covers" something.
+             • Mention concrete details — numbers, names, comparisons, conclusions.
+             • If the section contains a table or figure, state what it shows.
+             • Never write "This section introduces…" or "This part covers…" — start directly
+               with the subject matter.
 
-"keywords" — 5–10 short phrases drawn from the FULL content (not just the heading).
-             Every distinct concept, feature, or topic in the content must appear in keywords.
+"keywords" — 5–10 specific terms extracted directly from the content.
+             Include: technical terms, named methods/algorithms, model names, metric names,
+             proper nouns, and domain-specific vocabulary that appear in the text.
+             Each keyword must be 1–3 words.
+             Rules:
+             • Use terms a user would actually type when searching for this content.
+             • Do NOT include generic phrases like "key concepts", "performance comparison",
+               or "model overview" — only concrete terms from the content.
+             • Examples of good keywords: "ReLU", "batch normalization", "ResNet-50",
+               "attention mechanism", "F1 score", "gradient descent".
 
 "node_id"  — Hierarchical dotted ID reflecting this section's position in the document structure.
 
@@ -48,7 +64,7 @@ Each section in <INPUT> has a "seq_id" integer. For EACH section generate:
 
 Output:
 [
-  {{"seq_id": 1, "summary": "...", "keywords": ["...", "..."], "node_id": "1"}},
+  {{"seq_id": 1, "summary": "ReLU and its variants (Leaky ReLU, ELU, GELU) address vanishing gradients by providing non-zero gradients for positive inputs, enabling training of deep networks. GELU is preferred in Transformers due to its smooth probabilistic gating.", "keywords": ["ReLU", "Leaky ReLU", "GELU", "vanishing gradient", "activation function", "backpropagation"], "node_id": "1"}},
   ...
 ]
 """
@@ -72,11 +88,27 @@ Each section in <INPUT> has a "seq_id" integer. For EACH section generate:
 
 "seq_id"   — Copy the seq_id from the input exactly. Do NOT change or omit it.
 
-"summary"  — Complete summary of ALL content. Include every topic, feature, and detail present.
-             Do NOT omit anything. If the section spans multiple topics, cover all of them.
+"summary"  — Answer the question "What does this section cover and what does it say?"
+             Write 2–4 sentences. Be specific: name the exact methods, models, algorithms,
+             results, or concepts discussed. A reader must be able to judge from the summary
+             alone whether this section answers their question.
+             Rules:
+             • State what the section IS about, not that it "discusses" or "covers" something.
+             • Mention concrete details — numbers, names, comparisons, conclusions.
+             • If the section contains a table or figure, state what it shows.
+             • Never write "This section introduces…" or "This part covers…" — start directly
+               with the subject matter.
 
-"keywords" — 5–10 short phrases drawn from the FULL content (not just the heading).
-             Every distinct concept, feature, or topic in the content must appear in keywords.
+"keywords" — 5–10 specific terms extracted directly from the content.
+             Include: technical terms, named methods/algorithms, model names, metric names,
+             proper nouns, and domain-specific vocabulary that appear in the text.
+             Each keyword must be 1–3 words.
+             Rules:
+             • Use terms a user would actually type when searching for this content.
+             • Do NOT include generic phrases like "key concepts", "performance comparison",
+               or "model overview" — only concrete terms from the content.
+             • Examples of good keywords: "ReLU", "batch normalization", "ResNet-50",
+               "attention mechanism", "F1 score", "gradient descent".
 
 "node_id"  — Hierarchical dotted ID continuing from the context node above.
 
@@ -114,7 +146,7 @@ Each section in <INPUT> has a "seq_id" integer. For EACH section generate:
 
 Output:
 [
-  {{"seq_id": 1, "summary": "...", "keywords": ["...", "..."], "node_id": "2.1"}},
+  {{"seq_id": 1, "summary": "ResNet-50 achieves 76.1% Top-1 accuracy on ImageNet using residual connections that let gradients bypass layers via identity shortcuts, enabling 50-layer training without vanishing gradients.", "keywords": ["ResNet-50", "residual connections", "skip connections", "ImageNet", "Top-1 accuracy", "identity shortcut"], "node_id": "2.1"}},
   ...
 ]
 """
