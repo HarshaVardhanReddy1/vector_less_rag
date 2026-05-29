@@ -183,7 +183,8 @@ async def parse_pdf_to_markdown(
         # so VLM description lines that look like headings are not recorded.
         masked = _IMAGE_CONTEXT_RE.sub("", enriched)
         for hm in _HEADING_RE.finditer(masked):
-            heading_text = re.sub(r"\*+", "", hm.group(2)).strip()
+            heading_text = re.sub(r"\*+", "", hm.group(2))
+            heading_text = re.sub(r"(?<!\w)_+|_+(?!\w)", "", heading_text).strip()
             if heading_text and heading_text not in heading_page_map:
                 heading_page_map[heading_text] = page_num
 

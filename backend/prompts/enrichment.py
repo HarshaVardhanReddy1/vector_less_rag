@@ -6,16 +6,11 @@ Each section in <INPUT> has a "seq_id" integer. For EACH section generate:
 
 "seq_id"   — Copy the seq_id from the input exactly. Do NOT change or omit it.
 
-"summary"  — Answer the question "What is this section about?" in 2–4 sentences.
-             Write as a direct answer, not a description. Name the exact concepts, methods,
-             results, or decisions covered. A reader must understand what this node contains
-             without reading the original text.
+"summary"  — Complete summary of ALL content. Include every topic, feature, and detail present.
+             Do NOT omit anything. If the section spans multiple topics, cover all of them.
 
-"keywords" — 5–10 true keywords extracted from the content.
-             Include: technical terms, abbreviations (e.g. "EMD", "SSP"), their full forms
-             (e.g. "Earth Mover's Distance"), algorithm names, metric names, and domain-specific
-             vocabulary. These must be words a user would type to search for this content.
-             Do NOT include generic phrases like "key concepts" or "overview".
+"keywords" — 5–10 short phrases drawn from the FULL content (not just the heading).
+             Every distinct concept, feature, or topic in the content must appear in keywords.
 
 "node_id"  — Hierarchical dotted ID reflecting this section's position in the document structure.
 
@@ -53,6 +48,7 @@ Output:
   ...
 ]
 """
+
 
 
 def generate_enrichment_continuation_prompt(
@@ -115,7 +111,8 @@ Each section in <INPUT> has a "seq_id" integer. For EACH section generate:
 
 Output:
 [
-  {{"seq_id": 1, "summary": "...", "keywords": ["...", "..."], "node_id": "2.1"}},
+  {{"seq_id": 15, "summary": "Progressive bounding reduces EMD computation cost by computing increasingly tight lower bounds before running the full optimisation, skipping candidates that cannot improve the current best result.", "keywords": ["progressive bounding", "lower bound", "EMD computation", "pruning", "candidate filtering", "refinement phase"], "node_id": "4.2"}},
+  {{"seq_id": 16, "summary": "Dynamic refinement ordering reorders candidate evaluation at runtime based on running upper bounds, prioritising candidates most likely to be pruned early and reducing total EMD computations.", "keywords": ["dynamic refinement", "refinement ordering", "running upper bound", "DRO", "candidate evaluation", "computation reduction"], "node_id": "4.3"}},
   ...
 ]
 """

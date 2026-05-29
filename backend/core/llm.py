@@ -58,6 +58,7 @@ def generate_response(prompt: str, model: str = "openai/gpt-oss-120b:free") -> s
         ) from error
 
 
+@traceable(run_type="llm", name="LLM · generate_response_stream")
 def generate_response_stream(
     prompt: str, model: str = "openai/gpt-oss-120b:free"
 ) -> Iterator[str]:

@@ -1,5 +1,7 @@
 """Assembles text context from all selected tree nodes."""
 
+from langsmith import traceable
+
 from backend.utils.json_utils import load_json_data
 from backend.utils.node_utils import find_node_by_id
 from backend.retrieval.node_selector import retrieve_relevant_nodes
@@ -62,6 +64,7 @@ def get_context_from_node_ids(
     }
 
 
+@traceable(run_type="retriever", name="Retriever · retrieve_context_for_query")
 def retrieve_context_for_query(
     query: str,
     tree_path: str,

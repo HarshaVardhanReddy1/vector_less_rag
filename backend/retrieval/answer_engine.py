@@ -91,6 +91,7 @@ def answer_query(
         ) from error
 
 
+@traceable(run_type="chain", name="Pipeline · stream_answer_query")
 def stream_answer_query(
     query: str,
     tree_path: str,

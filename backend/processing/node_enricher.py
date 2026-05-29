@@ -2,6 +2,8 @@
 
 import json
 
+from langsmith import traceable
+
 from backend.config import ENRICH_MAX_BATCH_TOKENS, ENRICH_MODEL
 from backend.core.llm import get_client
 from backend.prompts.enrichment import (
@@ -123,6 +125,7 @@ def _enrich_chunk(
     ]
 
 
+@traceable(run_type="chain", name="Pipeline · enrich_nodes")
 def enrich_nodes(nodes: list[dict]) -> list[dict]:
     """Add summary, keywords, and node_id to every heading node via LLM.
 
