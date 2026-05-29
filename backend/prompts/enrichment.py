@@ -46,10 +46,18 @@ Each section in <INPUT> has a "seq_id" integer. For EACH section generate:
   • Never generate duplicate node_ids — every section must have a unique ID.
   • Parallel headings (same depth, same pattern) get sibling IDs at the same level.
   • A heading that is a sub-topic of the one before it gets a child ID (one dot deeper).
+  • If a heading starts with a numeric prefix (e.g. "3.1 Methods", "2.1.4 Results"),
+    treat that prefix as the authoritative hierarchy signal and assign the matching node_id.
   • Paragraph chunk nodes: a heading ending with ' -2', ' -3', ' -4', … is a continuation
     chunk of the immediately preceding node whose heading is the same text without the suffix.
     The parent holds chunk 1 (no suffix). Assign chunk nodes as numerical children of that parent.
-    Example: parent "Background" → node_id "2"; "Background -2" → "2.1"; "Background -3" → "2.2".
+    After all chunks of a parent are assigned, resume normal sibling numbering for the next
+    unrelated heading — do NOT continue into the chunk children's numbering level.
+    Examples:
+      parent "Background" → "2";  "Background -2" → "2.1";  "Background -3" → "2.2"
+      next unrelated section     → "3"  (NOT "2.3")
+      parent "4.1 Overview" → "4.1";  "4.1 Overview -2" → "4.1.1";  "4.1 Overview -3" → "4.1.2"
+      next sibling of 4.1        → "4.2"  (NOT "4.1.3")
 
 ━━━ FORMAT RULES ━━━
 
@@ -127,10 +135,18 @@ Each section in <INPUT> has a "seq_id" integer. For EACH section generate:
   • Never skip levels — 1.1.1 requires 1.1 to exist.
   • Never generate duplicate node_ids.
   • Parallel headings get sibling IDs; sub-topics get child IDs (one dot deeper).
+  • If a heading starts with a numeric prefix (e.g. "3.1 Methods", "2.1.4 Results"),
+    treat that prefix as the authoritative hierarchy signal and assign the matching node_id.
   • Paragraph chunk nodes: a heading ending with ' -2', ' -3', ' -4', … is a continuation
     chunk of the immediately preceding node whose heading is the same text without the suffix.
     The parent holds chunk 1 (no suffix). Assign chunk nodes as numerical children of that parent.
-    Example: parent "Background" → node_id "2"; "Background -2" → "2.1"; "Background -3" → "2.2".
+    After all chunks of a parent are assigned, resume normal sibling numbering for the next
+    unrelated heading — do NOT continue into the chunk children's numbering level.
+    Examples:
+      parent "Background" → "2";  "Background -2" → "2.1";  "Background -3" → "2.2"
+      next unrelated section     → "3"  (NOT "2.3")
+      parent "4.1 Overview" → "4.1";  "4.1 Overview -2" → "4.1.1";  "4.1 Overview -3" → "4.1.2"
+      next sibling of 4.1        → "4.2"  (NOT "4.1.3")
 
 ━━━ FORMAT RULES ━━━
 
