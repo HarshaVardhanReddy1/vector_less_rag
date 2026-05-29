@@ -6,11 +6,16 @@ Each section in <INPUT> has a "seq_id" integer. For EACH section generate:
 
 "seq_id"   — Copy the seq_id from the input exactly. Do NOT change or omit it.
 
-"summary"  — Complete summary of ALL content. Include every topic, feature, and detail present.
-             Do NOT omit anything. If the section spans multiple topics, cover all of them.
+"summary"  — Answer the question "What is this section about?" in 2–4 sentences.
+             Write as a direct answer, not a description. Name the exact concepts, methods,
+             results, or decisions covered. A reader must understand what this node contains
+             without reading the original text.
 
-"keywords" — 5–10 short phrases drawn from the FULL content (not just the heading).
-             Every distinct concept, feature, or topic in the content must appear in keywords.
+"keywords" — 5–10 true keywords extracted from the content.
+             Include: technical terms, abbreviations (e.g. "EMD", "SSP"), their full forms
+             (e.g. "Earth Mover's Distance"), algorithm names, metric names, and domain-specific
+             vocabulary. These must be words a user would type to search for this content.
+             Do NOT include generic phrases like "key concepts" or "overview".
 
 "node_id"  — Hierarchical dotted ID reflecting this section's position in the document structure.
 
@@ -68,11 +73,15 @@ Each section in <INPUT> has a "seq_id" integer. For EACH section generate:
 
 "seq_id"   — Copy the seq_id from the input exactly. Do NOT change or omit it.
 
-"summary"  — Complete summary of ALL content. Include every topic, feature, and detail present.
-             Do NOT omit anything. If the section spans multiple topics, cover all of them.
+"summary"  — Answer the question "What is this section about?" in 2–4 sentences.
+             Write as a direct answer, not a description. Name the exact concepts, methods,
+             results, or decisions covered. A reader must understand what this node contains
+             without reading the original text.
 
-"keywords" — 5–10 short phrases drawn from the FULL content (not just the heading).
-             Every distinct concept, feature, or topic in the content must appear in keywords.
+"keywords" — 5–10 true keywords extracted from the content.
+             Include: technical terms, abbreviations (e.g. "EMD", "SSP"), their full forms
+             (e.g. "Earth Mover's Distance"), algorithm names, metric names, and domain-specific
+             vocabulary. These must be words a user would type to search for this content.
 
 "node_id"  — Hierarchical dotted ID continuing from the context node above.
 
