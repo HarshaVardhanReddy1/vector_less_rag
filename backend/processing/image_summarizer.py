@@ -2,7 +2,7 @@
 
 import base64
 
-from backend.core.llm import get_client
+from backend.core.llm import get_async_client, get_client
 
 
 _VLM_MODEL = "qwen/qwen2.5-vl-72b-instruct"
@@ -57,6 +57,34 @@ def summarize_image(image_path: str, context: str = "") -> dict:
     full_prompt = context_hint + _IMAGE_SUMMARY_PROMPT
 
     response = client.chat.completions.create(
+        model=_VLM_MODEL,
+        max_tokens=1000,
+        messages=[
+            {
+                "role": "user",
+                "content": [
+                    {"type": "text", "text": full_prompt},
+                    {
+                        "type": "image_url",
+                        "image_url": {"url": f"data:image/png;base64,{base64_image}"},
+                    },
+                ],
+            }
+        ],
+    )
+    raw = response.choices[0].message.content
+    return _parse_vlm_response(raw)
+
+
+async def summarize_image_async(image_path: str, context: str = "") -> dict:
+    """Async version of summarize_image — use with asyncio.gather for concurrency."""
+    base64_image = encode_image(image_path)
+    client = get_async_client()
+
+    context_hint = f"Document context:\n{context}\n\n" if context.strip() else ""
+    full_prompt = context_hint + _IMAGE_SUMMARY_PROMPT
+
+    response = await client.chat.completions.create(
         model=_VLM_MODEL,
         max_tokens=1000,
         messages=[

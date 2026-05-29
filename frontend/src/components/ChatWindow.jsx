@@ -33,7 +33,7 @@ function AssistantMessage({ entry }) {
 
   return (
     <div className="assistant-msg">
-      <div className="assistant-msg__avatar">
+      <div className={`assistant-msg__avatar${entry.streaming ? " typing-avatar-pulse" : ""}`}>
         <Sparkles size={12} color="#fff" />
       </div>
 
@@ -45,19 +45,28 @@ function AssistantMessage({ entry }) {
               Answer
             </span>
             <div className="answer-card__acts">
-              <button
-                className={`copy-btn${copied ? " copy-btn--copied" : ""}`}
-                onClick={handleCopy}
-              >
-                <Copy size={11} />
-                {copied ? "Copied" : "Copy"}
-              </button>
+              {!entry.streaming && (
+                <button
+                  className={`copy-btn${copied ? " copy-btn--copied" : ""}`}
+                  onClick={handleCopy}
+                >
+                  <Copy size={11} />
+                  {copied ? "Copied" : "Copy"}
+                </button>
+              )}
             </div>
           </div>
           <div className="answer-card__body">
-            <div className="markdown-body">
-              <ReactMarkdown remarkPlugins={[remarkGfm]}>{entry.answer}</ReactMarkdown>
-            </div>
+            {entry.streaming && !entry.answer ? (
+              <div className="typing-dots">
+                <span /><span /><span />
+              </div>
+            ) : (
+              <div className="markdown-body">
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>{entry.answer}</ReactMarkdown>
+                {entry.streaming && <span className="stream-cursor" />}
+              </div>
+            )}
           </div>
         </div>
 
@@ -205,16 +214,6 @@ function ChatWindow({
               </div>
             ))}
 
-            {isQuerying && (
-              <div className="typing-bubble">
-                <div className="assistant-msg__avatar typing-avatar-pulse">
-                  <Sparkles size={12} color="#fff" />
-                </div>
-                <div className="typing-dots">
-                  <span /><span /><span />
-                </div>
-              </div>
-            )}
 
             <div ref={bottomRef} />
           </div>

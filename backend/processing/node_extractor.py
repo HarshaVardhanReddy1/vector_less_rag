@@ -7,18 +7,11 @@ tiktoken token count of that content.
 
 import re
 
-import tiktoken
+from backend.utils.token_utils import count_tokens
 
 
 _HEADING_RE       = re.compile(r"^(#{1,6})\s+(.*)", re.MULTILINE)
 _IMAGE_CONTEXT_RE = re.compile(r"<IMAGE_CONTEXT[^>]*>.*?</IMAGE_CONTEXT>", re.DOTALL)
-
-
-def _get_encoder():
-    try:
-        return tiktoken.encoding_for_model("gpt-4o")
-    except KeyError:
-        return tiktoken.get_encoding("cl100k_base")
 
 
 def extract_heading_nodes(
@@ -36,8 +29,6 @@ def extract_heading_nodes(
     Headings inside IMAGE_CONTEXT blocks are skipped — they belong to VLM
     descriptions, not to document section headings.
     """
-    encoder = _get_encoder()
-
     image_block_ranges = [
         (m.start(), m.end()) for m in _IMAGE_CONTEXT_RE.finditer(full_md)
     ]
@@ -66,7 +57,7 @@ def extract_heading_nodes(
             "heading":     heading_text,
             "page":        heading_page_map.get(heading_text, 1),
             "content":     content,
-            "token_count": len(encoder.encode(content)),
+            "token_count": count_tokens(content),
         })
 
     return nodes

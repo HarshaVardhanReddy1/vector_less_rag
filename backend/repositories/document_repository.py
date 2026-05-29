@@ -14,6 +14,72 @@ def serialize_document(document: dict | None) -> dict | None:
     return document
 
 
+def create_pending_record(
+    document_name: str,
+    original_file_path: str,
+) -> str:
+    """Create a document record with PENDING status before processing starts."""
+    document_data = {
+        "document_name":           document_name,
+        "original_file_path":      original_file_path,
+        "nodes_json_path":         None,
+        "tree_json_path":          None,
+        "total_nodes":             0,
+        "status":                  "PENDING",
+        "error_message":           None,
+        "uploaded_at":             datetime.now(timezone.utc),
+        "processing_started_at":   None,
+        "processing_finished_at":  None,
+    }
+    result = documents_collection.insert_one(document_data)
+    return str(result.inserted_id)
+
+
+def update_document_status(
+    document_id: str,
+    status: str,
+    error_message: str | None = None,
+) -> bool:
+    try:
+        object_id = ObjectId(document_id)
+    except InvalidId:
+        return False
+
+    update: dict = {"status": status}
+    if error_message is not None:
+        update["error_message"] = error_message
+    if status == "PROCESSING":
+        update["processing_started_at"] = datetime.now(timezone.utc)
+    elif status in ("READY", "FAILED"):
+        update["processing_finished_at"] = datetime.now(timezone.utc)
+
+    result = documents_collection.update_one(
+        {"_id": object_id},
+        {"$set": update},
+    )
+    return result.modified_count > 0
+
+
+def update_document_nodes(
+    document_id: str,
+    nodes_json_path: str,
+    total_nodes: int,
+) -> bool:
+    try:
+        object_id = ObjectId(document_id)
+    except InvalidId:
+        return False
+
+    result = documents_collection.update_one(
+        {"_id": object_id},
+        {"$set": {
+            "nodes_json_path": nodes_json_path,
+            "total_nodes":     total_nodes,
+        }},
+    )
+    return result.modified_count > 0
+
+
 def create_document_record(
     document_name: str,
     original_file_path: str,
@@ -44,9 +110,9 @@ def update_document_tree(document_id: str, tree_json_path: str) -> bool:
         {"_id": object_id},
         {
             "$set": {
-                "tree_json_path": tree_json_path,
-                "status":         "READY",
-                "indexed_at":     datetime.now(timezone.utc),
+                "tree_json_path":          tree_json_path,
+                "status":                  "READY",
+                "processing_finished_at":  datetime.now(timezone.utc),
             }
         },
     )

@@ -6,8 +6,9 @@ import StatusBanner from "./components/StatusBanner";
 import TopNav from "./components/TopNav";
 import {
   fetchDocumentById,
+  fetchDocumentStatus,
   listDocuments,
-  queryDocument,
+  queryDocumentStream,
   uploadDocument,
 } from "./api/documentApi";
 import "./styles.css";
@@ -71,13 +72,42 @@ function App() {
     return () => { active = false; };
   }, [selectedDocumentId]);
 
+  const pollUntilReady = async (documentId) => {
+    const MAX_POLLS = 120;   // 10 minutes at 5 s intervals
+    const INTERVAL_MS = 5000;
+
+    for (let i = 0; i < MAX_POLLS; i++) {
+      await new Promise((r) => setTimeout(r, INTERVAL_MS));
+      try {
+        const { status, error_message } = await fetchDocumentStatus(documentId);
+        if (status === "READY") return { ok: true };
+        if (status === "FAILED") return { ok: false, error: error_message || "Processing failed." };
+      } catch {
+        // transient network error — keep polling
+      }
+    }
+    return { ok: false, error: "Processing timed out." };
+  };
+
   const handleUpload = async (file) => {
     setIsUploading(true);
     clearMessages();
     try {
       const response = await uploadDocument(file);
-      await loadDocuments(response.document_id);
-      setSuccessMessage(`"${response.document_name}" indexed successfully.`);
+      const docId = response.document_id;
+
+      if (response.status === "PROCESSING") {
+        setSuccessMessage("Upload received. Processing in the background…");
+        const result = await pollUntilReady(docId);
+        if (!result.ok) {
+          setErrorMessage(result.error);
+          setIsUploading(false);
+          return;
+        }
+      }
+
+      await loadDocuments(docId);
+      setSuccessMessage(`Document indexed successfully.`);
       setChatHistory([]);
       setActiveInsightsEntry(null);
     } catch (err) {
@@ -95,34 +125,79 @@ function App() {
   };
 
   const handleSend = async (message) => {
-    if (!selectedDocument?.tree_json_path || !selectedDocument?.nodes_json_path) {
-      setErrorMessage("Please select a valid indexed document before asking a question.");
+    if (!selectedDocument?._id || selectedDocument?.status !== "READY") {
+      setErrorMessage("Please select a ready document before asking a question.");
       return;
     }
     setIsQuerying(true);
     clearMessages();
+
+    const entryIndex = { current: null };
+    const streamingEntry = {
+      query: message,
+      answer: "",
+      selectedNodes: [],
+      streaming: true,
+      timestamp: new Date().toISOString(),
+    };
+    setChatHistory((h) => {
+      entryIndex.current = h.length;
+      return [...h, streamingEntry];
+    });
+    setQuery("");
+
     try {
-      const response = await queryDocument({
-        query: message,
-        treePath: selectedDocument.tree_json_path,
-        nodesPath: selectedDocument.nodes_json_path,
-      });
-      const entry = {
-        query: message,
-        answer: response.answer,
-        selectedNodes: response.selected_nodes || [],
-        reasoning: response.reasoning || "",
-        confidence: response.confidence || "",
-        metrics: response.metrics || {},
-        timestamp: new Date().toISOString(),
-      };
-      setChatHistory((h) => [...h, entry]);
-      setActiveInsightsEntry(entry);
-      setLastQueriedDocId(selectedDocumentId);
-      setTimeout(() => setLastQueriedDocId(null), 2000);
-      setQuery("");
+      await queryDocumentStream(
+        { documentId: selectedDocument._id, query: message },
+        {
+          onMeta: (event) => {
+            setChatHistory((h) => {
+              const idx = entryIndex.current;
+              if (idx === null) return h;
+              const updated = [...h];
+              updated[idx] = {
+                ...updated[idx],
+                selectedNodes: event.selected_nodes || [],
+              };
+              return updated;
+            });
+          },
+          onToken: (token) => {
+            setChatHistory((h) => {
+              const idx = entryIndex.current;
+              if (idx === null) return h;
+              const updated = [...h];
+              updated[idx] = {
+                ...updated[idx],
+                answer: updated[idx].answer + token,
+              };
+              return updated;
+            });
+          },
+          onError: (message) => setErrorMessage(message),
+          onDone: () => {
+            setChatHistory((h) => {
+              const idx = entryIndex.current;
+              if (idx === null) return h;
+              const updated = [...h];
+              updated[idx] = { ...updated[idx], streaming: false };
+              setActiveInsightsEntry(updated[idx]);
+              setLastQueriedDocId(selectedDocumentId);
+              setTimeout(() => setLastQueriedDocId(null), 2000);
+              return updated;
+            });
+          },
+        },
+      );
     } catch (err) {
       setErrorMessage(err.message);
+      setChatHistory((h) => {
+        const idx = entryIndex.current;
+        if (idx === null) return h;
+        const updated = [...h];
+        updated[idx] = { ...updated[idx], streaming: false };
+        return updated;
+      });
     } finally {
       setIsQuerying(false);
     }

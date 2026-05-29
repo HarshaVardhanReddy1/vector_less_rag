@@ -6,13 +6,14 @@ a type= attribute and optional caption=), strips redundant raw picture-text
 blocks, and returns the combined markdown string along with a heading→page map.
 """
 
+import asyncio
 import os
 import re
 
 import fitz          # PyMuPDF
 import pymupdf4llm
 
-from backend.processing.image_summarizer import summarize_image
+from backend.processing.image_summarizer import summarize_image_async
 
 
 _HEADING_RE = re.compile(r"^(#{1,6})\s+(.*)", re.MULTILINE)
@@ -68,18 +69,37 @@ def _build_doc_context(accumulated_md: str, current_raw_md: str) -> str:
     return "\n".join(parts)
 
 
-def _replace_images_with_context(raw_md: str, doc_context: str = "") -> str:
-    """Swap markdown image links with VLM-generated IMAGE_CONTEXT blocks."""
+_MAX_CONCURRENT_IMAGES = 4
+
+
+async def _summarize_with_limit(
+    image_path: str, doc_context: str, sem: asyncio.Semaphore
+) -> tuple[str, dict]:
+    """Summarize one image, gated by the caller-provided semaphore."""
+    async with sem:
+        result = await summarize_image_async(os.path.abspath(image_path), doc_context)
+    return os.path.basename(image_path), result
+
+
+async def _replace_images_with_context(raw_md: str, doc_context: str = "") -> str:
+    """Swap markdown image links with VLM-generated IMAGE_CONTEXT blocks.
+
+    All images on the page are summarized concurrently via asyncio.gather,
+    bounded by _MAX_CONCURRENT_IMAGES to avoid rate-limit spikes.
+    """
     referenced = re.findall(r"!\[[^\]]*\]\(([^)]+\.png)\)", raw_md)
 
     summaries: dict[str, dict] = {}
-    for img_path in referenced:
-        abs_path = os.path.abspath(img_path)
-        key = os.path.basename(abs_path)
-        try:
-            summaries[key] = summarize_image(abs_path, context=doc_context)
-        except Exception as exc:
-            print(f"  Warning: could not summarize {key}: {exc}")
+    if referenced:
+        sem = asyncio.Semaphore(_MAX_CONCURRENT_IMAGES)
+        tasks = [_summarize_with_limit(img_path, doc_context, sem) for img_path in referenced]
+        results = await asyncio.gather(*tasks, return_exceptions=True)
+        for item in results:
+            if isinstance(item, Exception):
+                print(f"  Warning: could not summarize image: {item}")
+            else:
+                key, result = item
+                summaries[key] = result
 
     def _replace(match: re.Match) -> str:
         full_path = match.group(2)
@@ -120,7 +140,7 @@ def _attach_captions(md: str) -> str:
 # Public API
 # ---------------------------------------------------------------------------
 
-def parse_pdf_to_markdown(
+async def parse_pdf_to_markdown(
     pdf_path: str,
     image_output_dir: str,
 ) -> tuple[str, dict[str, int]]:
@@ -151,7 +171,7 @@ def parse_pdf_to_markdown(
         )
 
         doc_context = _build_doc_context(accumulated_md, raw_md)
-        enriched = _replace_images_with_context(raw_md, doc_context=doc_context)
+        enriched = await _replace_images_with_context(raw_md, doc_context=doc_context)
         enriched = _strip_picture_text(enriched)
         enriched = _attach_captions(enriched)
         enriched = enriched.strip()

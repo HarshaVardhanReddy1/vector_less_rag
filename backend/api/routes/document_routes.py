@@ -1,10 +1,13 @@
-from fastapi import APIRouter, File, HTTPException, UploadFile
+from fastapi import APIRouter, BackgroundTasks, File, HTTPException, UploadFile
+from fastapi.responses import StreamingResponse
 
 from backend.repositories.document_repository import fetch_document_by_id, list_documents
+from backend.retrieval.answer_engine import stream_answer_query
 from backend.services.document_service import (
     answer_document_query,
     build_document_index,
-    process_and_save_document,
+    run_document_pipeline_background,
+    save_and_register_document,
 )
 
 
@@ -17,14 +20,59 @@ def read_root():
 
 
 @router.post("/documents/upload")
-async def upload_document_endpoint(file: UploadFile = File(...)):
-    """Step 1 — PDF → enriched nodes JSON."""
-    return await process_and_save_document(file)
+async def upload_document_endpoint(
+    file: UploadFile = File(...),
+    background_tasks: BackgroundTasks = BackgroundTasks(),
+):
+    """Save PDF and kick off processing in the background.
+
+    Returns immediately with document_id and status=PROCESSING.
+    Poll GET /documents/{document_id}/status to track progress.
+    """
+    document_id, document_paths, is_new = await save_and_register_document(file)
+
+    if is_new:
+        background_tasks.add_task(
+            run_document_pipeline_background,
+            document_id,
+            document_paths["pdf_path"],
+            document_paths["nodes_path"],
+            document_paths["tree_path"],
+        )
+        return {
+            "message":     "Document upload received. Processing started in the background.",
+            "document_id": document_id,
+            "status":      "PROCESSING",
+        }
+
+    # Already processed — return the existing record info.
+    saved = fetch_document_by_id(document_id)
+    return {
+        "message":       "Document already processed.",
+        "document_id":   document_id,
+        "document_name": saved["document_name"],
+        "total_nodes":   saved["total_nodes"],
+        "status":        "READY",
+    }
+
+
+@router.get("/documents/{document_id}/status")
+async def document_status_endpoint(document_id: str):
+    """Poll this endpoint to track processing progress after upload."""
+    document = fetch_document_by_id(document_id)
+    if document is None:
+        raise HTTPException(status_code=404, detail="Document not found.")
+    return {
+        "document_id":   document_id,
+        "status":        document.get("status"),
+        "error_message": document.get("error_message"),
+        "total_nodes":   document.get("total_nodes", 0),
+    }
 
 
 @router.post("/documents/{document_id}/index")
 def index_document_endpoint(document_id: str):
-    """Step 2 — nodes JSON → retrieval tree JSON."""
+    """Rebuild the retrieval tree from existing nodes."""
     return build_document_index(document_id)
 
 
@@ -33,9 +81,47 @@ async def list_documents_endpoint():
     return {"documents": list_documents()}
 
 
-@router.get("/documents/query")
-async def query_document_endpoint(query: str, tree_path: str, nodes_path: str):
-    return answer_document_query(query=query, tree_path=tree_path, nodes_path=nodes_path)
+@router.get("/documents/{document_id}/query/stream")
+async def stream_query_endpoint(document_id: str, query: str):
+    """Stream answer tokens via Server-Sent Events.
+
+    Emits three event types:
+      {"type": "meta", "selected_nodes": [...], "start_index": N}
+      {"type": "token", "content": "..."}
+      [DONE]
+    """
+    document = fetch_document_by_id(document_id)
+    if document is None:
+        raise HTTPException(status_code=404, detail="Document not found.")
+    if document.get("status") != "READY":
+        raise HTTPException(
+            status_code=409,
+            detail=f"Document is not ready (status: {document.get('status', 'unknown')}).",
+        )
+    tree_path = document.get("tree_json_path")
+    nodes_path = document.get("nodes_json_path")
+    if not tree_path or not nodes_path:
+        raise HTTPException(status_code=409, detail="Document index is incomplete.")
+
+    return StreamingResponse(
+        stream_answer_query(query=query, tree_path=tree_path, nodes_path=nodes_path),
+        media_type="text/event-stream",
+        headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"},
+    )
+
+
+@router.get("/documents/{document_id}/query")
+async def query_document_endpoint(
+    document_id: str,
+    query: str,
+    evaluate: bool = False,
+):
+    """Query a document by its ID. Paths are looked up server-side.
+
+    Set evaluate=true to include faithfulness / relevance metrics in the
+    response (adds one extra LLM call per query).
+    """
+    return answer_document_query(query=query, document_id=document_id, evaluate=evaluate)
 
 
 @router.get("/documents/{document_id}")

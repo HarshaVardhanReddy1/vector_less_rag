@@ -30,6 +30,10 @@ Each section in <INPUT> has a "seq_id" integer. For EACH section generate:
   • Never generate duplicate node_ids — every section must have a unique ID.
   • Parallel headings (same depth, same pattern) get sibling IDs at the same level.
   • A heading that is a sub-topic of the one before it gets a child ID (one dot deeper).
+  • Paragraph chunk nodes: a heading ending with ' -2', ' -3', ' -4', … is a continuation
+    chunk of the immediately preceding node whose heading is the same text without the suffix.
+    The parent holds chunk 1 (no suffix). Assign chunk nodes as numerical children of that parent.
+    Example: parent "Background" → node_id "2"; "Background -2" → "2.1"; "Background -3" → "2.2".
 
 ━━━ FORMAT RULES ━━━
 
@@ -91,6 +95,10 @@ Each section in <INPUT> has a "seq_id" integer. For EACH section generate:
   • Never skip levels — 1.1.1 requires 1.1 to exist.
   • Never generate duplicate node_ids.
   • Parallel headings get sibling IDs; sub-topics get child IDs (one dot deeper).
+  • Paragraph chunk nodes: a heading ending with ' -2', ' -3', ' -4', … is a continuation
+    chunk of the immediately preceding node whose heading is the same text without the suffix.
+    The parent holds chunk 1 (no suffix). Assign chunk nodes as numerical children of that parent.
+    Example: parent "Background" → node_id "2"; "Background -2" → "2.1"; "Background -3" → "2.2".
 
 ━━━ FORMAT RULES ━━━
 

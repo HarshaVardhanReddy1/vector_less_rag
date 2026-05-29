@@ -38,13 +38,58 @@ export async function uploadDocument(file) {
 }
 
 
-export async function queryDocument({ query, treePath, nodesPath }) {
-  const params = new URLSearchParams({
-    query,
-    tree_path: treePath,
-    nodes_path: nodesPath,
-  });
+export async function queryDocument({ documentId, query, evaluate = false }) {
+  const params = new URLSearchParams({ query });
+  if (evaluate) params.set("evaluate", "true");
 
-  const response = await fetch(`${API_BASE_URL}/documents/query?${params.toString()}`);
+  const response = await fetch(
+    `${API_BASE_URL}/documents/${documentId}/query?${params.toString()}`
+  );
   return parseResponse(response);
+}
+
+
+export async function fetchDocumentStatus(documentId) {
+  const response = await fetch(`${API_BASE_URL}/documents/${documentId}/status`);
+  return parseResponse(response);
+}
+
+
+export async function queryDocumentStream(
+  { documentId, query },
+  { onMeta, onToken, onError, onDone } = {},
+) {
+  const params = new URLSearchParams({ query });
+  const response = await fetch(
+    `${API_BASE_URL}/documents/${documentId}/query/stream?${params.toString()}`,
+  );
+
+  if (!response.ok) {
+    const data = await response.json().catch(() => ({}));
+    throw new Error(data?.detail || "Stream request failed.");
+  }
+
+  const reader = response.body.getReader();
+  const decoder = new TextDecoder();
+  let buffer = "";
+
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    buffer += decoder.decode(value, { stream: true });
+    const lines = buffer.split("\n");
+    buffer = lines.pop();
+    for (const line of lines) {
+      if (!line.startsWith("data: ")) continue;
+      const payload = line.slice(6);
+      if (payload === "[DONE]") { onDone?.(); return; }
+      try {
+        const event = JSON.parse(payload);
+        if (event.type === "meta") onMeta?.(event);
+        else if (event.type === "token") onToken?.(event.content);
+        else if (event.type === "error") onError?.(event.message);
+      } catch { /* malformed chunk — skip */ }
+    }
+  }
+  onDone?.();
 }
