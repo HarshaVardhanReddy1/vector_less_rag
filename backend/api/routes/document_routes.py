@@ -22,7 +22,7 @@ def read_root():
 @router.post("/documents/upload")
 async def upload_document_endpoint(
     file: UploadFile = File(...),
-    background_tasks: BackgroundTasks = BackgroundTasks(),
+    background_tasks: BackgroundTasks = None,
 ):
     """Save PDF and kick off processing in the background.
 

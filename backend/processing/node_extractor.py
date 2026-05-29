@@ -2,7 +2,7 @@
 
 Splits enriched markdown into one node per heading section. Each node carries
 the heading text, the page it first appeared on, the section content, and a
-tiktoken token count of that content.
+token count of that content.
 """
 
 import re
@@ -24,7 +24,7 @@ def extract_heading_nodes(
         heading     — cleaned heading text (no ``#`` or ``**``)
         page        — PDF page where this heading first appeared (1-indexed)
         content     — text between this heading and the next
-        token_count — tiktoken count of the content string
+        token_count — token count of the content string
 
     Headings inside IMAGE_CONTEXT blocks are skipped — they belong to VLM
     descriptions, not to document section headings.

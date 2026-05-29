@@ -176,16 +176,20 @@ function App() {
           },
           onError: (message) => setErrorMessage(message),
           onDone: () => {
+            let finalEntry = null;
             setChatHistory((h) => {
               const idx = entryIndex.current;
               if (idx === null) return h;
               const updated = [...h];
               updated[idx] = { ...updated[idx], streaming: false };
-              setActiveInsightsEntry(updated[idx]);
-              setLastQueriedDocId(selectedDocumentId);
-              setTimeout(() => setLastQueriedDocId(null), 2000);
+              finalEntry = updated[idx];
               return updated;
             });
+            if (finalEntry) {
+              setActiveInsightsEntry(finalEntry);
+              setLastQueriedDocId(selectedDocumentId);
+              setTimeout(() => setLastQueriedDocId(null), 2000);
+            }
           },
         },
       );
