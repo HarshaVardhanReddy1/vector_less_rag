@@ -28,36 +28,34 @@ Each section in <INPUT> has a "seq_id" integer. For EACH section generate:
              • Examples of good keywords: "ReLU", "batch normalization", "ResNet-50",
                "attention mechanism", "F1 score", "gradient descent".
 
-"node_id"  — Hierarchical dotted ID reflecting this section's position in the document structure.
+"node_id"  — Hierarchical dotted ID reflecting the semantic position of this section.
 
-  Examples:
-    1         → first top-level section
-    1.1       → first child of section 1
-    1.1.1     → first child of section 1.1
-    2         → second top-level section
-    2.1       → first child of section 2
+  How to determine CHILD vs SIBLING:
+  • A section is a CHILD of the one before it when its heading:
+      - Narrows, details, or specialises the preceding topic
+        (e.g. "Neural Networks" → children: "Convolutional Layers", "Activation Functions")
+      - Is noticeably more specific or focused than the preceding heading
+  • A section is a SIBLING when its heading:
+      - Introduces a parallel or independent topic at the same level of abstraction
+      - Starts a clearly new theme unrelated to the immediately preceding section
+  • A section RISES to a higher level when it is broader in scope than the current depth
+    (e.g. after several sub-sections, a heading matching the scope of a top-level topic)
 
-  Rules:
-  • Main sections        → 1, 2, 3 ...
-  • Child sections       → 1.1, 1.2, 1.3 ...
-  • Nested child sections → 1.1.1, 1.1.2 ...
-  • Maintain proper sequential numbering — siblings are numbered 1, 2, 3 in order.
-  • Never skip levels — 1.1.1 requires 1.1 to exist.
+  Numbering rules:
+  • Top-level sections  → 1, 2, 3 …
+  • Children            → 1.1, 1.2, 2.1 …
+  • Deeper children     → 1.1.1, 1.1.2 …
+  • Never skip levels — 1.1.1 requires 1.1 to exist first.
   • Never generate duplicate node_ids — every section must have a unique ID.
-  • Parallel headings (same depth, same pattern) get sibling IDs at the same level.
-  • A heading that is a sub-topic of the one before it gets a child ID (one dot deeper).
-  • If a heading starts with a numeric prefix (e.g. "3.1 Methods", "2.1.4 Results"),
-    treat that prefix as the authoritative hierarchy signal and assign the matching node_id.
-  • Paragraph chunk nodes: a heading ending with ' -2', ' -3', ' -4', … is a continuation
-    chunk of the immediately preceding node whose heading is the same text without the suffix.
-    The parent holds chunk 1 (no suffix). Assign chunk nodes as numerical children of that parent.
-    After all chunks of a parent are assigned, resume normal sibling numbering for the next
-    unrelated heading — do NOT continue into the chunk children's numbering level.
-    Examples:
-      parent "Background" → "2";  "Background -2" → "2.1";  "Background -3" → "2.2"
-      next unrelated section     → "3"  (NOT "2.3")
-      parent "4.1 Overview" → "4.1";  "4.1 Overview -2" → "4.1.1";  "4.1 Overview -3" → "4.1.2"
-      next sibling of 4.1        → "4.2"  (NOT "4.1.3")
+  • If a heading starts with a numeric prefix (e.g. "3.1 Methods"), treat it as authoritative.
+
+  Chunk continuation nodes (heading ends with ' -2', ' -3', …):
+  • Overflow chunks of the parent (same heading without the suffix).
+  • Assign as children of that parent regardless of content.
+  • After all chunks, resume sibling numbering at the parent's level.
+  Examples:
+    "Background" → "2";  "Background -2" → "2.1";  "Background -3" → "2.2";  next section → "3"
+    parent "4.1 Overview" → "4.1";  "4.1 Overview -2" → "4.1.1";  next sibling → "4.2"
 
 ━━━ FORMAT RULES ━━━
 
@@ -120,33 +118,33 @@ Each section in <INPUT> has a "seq_id" integer. For EACH section generate:
 
 "node_id"  — Hierarchical dotted ID continuing from the context node above.
 
-  Examples:
-    1         → first top-level section
-    1.1       → first child of section 1
-    1.1.1     → first child of section 1.1
-    2         → second top-level section
-    2.1       → first child of section 2
+  How to determine CHILD vs SIBLING:
+  • A section is a CHILD of the one before it when its heading:
+      - Narrows, details, or specialises the preceding topic
+        (e.g. "Neural Networks" → children: "Convolutional Layers", "Activation Functions")
+      - Is noticeably more specific or focused than the preceding heading
+  • A section is a SIBLING when its heading:
+      - Introduces a parallel or independent topic at the same level of abstraction
+      - Starts a clearly new theme unrelated to the immediately preceding section
+  • A section RISES to a higher level when it is broader in scope than the current depth
+    (e.g. after several sub-sections, a heading matching the scope of a top-level topic)
 
-  Rules:
+  Numbering rules:
   • Continue numbering from where the previous batch ended — do NOT restart from 1.
-  • Main sections        → 1, 2, 3 ...
-  • Child sections       → 1.1, 1.2, 1.3 ...
-  • Nested child sections → 1.1.1, 1.1.2 ...
-  • Never skip levels — 1.1.1 requires 1.1 to exist.
+  • Top-level sections  → 1, 2, 3 …
+  • Children            → 1.1, 1.2, 2.1 …
+  • Deeper children     → 1.1.1, 1.1.2 …
+  • Never skip levels — 1.1.1 requires 1.1 to exist first.
   • Never generate duplicate node_ids.
-  • Parallel headings get sibling IDs; sub-topics get child IDs (one dot deeper).
-  • If a heading starts with a numeric prefix (e.g. "3.1 Methods", "2.1.4 Results"),
-    treat that prefix as the authoritative hierarchy signal and assign the matching node_id.
-  • Paragraph chunk nodes: a heading ending with ' -2', ' -3', ' -4', … is a continuation
-    chunk of the immediately preceding node whose heading is the same text without the suffix.
-    The parent holds chunk 1 (no suffix). Assign chunk nodes as numerical children of that parent.
-    After all chunks of a parent are assigned, resume normal sibling numbering for the next
-    unrelated heading — do NOT continue into the chunk children's numbering level.
-    Examples:
-      parent "Background" → "2";  "Background -2" → "2.1";  "Background -3" → "2.2"
-      next unrelated section     → "3"  (NOT "2.3")
-      parent "4.1 Overview" → "4.1";  "4.1 Overview -2" → "4.1.1";  "4.1 Overview -3" → "4.1.2"
-      next sibling of 4.1        → "4.2"  (NOT "4.1.3")
+  • If a heading starts with a numeric prefix (e.g. "3.1 Methods"), treat it as authoritative.
+
+  Chunk continuation nodes (heading ends with ' -2', ' -3', …):
+  • Overflow chunks of the parent (same heading without the suffix).
+  • Assign as children of that parent regardless of content.
+  • After all chunks, resume sibling numbering at the parent's level.
+  Examples:
+    "Background" → "2";  "Background -2" → "2.1";  "Background -3" → "2.2";  next section → "3"
+    parent "4.1 Overview" → "4.1";  "4.1 Overview -2" → "4.1.1";  next sibling → "4.2"
 
 ━━━ FORMAT RULES ━━━
 
