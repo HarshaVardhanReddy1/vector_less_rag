@@ -41,21 +41,17 @@ def run_document_processing_pipeline(
     with open(md_path, "w", encoding="utf-8") as f:
         f.write(full_md)
 
-    # Stage 2 — Markdown → raw flat nodes (no LLM)
+    # Stage 2 — Markdown → chunked flat nodes (no LLM)
     nodes = extract_heading_nodes(full_md, heading_page_map)
-
-    raw_json_path = os.path.join(base_output_dir, f"{doc_stem}_raw.json")
-    with open(raw_json_path, "w", encoding="utf-8") as f:
-        json.dump(nodes, f, indent=4, ensure_ascii=False)
-    print(f"Raw nodes: {raw_json_path}  ({len(nodes)} nodes)")
-
-    # Stage 3 — Paragraph chunking (no LLM)
     nodes = chunk_nodes(nodes)
+
+    for i, node in enumerate(nodes, start=1):
+        node["seq_id"] = i
 
     chunked_json_path = os.path.join(base_output_dir, f"{doc_stem}_chunked.json")
     with open(chunked_json_path, "w", encoding="utf-8") as f:
         json.dump(nodes, f, indent=4, ensure_ascii=False)
-    print(f"Chunked  : {chunked_json_path}  ({len(nodes)} nodes after chunking)")
+    print(f"Chunked  : {chunked_json_path}  ({len(nodes)} nodes)")
 
     # Stage 4 — LLM enrichment (node_id, summary, keywords)
     nodes = enrich_nodes(nodes)
