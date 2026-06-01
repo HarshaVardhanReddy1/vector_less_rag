@@ -111,7 +111,7 @@ node = {
 MAX_TOKENS = 1000
 
 print("=" * 70)
-print(f"INPUT NODE")
+print("INPUT NODE")
 print(f"  heading     : {node['heading']}")
 print(f"  page        : {node['page']}")
 print(f"  token_count : {node['token_count']}")

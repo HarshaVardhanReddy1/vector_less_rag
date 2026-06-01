@@ -82,13 +82,16 @@ async def list_documents_endpoint():
 
 
 @router.get("/documents/{document_id}/query/stream")
-async def stream_query_endpoint(document_id: str, query: str):
+async def stream_query_endpoint(document_id: str, query: str, evaluate: bool = True):
     """Stream answer tokens via Server-Sent Events.
 
-    Emits three event types:
+    Emits these event types:
       {"type": "meta", "selected_nodes": [...], "start_index": N}
       {"type": "token", "content": "..."}
+      {"type": "eval", "reasoning": "...", "confidence": "...", "metrics": {...}}
       [DONE]
+
+    Set evaluate=false to skip the LLM judge (no "eval" event is emitted).
     """
     document = fetch_document_by_id(document_id)
     if document is None:
@@ -104,7 +107,7 @@ async def stream_query_endpoint(document_id: str, query: str):
         raise HTTPException(status_code=409, detail="Document index is incomplete.")
 
     return StreamingResponse(
-        stream_answer_query(query=query, tree_path=tree_path, toc_path=toc_path),
+        stream_answer_query(query=query, tree_path=tree_path, toc_path=toc_path, evaluate=evaluate),
         media_type="text/event-stream",
         headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"},
     )
@@ -114,7 +117,7 @@ async def stream_query_endpoint(document_id: str, query: str):
 async def query_document_endpoint(
     document_id: str,
     query: str,
-    evaluate: bool = False,
+    evaluate: bool = True,
 ):
     """Query a document by its ID. Paths are looked up server-side.
 

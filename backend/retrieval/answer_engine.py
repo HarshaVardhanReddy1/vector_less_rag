@@ -26,14 +26,14 @@ def answer_query(
     tree_path: str,
     toc_path: str,
     log_path: str = DEFAULT_QUERY_LOG_PATH,
-    evaluate: bool = False,
+    evaluate: bool = True,
 ) -> dict:
     """Generate an answer for the given query.
 
     Args:
-        evaluate: When True, runs the LLM judge after answering and includes
-                  reasoning, confidence, and metrics in the response.
-                  Defaults to False to avoid the extra LLM call in production.
+        evaluate: When True (the default), runs the LLM judge after answering
+                  and includes reasoning, confidence, and metrics in the
+                  response. Pass False to skip the extra LLM call.
     """
     try:
         retrieved_context = retrieve_context_for_query(
@@ -97,13 +97,20 @@ def stream_answer_query(
     tree_path: str,
     toc_path: str,
     log_path: str = DEFAULT_QUERY_LOG_PATH,
+    evaluate: bool = True,
 ) -> Iterator[str]:
     """Yield SSE-formatted lines: first a metadata event, then answer tokens.
 
     Event format:
         data: {"type": "meta", "selected_nodes": [...], "start_index": N}
         data: {"type": "token", "content": "..."}
+        data: {"type": "eval", "reasoning": "...", "confidence": "...", "metrics": {...}}
         data: [DONE]
+
+    Args:
+        evaluate: When True, runs the LLM judge after the answer finishes and
+                  emits a final "eval" event with reasoning, confidence, and
+                  metrics before "[DONE]".
     """
     try:
         retrieved_context = retrieve_context_for_query(
@@ -138,12 +145,22 @@ def stream_answer_query(
             full_answer += token
             yield f"data: {json.dumps({'type': 'token', 'content': token})}\n\n"
 
+        result = {"query": query, "selected_nodes": selected_nodes, "answer": full_answer}
+
+        if evaluate:
+            judgment = evaluate_answer(
+                query=query,
+                answer=full_answer,
+                context_text=format_retrieved_context(retrieved_context),
+            )
+            result["reasoning"]  = judgment.get("reasoning", "")
+            result["confidence"] = judgment.get("confidence", "")
+            result["metrics"]    = judgment.get("metrics", {})
+            yield f"data: {json.dumps({'type': 'eval', 'reasoning': result['reasoning'], 'confidence': result['confidence'], 'metrics': result['metrics']})}\n\n"
+
         yield "data: [DONE]\n\n"
 
-        append_query_response(
-            {"query": query, "selected_nodes": selected_nodes, "answer": full_answer},
-            log_path,
-        )
+        append_query_response(result, log_path)
 
     except Exception as error:
         yield f"data: {json.dumps({'type': 'error', 'message': str(error)})}\n\n"

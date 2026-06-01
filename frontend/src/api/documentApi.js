@@ -56,10 +56,11 @@ export async function fetchDocumentStatus(documentId) {
 
 
 export async function queryDocumentStream(
-  { documentId, query },
-  { onMeta, onToken, onError, onDone } = {},
+  { documentId, query, evaluate = true },
+  { onMeta, onToken, onEval, onError, onDone } = {},
 ) {
   const params = new URLSearchParams({ query });
+  if (!evaluate) params.set("evaluate", "false");
   const response = await fetch(
     `${API_BASE_URL}/documents/${documentId}/query/stream?${params.toString()}`,
   );
@@ -87,6 +88,7 @@ export async function queryDocumentStream(
         const event = JSON.parse(payload);
         if (event.type === "meta") onMeta?.(event);
         else if (event.type === "token") onToken?.(event.content);
+        else if (event.type === "eval") onEval?.(event);
         else if (event.type === "error") onError?.(event.message);
       } catch { /* malformed chunk — skip */ }
     }

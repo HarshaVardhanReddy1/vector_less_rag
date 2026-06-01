@@ -870,14 +870,7 @@ button, input, textarea { font: inherit; }
   white-space: nowrap;
 }
 
-/* Metrics row */
-.metrics-row {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-  align-items: center;
-}
-
+/* Confidence pill (Analysis panel) */
 .confidence-pill {
   display: flex;
   align-items: center;
@@ -891,29 +884,7 @@ button, input, textarea { font: inherit; }
 .confidence-pill--medium { background: var(--amber-dim); color: var(--amber); border: 1px solid rgba(245,158,11,0.18); }
 .confidence-pill--low { background: var(--red-dim); color: var(--red); border: 1px solid rgba(239,68,68,0.18); }
 
-.metric-chip-sm {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  padding: 3px 8px;
-  background: var(--bg-3);
-  border: 1px solid var(--border-1);
-  border-radius: var(--r-xl);
-  font-size: 11px;
-}
-.metric-chip-sm__label { color: var(--text-3); }
-.metric-chip-sm__val { font-weight: 600; }
-.metric-chip-sm--high .metric-chip-sm__val { color: var(--emerald); }
-.metric-chip-sm--med .metric-chip-sm__val { color: var(--amber); }
-.metric-chip-sm--low .metric-chip-sm__val { color: var(--red); }
-
-/* Reasoning panel */
-.reasoning-panel {
-  border: 1px solid var(--border-1);
-  border-radius: var(--r-md);
-  overflow: hidden;
-  background: var(--bg-2);
-}
+/* Reasoning trace toggle (Analysis panel) */
 .reasoning-toggle {
   display: flex;
   align-items: center;
@@ -931,13 +902,6 @@ button, input, textarea { font: inherit; }
 .reasoning-toggle:hover { background: var(--bg-3); }
 .reasoning-toggle__left { display: flex; align-items: center; gap: 6px; }
 .reasoning-toggle__icon { color: var(--text-3); }
-.reasoning-body {
-  padding: 10px 12px 12px;
-  font-size: 12px;
-  color: var(--text-2);
-  line-height: 1.65;
-  border-top: 1px solid var(--border-0);
-}
 
 /* Typing indicator */
 .typing-bubble {

@@ -115,7 +115,7 @@ def main():
     with open(QA_DATASET_PATH, "r", encoding="utf-8") as f:
         qa_dataset = json.load(f)
 
-    print(f"=== RAG Evaluation ===")
+    print("=== RAG Evaluation ===")
     print(f"Loaded {len(qa_dataset)} questions")
 
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)

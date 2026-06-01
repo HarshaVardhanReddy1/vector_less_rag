@@ -133,7 +133,7 @@ function App() {
     clearMessages();
 
     const entryIndex = { current: null };
-    const streamingEntry = {
+    const entryData = {
       query: message,
       answer: "",
       selectedNodes: [],
@@ -142,66 +142,55 @@ function App() {
     };
     setChatHistory((h) => {
       entryIndex.current = h.length;
-      return [...h, streamingEntry];
+      return [...h, { ...entryData }];
     });
     setQuery("");
+
+    // Mirror the accumulated entryData into chat history for rendering. We keep
+    // a plain closure object as the source of truth so onDone can read the
+    // final entry directly instead of relying on setState updater timing.
+    const syncEntry = () => {
+      setChatHistory((h) => {
+        const idx = entryIndex.current;
+        if (idx === null) return h;
+        const updated = [...h];
+        updated[idx] = { ...entryData };
+        return updated;
+      });
+    };
 
     try {
       await queryDocumentStream(
         { documentId: selectedDocument._id, query: message },
         {
           onMeta: (event) => {
-            setChatHistory((h) => {
-              const idx = entryIndex.current;
-              if (idx === null) return h;
-              const updated = [...h];
-              updated[idx] = {
-                ...updated[idx],
-                selectedNodes: event.selected_nodes || [],
-              };
-              return updated;
-            });
+            entryData.selectedNodes = event.selected_nodes || [];
+            syncEntry();
           },
           onToken: (token) => {
-            setChatHistory((h) => {
-              const idx = entryIndex.current;
-              if (idx === null) return h;
-              const updated = [...h];
-              updated[idx] = {
-                ...updated[idx],
-                answer: updated[idx].answer + token,
-              };
-              return updated;
-            });
+            entryData.answer += token;
+            syncEntry();
+          },
+          onEval: (event) => {
+            entryData.reasoning = event.reasoning;
+            entryData.confidence = event.confidence;
+            entryData.metrics = event.metrics;
+            syncEntry();
           },
           onError: (message) => setErrorMessage(message),
           onDone: () => {
-            let finalEntry = null;
-            setChatHistory((h) => {
-              const idx = entryIndex.current;
-              if (idx === null) return h;
-              const updated = [...h];
-              updated[idx] = { ...updated[idx], streaming: false };
-              finalEntry = updated[idx];
-              return updated;
-            });
-            if (finalEntry) {
-              setActiveInsightsEntry(finalEntry);
-              setLastQueriedDocId(selectedDocumentId);
-              setTimeout(() => setLastQueriedDocId(null), 2000);
-            }
+            entryData.streaming = false;
+            syncEntry();
+            setActiveInsightsEntry({ ...entryData });
+            setLastQueriedDocId(selectedDocumentId);
+            setTimeout(() => setLastQueriedDocId(null), 2000);
           },
         },
       );
     } catch (err) {
       setErrorMessage(err.message);
-      setChatHistory((h) => {
-        const idx = entryIndex.current;
-        if (idx === null) return h;
-        const updated = [...h];
-        updated[idx] = { ...updated[idx], streaming: false };
-        return updated;
-      });
+      entryData.streaming = false;
+      syncEntry();
     } finally {
       setIsQuerying(false);
     }

@@ -5,7 +5,7 @@ from backend.prompts.judge import generate_llm_judge_prompt
 from backend.utils.json_utils import ensure_valid_json
 
 
-_JUDGE_MODEL = "openai/gpt-4o-mini"
+_JUDGE_MODEL = "openai/gpt-oss-120b:free"
 
 _JUDGE_VALIDATION_REQUIREMENTS = """
 Return a JSON object with exactly these fields:

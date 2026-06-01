@@ -197,7 +197,7 @@ def build_document_index(document_id: str) -> dict:
 # Query
 # ---------------------------------------------------------------------------
 
-def answer_document_query(query: str, document_id: str, evaluate: bool = False) -> dict:
+def answer_document_query(query: str, document_id: str, evaluate: bool = True) -> dict:
     """Look up paths by document_id and answer the query."""
     saved = fetch_document_by_id(document_id)
     if saved is None:

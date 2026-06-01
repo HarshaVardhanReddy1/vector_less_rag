@@ -1,4 +1,4 @@
-import { ArrowUp, BookOpen, Brain, ChevronDown, ChevronUp, Copy, MessageSquare, Sparkles, X, ChevronUp as ScrollUp } from "lucide-react";
+import { ArrowUp, BookOpen, Copy, MessageSquare, Sparkles, X, ChevronUp as ScrollUp } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -9,19 +9,7 @@ function formatTime(iso) {
   return d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
 }
 
-function MetricChipSm({ label, value }) {
-  const score = parseFloat(value);
-  const tier = score >= 0.75 ? "high" : score >= 0.45 ? "med" : "low";
-  return (
-    <div className={`metric-chip-sm metric-chip-sm--${tier}`}>
-      <span className="metric-chip-sm__label">{label}</span>
-      <span className="metric-chip-sm__val">{isNaN(score) ? "—" : score.toFixed(2)}</span>
-    </div>
-  );
-}
-
 function AssistantMessage({ entry }) {
-  const [reasoningOpen, setReasoningOpen] = useState(false);
   const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {
@@ -88,40 +76,6 @@ function AssistantMessage({ entry }) {
           </div>
         )}
 
-        {(entry.confidence || entry.metrics) && (
-          <div className="metrics-row">
-            {entry.confidence && (
-              <div className={`confidence-pill confidence-pill--${entry.confidence}`}>
-                {entry.confidence.charAt(0).toUpperCase() + entry.confidence.slice(1)}
-              </div>
-            )}
-            {entry.metrics && (
-              <>
-                <MetricChipSm label="Accuracy" value={entry.metrics.accuracy_score} />
-                <MetricChipSm label="Groundedness" value={entry.metrics.groundedness_score} />
-                <MetricChipSm label="Relevance" value={entry.metrics.relevance_score} />
-              </>
-            )}
-          </div>
-        )}
-
-        {entry.reasoning && (
-          <div className="reasoning-panel">
-            <button
-              className="reasoning-toggle"
-              onClick={() => setReasoningOpen((o) => !o)}
-            >
-              <span className="reasoning-toggle__left">
-                <Brain size={13} className="reasoning-toggle__icon" />
-                Reasoning trace
-              </span>
-              {reasoningOpen ? <ChevronUp size={13} /> : <ChevronDown size={13} />}
-            </button>
-            {reasoningOpen && (
-              <div className="reasoning-body">{entry.reasoning}</div>
-            )}
-          </div>
-        )}
       </div>
     </div>
   );
