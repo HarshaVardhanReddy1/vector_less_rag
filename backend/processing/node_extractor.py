@@ -21,6 +21,7 @@ def extract_heading_nodes(
     """Split enriched markdown into flat heading-based nodes.
 
     Each node:
+        seq_id      — 0-based position of this node in document order
         heading     — cleaned heading text (no ``#`` or ``**``)
         page        — PDF page where this heading first appeared (1-indexed)
         content     — text between this heading and the next
@@ -54,6 +55,7 @@ def extract_heading_nodes(
         content = full_md[content_start:content_end].strip()
 
         nodes.append({
+            "seq_id":      i,
             "heading":     heading_text,
             "page":        heading_page_map.get(heading_text, 1),
             "content":     content,

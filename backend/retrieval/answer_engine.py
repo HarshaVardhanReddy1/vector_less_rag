@@ -24,7 +24,7 @@ def _build_answer_prompt(query: str, retrieved_context: dict) -> str:
 def answer_query(
     query: str,
     tree_path: str,
-    nodes_path: str,
+    toc_path: str,
     log_path: str = DEFAULT_QUERY_LOG_PATH,
     evaluate: bool = False,
 ) -> dict:
@@ -39,7 +39,7 @@ def answer_query(
         retrieved_context = retrieve_context_for_query(
             query=query,
             tree_path=tree_path,
-            nodes_path=nodes_path,
+            toc_path=toc_path,
         )
 
         if retrieved_context is None:
@@ -87,7 +87,7 @@ def answer_query(
     except Exception as error:
         raise RuntimeError(
             f"Failed to answer query {query!r} using tree '{tree_path}' and "
-            f"nodes '{nodes_path}'."
+            f"nodes '{toc_path}'."
         ) from error
 
 
@@ -95,7 +95,7 @@ def answer_query(
 def stream_answer_query(
     query: str,
     tree_path: str,
-    nodes_path: str,
+    toc_path: str,
     log_path: str = DEFAULT_QUERY_LOG_PATH,
 ) -> Iterator[str]:
     """Yield SSE-formatted lines: first a metadata event, then answer tokens.
@@ -109,7 +109,7 @@ def stream_answer_query(
         retrieved_context = retrieve_context_for_query(
             query=query,
             tree_path=tree_path,
-            nodes_path=nodes_path,
+            toc_path=toc_path,
         )
 
         if retrieved_context is None:

@@ -27,23 +27,23 @@ MAX_RETRIES = 3
 DOCS = {
     "distributed-systems-rag-test": {
         "tree": str(ROOT / "data/trees/distributed-systems-rag-test.json"),
-        "nodes": str(ROOT / "data/nodes/distributed-systems-rag-test.json"),
+        "nodes": str(ROOT / "data/tocs/distributed-systems-rag-test.json"),
     },
     "earthmover": {
         "tree": str(ROOT / "data/trees/earthmover.json"),
-        "nodes": str(ROOT / "data/nodes/earthmover.json"),
+        "nodes": str(ROOT / "data/tocs/earthmover.json"),
     },
     "final-major-project-research-paper": {
         "tree": str(ROOT / "data/trees/final-major-project-research-paper.json"),
-        "nodes": str(ROOT / "data/nodes/final-major-project-research-paper.json"),
+        "nodes": str(ROOT / "data/tocs/final-major-project-research-paper.json"),
     },
     "final-pinnit-phase-feature-list-plan-v1-1-proposal-1": {
         "tree": str(ROOT / "data/trees/final-pinnit-phase-feature-list-plan-v1-1-proposal-1.json"),
-        "nodes": str(ROOT / "data/nodes/final-pinnit-phase-feature-list-plan-v1-1-proposal-1.json"),
+        "nodes": str(ROOT / "data/tocs/final-pinnit-phase-feature-list-plan-v1-1-proposal-1.json"),
     },
     "ride-hailing-pricing-and-scaling-strategy-260521204826": {
         "tree": str(ROOT / "data/trees/ride-hailing-pricing-and-scaling-strategy-260521204826.json"),
-        "nodes": str(ROOT / "data/nodes/ride-hailing-pricing-and-scaling-strategy-260521204826.json"),
+        "nodes": str(ROOT / "data/tocs/ride-hailing-pricing-and-scaling-strategy-260521204826.json"),
     },
 }
 
@@ -78,7 +78,7 @@ def _judge_correctness(question: str, expected_answer: str, actual_answer: str) 
         return parsed
 
     try:
-        raw = generate_response(prompt, model="openai/gpt-4o-mini")
+        raw = generate_response(prompt)
         return ensure_valid_json(raw, max_retries=2, validator=_validate)
     except Exception as exc:
         print(f"    [WARN] Judge failed: {exc}")
@@ -145,7 +145,7 @@ def main():
                 rag_result = answer_query(
                     query=question,
                     tree_path=doc_paths["tree"],
-                    nodes_path=doc_paths["nodes"],
+                    toc_path=doc_paths["nodes"],
                 )
                 actual_answer = rag_result.get("answer", "")
                 selected_nodes = rag_result.get("selected_nodes", [])

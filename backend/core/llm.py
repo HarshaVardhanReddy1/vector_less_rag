@@ -6,6 +6,8 @@ from langsmith import traceable
 from langsmith.wrappers import wrap_openai
 from openai import AsyncOpenAI, OpenAI
 
+from backend.config import RESPONSE_MODEL
+
 
 def _load_api_key() -> str:
     load_dotenv()
@@ -35,14 +37,21 @@ def get_async_client() -> AsyncOpenAI:
 
 
 @traceable(run_type="llm", name="LLM · generate_response")
-def generate_response(prompt: str, model: str = "openai/gpt-oss-120b:free") -> str:
+def generate_response(
+    prompt: str,
+    model: str = RESPONSE_MODEL,
+    response_format: dict | None = None,
+) -> str:
     try:
-        client   = get_client()
-        response = client.chat.completions.create(
+        client = get_client()
+        kwargs: dict = dict(
             model=model,
             temperature=0,
             messages=[{"role": "user", "content": prompt}],
         )
+        if response_format is not None:
+            kwargs["response_format"] = response_format
+        response = client.chat.completions.create(**kwargs)
         if not response.choices:
             raise RuntimeError("The LLM returned no choices.")
 
@@ -60,7 +69,7 @@ def generate_response(prompt: str, model: str = "openai/gpt-oss-120b:free") -> s
 
 @traceable(run_type="llm", name="LLM · generate_response_stream")
 def generate_response_stream(
-    prompt: str, model: str = "openai/gpt-oss-120b:free"
+    prompt: str, model: str = RESPONSE_MODEL
 ) -> Iterator[str]:
     """Yield response text tokens one at a time using the streaming API."""
     try:

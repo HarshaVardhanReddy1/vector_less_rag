@@ -36,7 +36,7 @@ async def upload_document_endpoint(
             run_document_pipeline_background,
             document_id,
             document_paths["pdf_path"],
-            document_paths["nodes_path"],
+            document_paths["toc_path"],
             document_paths["tree_path"],
         )
         return {
@@ -99,12 +99,12 @@ async def stream_query_endpoint(document_id: str, query: str):
             detail=f"Document is not ready (status: {document.get('status', 'unknown')}).",
         )
     tree_path = document.get("tree_json_path")
-    nodes_path = document.get("nodes_json_path")
-    if not tree_path or not nodes_path:
+    toc_path = document.get("nodes_json_path")
+    if not tree_path or not toc_path:
         raise HTTPException(status_code=409, detail="Document index is incomplete.")
 
     return StreamingResponse(
-        stream_answer_query(query=query, tree_path=tree_path, nodes_path=nodes_path),
+        stream_answer_query(query=query, tree_path=tree_path, toc_path=toc_path),
         media_type="text/event-stream",
         headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"},
     )

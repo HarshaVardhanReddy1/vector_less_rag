@@ -21,6 +21,27 @@ All IDs in selected_node_ids must come from the provided tree. Do not invent IDs
 """
 
 
+# JSON-schema structured output: forces the shape
+# {"selected_node_ids": [...], "reason": "..."} so the response always parses.
+# Semantic checks (IDs must exist in the tree) still run via the validator below.
+_MULTI_SELECTION_RESPONSE_FORMAT = {
+    "type": "json_schema",
+    "json_schema": {
+        "name": "node_selection",
+        "strict": True,
+        "schema": {
+            "type": "object",
+            "properties": {
+                "selected_node_ids": {"type": "array", "items": {"type": "string"}},
+                "reason":            {"type": "string"},
+            },
+            "required": ["selected_node_ids", "reason"],
+            "additionalProperties": False,
+        },
+    },
+}
+
+
 @traceable(run_type="retriever", name="Retriever · select_relevant_nodes_from_tree")
 def select_relevant_nodes_from_tree(query: str, tree: list[dict]) -> list[dict]:
     if not tree:
@@ -28,7 +49,11 @@ def select_relevant_nodes_from_tree(query: str, tree: list[dict]) -> list[dict]:
 
     tree_text        = format_tree_for_prompt(tree)
     prompt           = generate_tree_multi_node_selection_prompt(query=query, tree_text=tree_text)
-    response         = generate_response(prompt)
+    try:
+        response = generate_response(prompt, response_format=_MULTI_SELECTION_RESPONSE_FORMAT)
+    except Exception:
+        # Route may not accept response_format — fall back to plain generation.
+        response = generate_response(prompt)
     allowed_node_ids = {node["node_id"] for node in flatten_tree(tree)}
 
     parsed = ensure_valid_json(

@@ -1,0 +1,1987 @@
+{
+    "timestamp": "2026-06-01T18:08:51.597198",
+    "total_questions": 100,
+    "correct": 92,
+    "accuracy": 0.92,
+    "correctness_threshold": 0.7,
+    "average_correctness_score": 0.8813,
+    "per_document": {
+        "distributed-systems-rag-test": {
+            "total": 20,
+            "correct": 20,
+            "accuracy": 1.0
+        },
+        "earthmover": {
+            "total": 20,
+            "correct": 20,
+            "accuracy": 1.0
+        },
+        "final-major-project-research-paper": {
+            "total": 20,
+            "correct": 17,
+            "accuracy": 0.85
+        },
+        "final-pinnit-phase-feature-list-plan-v1-1-proposal-1": {
+            "total": 20,
+            "correct": 16,
+            "accuracy": 0.8
+        },
+        "ride-hailing-pricing-and-scaling-strategy-260521204826": {
+            "total": 20,
+            "correct": 19,
+            "accuracy": 0.95
+        }
+    },
+    "router_errors": 0,
+    "results_path": "D:\\Python\\AiProjects\\page_index_projects\\project_1\\tests\\results\\results_20260601_171324.json",
+    "results": [
+        {
+            "id": 1,
+            "document": "final-pinnit-phase-feature-list-plan-v1-1-proposal-1",
+            "node_id": "",
+            "question": "What is the primary purpose of the Pinnit platform?",
+            "expected_answer": "The Pinnit platform is designed to provide a hybrid e-commerce and rental fashion solution with booking, delivery, inventory, and payment management capabilities.",
+            "actual_answer": "The objective is to build a reliable e‑commerce / hybrid rental (fashion) platform that supports the approved business workflows, improves operational visibility, and gives the client a maintainable foundation for future growth.",
+            "is_correct": true,
+            "correctness_score": 0.8,
+            "correctness_reasoning": "The answer captures the hybrid e‑commerce/rental focus but omits key details like booking, delivery, inventory, and payment management.",
+            "selected_nodes": [
+                {
+                    "node_id": "1.5.1",
+                    "title": "3.1 Project Objective",
+                    "page": 3
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "document": "final-pinnit-phase-feature-list-plan-v1-1-proposal-1",
+            "node_id": "",
+            "question": "How many functional modules are included in the solution scope?",
+            "expected_answer": "The solution scope includes 13 functional modules.",
+            "actual_answer": "13",
+            "is_correct": true,
+            "correctness_score": 1.0,
+            "correctness_reasoning": "The answer provides the exact number of functional modules, matching the expected answer.",
+            "selected_nodes": [
+                {
+                    "node_id": "1.5.3",
+                    "title": "3.3 Solution Scope Snapshot",
+                    "page": 3
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "document": "final-pinnit-phase-feature-list-plan-v1-1-proposal-1",
+            "node_id": "",
+            "question": "What is the total estimated effort for the project?",
+            "expected_answer": "The total estimated effort for the project is 947 hours.",
+            "actual_answer": "947",
+            "is_correct": false,
+            "correctness_score": 0.6,
+            "correctness_reasoning": "Provides the correct numeric value but omits the unit (hours) and context, making it only partially correct.",
+            "selected_nodes": [
+                {
+                    "node_id": "1.9.2",
+                    "title": "7.2 Effort Summary by Role",
+                    "page": 16
+                }
+            ]
+        },
+        {
+            "id": 4,
+            "document": "final-pinnit-phase-feature-list-plan-v1-1-proposal-1",
+            "node_id": "",
+            "question": "Which city is targeted for the initial launch of the platform?",
+            "expected_answer": "The platform is initially planned to launch in Hyderabad.",
+            "actual_answer": "Hyderabad",
+            "is_correct": true,
+            "correctness_score": 1.0,
+            "correctness_reasoning": "The actual answer directly provides the city Hyderabad, exactly matching the expected answer.",
+            "selected_nodes": [
+                {
+                    "node_id": "1.8.4",
+                    "title": "6.4 Success Measures",
+                    "page": 15
+                }
+            ]
+        },
+        {
+            "id": 5,
+            "document": "final-pinnit-phase-feature-list-plan-v1-1-proposal-1",
+            "node_id": "",
+            "question": "What technology is used for frontend development?",
+            "expected_answer": "React is used for frontend development.",
+            "actual_answer": "React",
+            "is_correct": true,
+            "correctness_score": 1.0,
+            "correctness_reasoning": "The actual answer correctly identifies React as the frontend technology, matching the expected answer.",
+            "selected_nodes": [
+                {
+                    "node_id": "1.6.10",
+                    "title": "4.5 Technology Stack",
+                    "page": 13
+                }
+            ]
+        },
+        {
+            "id": 6,
+            "document": "final-pinnit-phase-feature-list-plan-v1-1-proposal-1",
+            "node_id": "",
+            "question": "Which backend technology is proposed for the project?",
+            "expected_answer": "Node.js is proposed for backend development.",
+            "actual_answer": "Node.js",
+            "is_correct": true,
+            "correctness_score": 1.0,
+            "correctness_reasoning": "The actual answer correctly identifies Node.js as the proposed backend technology, matching the expected answer.",
+            "selected_nodes": [
+                {
+                    "node_id": "1.6.10",
+                    "title": "4.5 Technology Stack",
+                    "page": 13
+                }
+            ]
+        },
+        {
+            "id": 7,
+            "document": "final-pinnit-phase-feature-list-plan-v1-1-proposal-1",
+            "node_id": "",
+            "question": "What database solution is planned for the platform?",
+            "expected_answer": "MongoDB Atlas is planned as the database solution.",
+            "actual_answer": "MongoDB Atlas: Primary document datastore hosted in India-region per data residency constraint.",
+            "is_correct": true,
+            "correctness_score": 0.9,
+            "correctness_reasoning": "The answer correctly identifies MongoDB Atlas as the planned database solution, matching the expected answer, with minor extra detail.",
+            "selected_nodes": [
+                {
+                    "node_id": "1.6.5",
+                    "title": "Phase 4: Testing & QA",
+                    "page": 10
+                },
+                {
+                    "node_id": "1.6.8",
+                    "title": "4.3 Key Integrations",
+                    "page": 13
+                }
+            ]
+        },
+        {
+            "id": 8,
+            "document": "final-pinnit-phase-feature-list-plan-v1-1-proposal-1",
+            "node_id": "",
+            "question": "What payment gateway is integrated into the application?",
+            "expected_answer": "Razorpay is integrated as the payment gateway.",
+            "actual_answer": "Razorpay",
+            "is_correct": true,
+            "correctness_score": 1.0,
+            "correctness_reasoning": "The actual answer correctly identifies Razorpay as the integrated payment gateway, matching the expected answer.",
+            "selected_nodes": [
+                {
+                    "node_id": "1.6.3.3",
+                    "title": "Customer App — Booking Flow",
+                    "page": 7
+                },
+                {
+                    "node_id": "1.6.8",
+                    "title": "4.3 Key Integrations",
+                    "page": 13
+                }
+            ]
+        },
+        {
+            "id": 9,
+            "document": "final-pinnit-phase-feature-list-plan-v1-1-proposal-1",
+            "node_id": "",
+            "question": "What authentication and authorization mechanisms are used in the platform?",
+            "expected_answer": "The platform uses JWT, RBAC, and MFA for authentication and authorization.",
+            "actual_answer": "Add unit/integration tests for OTP edge cases and QA test plans for OTP auto‑read, lockout and JWT lifecycle; Build mobile UI for phone entry, OTP input, resend timer and auto‑read SMS hook (Android) with secure JWT storage and logout flow; Design Auth DB schema: phone table, OTP attempts, lockout timestamp, JWT session table with refresh token reference and audit fields  \n\nSecure login session token refresh endpoint and secure refresh token storage (refresh endpoint + client refresh logic)  \n\nAgent authentication system connection and rn login flow (agent schema + post /system connection/agent/auth + rn screens)  \n\nCreate Agent DB entities and session model; implement server‑side role enforcement and agent status endpoints; Define RBAC model, permission matrix and implement server‑side middleware to enforce roles on every API call.",
+            "is_correct": false,
+            "correctness_score": 0.2,
+            "correctness_reasoning": "The answer only vaguely mentions JWT and RBAC and omits MFA, providing unrelated implementation details instead of directly stating the authentication and authorization mechanisms.",
+            "selected_nodes": [
+                {
+                    "node_id": "1.6.3",
+                    "title": "Phase 2: Core Development",
+                    "page": 5
+                }
+            ]
+        },
+        {
+            "id": 10,
+            "document": "final-pinnit-phase-feature-list-plan-v1-1-proposal-1",
+            "node_id": "",
+            "question": "What is the purpose of the barcode generation feature?",
+            "expected_answer": "The barcode generation feature helps with inventory tracking, suitcase management, and operational traceability.",
+            "actual_answer": "No relevant nodes were found for the query.",
+            "is_correct": false,
+            "correctness_score": 0.0,
+            "correctness_reasoning": "The answer provides no information about the barcode generation purpose, missing all key facts.",
+            "selected_nodes": []
+        },
+        {
+            "id": 11,
+            "document": "final-pinnit-phase-feature-list-plan-v1-1-proposal-1",
+            "node_id": "",
+            "question": "What functionality does the delivery agent application provide?",
+            "expected_answer": "The delivery agent application provides delivery management, offline sync, damage logging, barcode scanning, and return confirmation workflows.",
+            "actual_answer": "Delivery Agent App | 89h | Workflow implementation, data model, API support, UI screens and QA validation",
+            "is_correct": false,
+            "correctness_score": 0.0,
+            "correctness_reasoning": "The answer does not mention any of the expected functionalities such as delivery management, offline sync, damage logging, barcode scanning, or return confirmation workflows.",
+            "selected_nodes": [
+                {
+                    "node_id": "1.6.1",
+                    "title": "4.1 Proposed Functional Modules",
+                    "page": 3
+                }
+            ]
+        },
+        {
+            "id": 12,
+            "document": "final-pinnit-phase-feature-list-plan-v1-1-proposal-1",
+            "node_id": "",
+            "question": "What is the purpose of the revenue dashboard module?",
+            "expected_answer": "The revenue dashboard module provides KPI visualization, transaction analytics, and financial reporting.",
+            "actual_answer": "Revenue dashboard backend calculations and timeseries endpoints (aggregates by day/week/month)  \nRevenue dashboard react screen experience with charts, kpis and date-range controls",
+            "is_correct": true,
+            "correctness_score": 0.8,
+            "correctness_reasoning": "The answer captures KPI visualization and analytics aspects but omits the financial reporting component, so it's mostly correct with a minor omission.",
+            "selected_nodes": [
+                {
+                    "node_id": "1.6.3.1",
+                    "title": "Admin Console — Alerts, Finance & Reports",
+                    "page": 5
+                }
+            ]
+        },
+        {
+            "id": 13,
+            "document": "final-pinnit-phase-feature-list-plan-v1-1-proposal-1",
+            "node_id": "",
+            "question": "Which services are used for sending notifications and alerts?",
+            "expected_answer": "Firebase Cloud Messaging, MSG91 or Twilio, and SendGrid are used for notifications and alerts.",
+            "actual_answer": "- Firebase Cloud Messaging (FCM): Push notifications to customer and agent apps; configurable per alert rule.  \n- MSG91 / Twilio (SMS): OTP delivery, booking and payment SMS notifications.  \n- SendGrid (Email): Transactional emails for booking confirmations and receipts.",
+            "is_correct": true,
+            "correctness_score": 1.0,
+            "correctness_reasoning": "The answer lists all three services (FCM, MSG91/Twilio, SendGrid) as in the expected answer.",
+            "selected_nodes": [
+                {
+                    "node_id": "1.6.8",
+                    "title": "4.3 Key Integrations",
+                    "page": 13
+                }
+            ]
+        },
+        {
+            "id": 14,
+            "document": "final-pinnit-phase-feature-list-plan-v1-1-proposal-1",
+            "node_id": "",
+            "question": "What role does Redis play in the system architecture?",
+            "expected_answer": "Redis is used for WebSocket scaling and temporary reservation hold mechanisms.",
+            "actual_answer": "Redis is used for pub/sub messaging to support real‑time session synchronization. It provides the channels for WebSocket message contracts (session timer, order status, OTP events), is integrated into the WebSocket server for connection management and scaling, and is part of the load‑testing to validate concurrency, reconnection, timer drift and message ordering.",
+            "is_correct": true,
+            "correctness_score": 0.8,
+            "correctness_reasoning": "The answer correctly identifies Redis's role in WebSocket scaling and real‑time messaging, but omits the temporary reservation hold mechanism mentioned in the expected answer.",
+            "selected_nodes": [
+                {
+                    "node_id": "1.6.3.2",
+                    "title": "Backend & Platform Services",
+                    "page": 5
+                },
+                {
+                    "node_id": "1.15.1",
+                    "title": "Backend & Platform Services",
+                    "page": 5
+                }
+            ]
+        },
+        {
+            "id": 15,
+            "document": "final-pinnit-phase-feature-list-plan-v1-1-proposal-1",
+            "node_id": "",
+            "question": "What are the key deliverables in the deployment phase?",
+            "expected_answer": "The deployment phase includes smoke testing, rollback planning, monitoring setup, and operational handover.",
+            "actual_answer": "Execute release checklist, smoke tests, rollback plan, and stakeholder communication; Monitor go-live, resolve launch blockers, and document operational handover; Prepare production configuration, secrets, environment variables, and deployment runbook",
+            "is_correct": true,
+            "correctness_score": 0.9,
+            "correctness_reasoning": "Includes all expected deliverables (smoke testing, rollback planning, monitoring, operational handover) plus extra details, so mostly correct.",
+            "selected_nodes": [
+                {
+                    "node_id": "1.6.6.1",
+                    "title": "Deployment & Release",
+                    "page": 11
+                }
+            ]
+        },
+        {
+            "id": 16,
+            "document": "final-pinnit-phase-feature-list-plan-v1-1-proposal-1",
+            "node_id": "",
+            "question": "What is the purpose of the Integration & Data Flow phase?",
+            "expected_answer": "The Integration & Data Flow phase validates APIs, notifications, storage systems, queues, and end-to-end workflows.",
+            "actual_answer": "Integration hardening, data handoff, and end‑to‑end flow validation: connect feature modules across APIs, queues, storage, notifications, and downstream consumers; run end‑to‑end integration checks for happy paths, failures, deduplication, and observability; validate source‑to‑target data contracts, field mappings, auth scopes, and retry behavior.",
+            "is_correct": true,
+            "correctness_score": 0.96,
+            "correctness_reasoning": "The answer includes all expected elements—validation of APIs, notifications, storage, queues, and end‑to‑end workflows—and adds relevant details, fully matching the expected answer.",
+            "selected_nodes": [
+                {
+                    "node_id": "1.6.4.1",
+                    "title": "Integration & Data Flow",
+                    "page": 10
+                },
+                {
+                    "node_id": "1.16.1",
+                    "title": "Integration & Data Flow",
+                    "page": 10
+                }
+            ]
+        },
+        {
+            "id": 17,
+            "document": "final-pinnit-phase-feature-list-plan-v1-1-proposal-1",
+            "node_id": "",
+            "question": "What are the major responsibilities of the QA team in the project?",
+            "expected_answer": "The QA team handles functional testing, regression testing, UAT support, defect verification, and release readiness validation.",
+            "actual_answer": "Build and execute functional test cases for all approved feature workflows; Coordinate UAT fixes, regression pass, release readiness, and sign-off evidence; Validate integrations, data quality, permissions, failure handling, and audit traces.",
+            "is_correct": true,
+            "correctness_score": 0.85,
+            "correctness_reasoning": "The answer covers functional, regression, UAT, and release readiness, adding extra details, but omits explicit mention of defect verification.",
+            "selected_nodes": [
+                {
+                    "node_id": "1.6.5.1",
+                    "title": "Testing & QA",
+                    "page": 10
+                }
+            ]
+        },
+        {
+            "id": 18,
+            "document": "final-pinnit-phase-feature-list-plan-v1-1-proposal-1",
+            "node_id": "",
+            "question": "What is included in the hypercare and post-launch support phase?",
+            "expected_answer": "The hypercare phase includes stabilization, incident resolution, user support, monitoring, and operational handover.",
+            "actual_answer": "|Feature|Engineering Work Items|Effort|\n|---|---|---|\n|Hypercare, stabilization, and handover<br>support|Finalize documentation, maintenance<br>plan, and backlog for next-phase<br>enhancements (Hard); Monitor<br>production behavior, triage incidents,<br>and resolve priority defects (Hard);<br>Support users with training, issue<br>reproduction, and operational guidance<br>(Hard)|52h|",
+            "is_correct": true,
+            "correctness_score": 0.9,
+            "correctness_reasoning": "The answer captures all key components—stabilization, incident resolution, user support, monitoring, and handover—though phrased as a table with extra details.",
+            "selected_nodes": [
+                {
+                    "node_id": "1.19.2",
+                    "title": "Post-Launch Support",
+                    "page": 13
+                }
+            ]
+        },
+        {
+            "id": 19,
+            "document": "final-pinnit-phase-feature-list-plan-v1-1-proposal-1",
+            "node_id": "",
+            "question": "What is the expected payment webhook reconciliation success rate?",
+            "expected_answer": "The expected payment webhook reconciliation success rate is greater than 99%.",
+            "actual_answer": "> 99%",
+            "is_correct": true,
+            "correctness_score": 1.0,
+            "correctness_reasoning": "The answer matches the expected fact that the success rate is greater than 99%.",
+            "selected_nodes": [
+                {
+                    "node_id": "1.8.4",
+                    "title": "6.4 Success Measures",
+                    "page": 15
+                }
+            ]
+        },
+        {
+            "id": 20,
+            "document": "final-pinnit-phase-feature-list-plan-v1-1-proposal-1",
+            "node_id": "",
+            "question": "What is the target inventory mismatch rate after launch?",
+            "expected_answer": "The target inventory mismatch rate is less than 2% during the first three months after launch.",
+            "actual_answer": "Maintain inventory mismatch rate < 2% in the first 3 months via barcode scanning and return logging",
+            "is_correct": true,
+            "correctness_score": 1.0,
+            "correctness_reasoning": "The answer correctly states the target mismatch rate (<2%) and the timeframe (first 3 months), matching the expected answer.",
+            "selected_nodes": [
+                {
+                    "node_id": "1.8.4",
+                    "title": "6.4 Success Measures",
+                    "page": 15
+                }
+            ]
+        },
+        {
+            "id": 21,
+            "document": "ride-hailing-pricing-and-scaling-strategy-260521204826",
+            "node_id": "",
+            "question": "What is the primary focus of the ride-hailing architecture document?",
+            "expected_answer": "The document focuses on scalable ride-hailing pricing and dispatch systems for the Indian market.",
+            "actual_answer": "Engineering a Scalable Dynamic Pricing and Dispatch Ecosystem for the Indian Ride‑Hailing Market.",
+            "is_correct": true,
+            "correctness_score": 1.0,
+            "correctness_reasoning": "The actual answer restates the same focus on scalable pricing and dispatch for the Indian ride‑hailing market.",
+            "selected_nodes": [
+                {
+                    "node_id": "1",
+                    "title": "Engineering a Scalable Dynamic Pricing and Dispatch Ecosystem for the Indian Ride-Hailing Market",
+                    "page": 1
+                }
+            ]
+        },
+        {
+            "id": 22,
+            "document": "ride-hailing-pricing-and-scaling-strategy-260521204826",
+            "node_id": "",
+            "question": "Which runtime is recommended for high-performance microservices?",
+            "expected_answer": "The Bun runtime is recommended for high-performance microservices.",
+            "actual_answer": "The Bun runtime is recommended for high‑performance microservices.",
+            "is_correct": true,
+            "correctness_score": 1.0,
+            "correctness_reasoning": "The actual answer exactly matches the expected answer.",
+            "selected_nodes": [
+                {
+                    "node_id": "1",
+                    "title": "Engineering a Scalable Dynamic Pricing and Dispatch Ecosystem for the Indian Ride-Hailing Market",
+                    "page": 1
+                },
+                {
+                    "node_id": "2",
+                    "title": "Distributed Microservices and the High-Performance Runtime Environment",
+                    "page": 1
+                }
+            ]
+        },
+        {
+            "id": 23,
+            "document": "ride-hailing-pricing-and-scaling-strategy-260521204826",
+            "node_id": "",
+            "question": "Why is FastAPI used in the architecture?",
+            "expected_answer": "FastAPI is used for AI and machine learning workloads.",
+            "actual_answer": "FastAPI provides an asynchronous bridge, allowing the AI service to interact seamlessly with the rest of the microservice mesh via gRPC, maintaining non‑blocking behavior even during intensive inference cycles.",
+            "is_correct": true,
+            "correctness_score": 0.9,
+            "correctness_reasoning": "The answer correctly identifies FastAPI's role in supporting AI/ML inference and adds relevant details about async, non‑blocking behavior, matching the expected core fact.",
+            "selected_nodes": [
+                {
+                    "node_id": "2",
+                    "title": "Distributed Microservices and the High-Performance Runtime Environment",
+                    "page": 1
+                }
+            ]
+        },
+        {
+            "id": 24,
+            "document": "ride-hailing-pricing-and-scaling-strategy-260521204826",
+            "node_id": "",
+            "question": "What communication protocol is used between services?",
+            "expected_answer": "gRPC with Protocol Buffers is used for service communication.",
+            "actual_answer": "gRPC, using binary serialization through Protocol Buffers and operating over HTTP/2.",
+            "is_correct": true,
+            "correctness_score": 1.0,
+            "correctness_reasoning": "The answer correctly states that gRPC with Protocol Buffers is used, matching the expected answer.",
+            "selected_nodes": [
+                {
+                    "node_id": "3",
+                    "title": "Service Communication via gRPC and Protocol Buffers",
+                    "page": 2
+                }
+            ]
+        },
+        {
+            "id": 25,
+            "document": "ride-hailing-pricing-and-scaling-strategy-260521204826",
+            "node_id": "",
+            "question": "What role does Kafka play in the architecture?",
+            "expected_answer": "Kafka acts as the event-driven backbone for telemetry and reliability.",
+            "actual_answer": "Apache Kafka serves as the central nervous system of the application, decoupling data producers from consumers to enable an asynchronous, event‑driven architecture.",
+            "is_correct": true,
+            "correctness_score": 0.85,
+            "correctness_reasoning": "The answer captures Kafka's role as the event‑driven backbone/central component enabling asynchronous, decoupled communication, matching the expected core fact, though it omits the specific mention of telemetry and reliability.",
+            "selected_nodes": [
+                {
+                    "node_id": "4",
+                    "title": "Event-Driven Backbone: Kafka for Global Telemetry and Reliability",
+                    "page": 2
+                },
+                {
+                    "node_id": "5",
+                    "title": "Multi-Tiered Event Ingestion and Processing",
+                    "page": 2
+                }
+            ]
+        },
+        {
+            "id": 26,
+            "document": "ride-hailing-pricing-and-scaling-strategy-260521204826",
+            "node_id": "",
+            "question": "Which database is used for transactional consistency?",
+            "expected_answer": "PostgreSQL is used for transactional consistency.",
+            "actual_answer": "PostgreSQL",
+            "is_correct": true,
+            "correctness_score": 1.0,
+            "correctness_reasoning": "The actual answer correctly identifies PostgreSQL as the database used for transactional consistency, matching the expected answer.",
+            "selected_nodes": [
+                {
+                    "node_id": "7",
+                    "title": "PostgreSQL and transactional consistency",
+                    "page": 3
+                }
+            ]
+        },
+        {
+            "id": 27,
+            "document": "ride-hailing-pricing-and-scaling-strategy-260521204826",
+            "node_id": "",
+            "question": "Why is Redis used in the ride-hailing platform?",
+            "expected_answer": "Redis is used for real-time coordination and geospatial indexing.",
+            "actual_answer": "Redis remains the cornerstone for volatile, high-frequency operations. The platform utilizes Redis Geospatial indices for rapid proximity searches, identifying available drivers within a specific radius of a ride request using geohash prefix matching. Furthermore, Redis is used to implement distributed locking via the SETNX command, ensuring that a ride offer can only be accepted by a single driver, thereby preventing race conditions in high-density areas. Surge pricing multipliers for every H3 cell are also cached in Redis with a Time-To-Live (TTL) of only a few seconds, ensuring that the pricing engine can retrieve localized rates with sub-millisecond latency.",
+            "is_correct": true,
+            "correctness_score": 1.0,
+            "correctness_reasoning": "The answer includes both real-time coordination (locking, caching) and geospatial indexing, fully covering the expected facts.",
+            "selected_nodes": [
+                {
+                    "node_id": "9",
+                    "title": "Redis for real-time coordination and geospatial indexing",
+                    "page": 3
+                },
+                {
+                    "node_id": "21",
+                    "title": "Horizontal Scaling and Statelessness",
+                    "page": 7
+                },
+                {
+                    "node_id": "22",
+                    "title": "Concurrency Precautions and Race Condition Mitigation",
+                    "page": 7
+                },
+                {
+                    "node_id": "23",
+                    "title": "Regional Isolation and Fault Domains",
+                    "page": 7
+                }
+            ]
+        },
+        {
+            "id": 28,
+            "document": "ride-hailing-pricing-and-scaling-strategy-260521204826",
+            "node_id": "",
+            "question": "What is the purpose of HE3DB?",
+            "expected_answer": "HE3DB provides encrypted and elastic data management using fully homomorphic encryption.",
+            "actual_answer": "HE3DB is an efficient, encrypted database that utilizes Fully Homomorphic Encryption (FHE) to allow for computations on encrypted data without decrypting it first, addressing data privacy and security-sensitive computations such as handling sensitive user attributes for individualized pricing or fraud detection while ensuring personally identifiable information (PII) is never exposed in the clear during the analytical process.",
+            "is_correct": true,
+            "correctness_score": 0.9,
+            "correctness_reasoning": "The answer correctly describes HE3DB as an encrypted database using fully homomorphic encryption for secure computations, matching the core purpose, with extra details but no contradictions.",
+            "selected_nodes": [
+                {
+                    "node_id": "10",
+                    "title": "HE3DB for encrypted and elastic data management",
+                    "page": 3
+                }
+            ]
+        },
+        {
+            "id": 29,
+            "document": "ride-hailing-pricing-and-scaling-strategy-260521204826",
+            "node_id": "",
+            "question": "What factors influence dynamic pricing?",
+            "expected_answer": "Demand-supply ratio, weather, traffic congestion, and events influence dynamic pricing.",
+            "actual_answer": "- **Demand-Supply Ratio:** The primary driver of surge. Calculated per H3 cell index. For example, a ratio of 2:1 (two riders searching for every one driver) might trigger a 1.2x surge, while a 10:1 ratio could push it to 2.0x or higher.  \n\n- **Environmental Factors (Weather):** In Indian cities, monsoon rain can cause a 30‑50% spike in demand while simultaneously reducing supply as bike and auto drivers seek shelter. The AI service consumes weather API data to proactively increase surge multipliers when precipitation is detected.  \n\n- **Traffic Congestion:** Real‑time traffic metadata from Google or Ola Maps is used to adjust the Rate_{Time} component. Heavy traffic increases the opportunity cost for drivers, necessitating higher fares to maintain supply.  \n\n- **Temporal and Event‑Based Context:** Morning peak hours (e.g., 8:00 AM to 11:00 AM) and night surcharges (+10‑18% base increase) are baseline adjustments. The system also tracks localized events such as cricket matches, festivals (e.g., Diwali), or public transit strikes that drastically alter normal demand patterns.",
+            "is_correct": true,
+            "correctness_score": 1.0,
+            "correctness_reasoning": "The answer lists demand-supply ratio, weather, traffic congestion, and events, matching all expected factors.",
+            "selected_nodes": [
+                {
+                    "node_id": "11",
+                    "title": "Dynamic Pricing Engine: Variables and AI Modeling",
+                    "page": 4
+                },
+                {
+                    "node_id": "12",
+                    "title": "Key Pricing Variables and Triggers",
+                    "page": 4
+                }
+            ]
+        },
+        {
+            "id": 30,
+            "document": "ride-hailing-pricing-and-scaling-strategy-260521204826",
+            "node_id": "",
+            "question": "Which machine learning model is used for demand forecasting?",
+            "expected_answer": "LSTM and ConvLSTM models are used for demand forecasting.",
+            "actual_answer": "No relevant nodes were found for the query.",
+            "is_correct": false,
+            "correctness_score": 0.0,
+            "correctness_reasoning": "The answer provides no information about the model, missing the expected LSTM and ConvLSTM mention.",
+            "selected_nodes": []
+        },
+        {
+            "id": 31,
+            "document": "ride-hailing-pricing-and-scaling-strategy-260521204826",
+            "node_id": "",
+            "question": "What is the purpose of the Trips table?",
+            "expected_answer": "The Trips table stores ride-related transactional information.",
+            "actual_answer": "The Trips table serves as the primary source of truth for every completed ride.",
+            "is_correct": true,
+            "correctness_score": 0.9,
+            "correctness_reasoning": "The answer captures the core purpose of storing ride-related transactional data, phrasing it as the primary source of truth for completed rides.",
+            "selected_nodes": [
+                {
+                    "node_id": "15",
+                    "title": "Core Transactional Pricing Entities",
+                    "page": 5
+                }
+            ]
+        },
+        {
+            "id": 32,
+            "document": "ride-hailing-pricing-and-scaling-strategy-260521204826",
+            "node_id": "",
+            "question": "What is stored in the Payment table?",
+            "expected_answer": "The Payment table stores payment details, taxes, and platform fees.",
+            "actual_answer": "payment_uuid, amount_paid, method (UPI, Card, Cash), tax_amount (GST), platform_fee (commission), third_party_fee (e.g., payment gateway charges)",
+            "is_correct": true,
+            "correctness_score": 0.9,
+            "correctness_reasoning": "The answer includes payment details, taxes, and platform fees as expected, and adds extra relevant fields, so it is mostly correct.",
+            "selected_nodes": [
+                {
+                    "node_id": "15",
+                    "title": "Core Transactional Pricing Entities",
+                    "page": 5
+                }
+            ]
+        },
+        {
+            "id": 33,
+            "document": "ride-hailing-pricing-and-scaling-strategy-260521204826",
+            "node_id": "",
+            "question": "Why is the Strategy Pattern used for maps integration?",
+            "expected_answer": "The Strategy Pattern allows runtime switching between Google Maps and Ola Maps.",
+            "actual_answer": "In the Bun/TypeScript environment, the application utilizes the Strategy Design Pattern to encapsulate mapping logic. This decouples the business logic (e.g., \"Request a Route\") from the specific API implementation (e.g., \"Call Google Directions API\"). \n\nBy using a MapStrategyManager, the platform can dynamically select the provider based on several factors: \n\n- **Cost Efficiency:** Using Ola Maps as the default for high-volume routing requests in Tier-1 cities to minimize API fees.  \n- **Accuracy Fallback:** If Ola Maps lacks data for a specific newly-developed suburban area, the system can transparently fallback to Google Maps for that specific request.  \n- **Regional Specialization:** Using Ola Maps for routes requiring localized landmarks (\"the shop next to the temple\") which are better represented in their India-centric dataset.",
+            "is_correct": true,
+            "correctness_score": 0.9,
+            "correctness_reasoning": "The answer correctly explains that the Strategy Pattern enables runtime switching between Google and Ola Maps, adding relevant details.",
+            "selected_nodes": [
+                {
+                    "node_id": "19",
+                    "title": "Implementation using the Strategy Pattern",
+                    "page": 6
+                }
+            ]
+        },
+        {
+            "id": 34,
+            "document": "ride-hailing-pricing-and-scaling-strategy-260521204826",
+            "node_id": "",
+            "question": "What scaling principle is considered the golden rule for large systems?",
+            "expected_answer": "Absolute statelessness of application servers is considered the golden rule.",
+            "actual_answer": "The absolute statelessness of application servers.",
+            "is_correct": true,
+            "correctness_score": 1.0,
+            "correctness_reasoning": "The answer matches the expected key fact exactly.",
+            "selected_nodes": [
+                {
+                    "node_id": "21",
+                    "title": "Horizontal Scaling and Statelessness",
+                    "page": 7
+                }
+            ]
+        },
+        {
+            "id": 35,
+            "document": "ride-hailing-pricing-and-scaling-strategy-260521204826",
+            "node_id": "",
+            "question": "How does the system prevent double-booking of rides?",
+            "expected_answer": "The system uses Redis SETNX distributed locking to prevent double-booking.",
+            "actual_answer": "When a rider requests a trip, a unique token is generated and pushed to nearby drivers via Socket.io.  \nThe first driver app to send an \"Accept\" signal triggers a Redis **SETNX** operation on the trip token.  \n- If the SETNX returns **1**, the driver is assigned.  \n- If it returns **0** (the lock is already held), the system instantly notifies other drivers that the ride has already been taken.",
+            "is_correct": true,
+            "correctness_score": 0.9,
+            "correctness_reasoning": "Includes the key fact that Redis SETNX is used for locking to prevent double-booking, matching the expected answer.",
+            "selected_nodes": [
+                {
+                    "node_id": "22",
+                    "title": "Concurrency Precautions and Race Condition Mitigation",
+                    "page": 7
+                }
+            ]
+        },
+        {
+            "id": 36,
+            "document": "ride-hailing-pricing-and-scaling-strategy-260521204826",
+            "node_id": "",
+            "question": "What is the purpose of regional fault domains?",
+            "expected_answer": "Regional fault domains prevent nationwide outages by isolating failures.",
+            "actual_answer": "To mitigate the risk of a nationwide outage, the architecture is partitioned into independent regional fault domains. This “Cellular Architecture” ensures that a failure in one region's infrastructure does not cascade to the entire platform.",
+            "is_correct": true,
+            "correctness_score": 1.0,
+            "correctness_reasoning": "The answer correctly states that regional fault domains isolate failures to avoid nationwide outages, matching the expected purpose.",
+            "selected_nodes": [
+                {
+                    "node_id": "23",
+                    "title": "Regional Isolation and Fault Domains",
+                    "page": 7
+                }
+            ]
+        },
+        {
+            "id": 37,
+            "document": "ride-hailing-pricing-and-scaling-strategy-260521204826",
+            "node_id": "",
+            "question": "What is dead reckoning in telemetry management?",
+            "expected_answer": "Dead reckoning interpolates vehicle positions between server updates.",
+            "actual_answer": "The client-side application interpolates the vehicle's position between server updates based on its last known velocity and heading, providing a smooth animation for the rider without requiring high-frequency server communication.",
+            "is_correct": true,
+            "correctness_score": 0.9,
+            "correctness_reasoning": "Captures the core idea of interpolating positions between server updates, adding accurate details without contradicting the expected answer.",
+            "selected_nodes": [
+                {
+                    "node_id": "24",
+                    "title": "Managing Driver Telemetry and Network Volatility",
+                    "page": 7
+                }
+            ]
+        },
+        {
+            "id": 38,
+            "document": "ride-hailing-pricing-and-scaling-strategy-260521204826",
+            "node_id": "",
+            "question": "Why are surge caps implemented?",
+            "expected_answer": "Surge caps prevent socially or legally unacceptable fare increases.",
+            "actual_answer": "to prevent fares from reaching socially or legally unacceptable levels during emergencies (e.g., severe flooding or public transit strikes).",
+            "is_correct": true,
+            "correctness_score": 0.95,
+            "correctness_reasoning": "The answer correctly states that surge caps prevent socially or legally unacceptable fare increases, matching the expected answer.",
+            "selected_nodes": [
+                {
+                    "node_id": "26",
+                    "title": "Surge Caps and Transparency",
+                    "page": 8
+                }
+            ]
+        },
+        {
+            "id": 39,
+            "document": "ride-hailing-pricing-and-scaling-strategy-260521204826",
+            "node_id": "",
+            "question": "What is the purpose of fairness in pricing models?",
+            "expected_answer": "Fairness ensures balanced driver incentives and prevents user alienation.",
+            "actual_answer": "Pricing models must be balanced to ensure they do not systematically disadvantage certain segments of the population or the driver pool.",
+            "is_correct": true,
+            "correctness_score": 0.8,
+            "correctness_reasoning": "Captures the core idea of balancing incentives and avoiding disadvantage, though omits explicit mention of user alienation.",
+            "selected_nodes": [
+                {
+                    "node_id": "25",
+                    "title": "Operational Precautions for Pricing Fairness and Compliance",
+                    "page": 8
+                },
+                {
+                    "node_id": "27",
+                    "title": "Algorithmic Fairness and Driver Retention",
+                    "page": 8
+                }
+            ]
+        },
+        {
+            "id": 40,
+            "document": "ride-hailing-pricing-and-scaling-strategy-260521204826",
+            "node_id": "",
+            "question": "What is the overall conclusion of the architecture report?",
+            "expected_answer": "The report concludes that scalable ride-hailing systems require distributed systems, AI pricing, and fault-tolerant infrastructure.",
+            "actual_answer": "Building a ride-hailing platform for 10 million users in India is a complex engineering endeavor that requires a deep integration of real-time telemetry, predictive AI, and highly available distributed systems. The selection of the Bun runtime provides the necessary performance foundation, while Python/FastAPI offers the flexibility for sophisticated dynamic pricing models. By leveraging Kafka as the event-driven backbone and a hybrid database strategy (PostgreSQL, ScyllaDB, Redis, and HE3), the application can maintain transactional integrity while processing millions of concurrent location updates. \n\nThe implementation of an abstract mapping layer using the strategy pattern ensures that the platform can optimize for cost and regional accuracy by switching between Ola and Google Maps. Simultaneously, precautions such as distributed locking, regional isolation, and surge capping are vital for maintaining system stability and user trust. As the platform scales, the focus must remain on the synergy between algorithmic precision and human-centric fairness, ensuring that dynamic pricing serves to balance the ecosystem rather than purely extracting maximum value. This architectural blueprint provides the technical roadmap necessary to navigate the\n\nunique challenges of the Indian urban mobility market at massive scale.",
+            "is_correct": true,
+            "correctness_score": 0.9,
+            "correctness_reasoning": "The answer captures the key points—distributed systems, AI-driven pricing, and fault‑tolerant/high‑availability infrastructure—though with extra detail and slightly different phrasing.",
+            "selected_nodes": [
+                {
+                    "node_id": "28",
+                    "title": "Conclusions",
+                    "page": 8
+                }
+            ]
+        },
+        {
+            "id": 41,
+            "document": "distributed-systems-rag-test",
+            "node_id": "",
+            "question": "What does the CAP theorem state?",
+            "expected_answer": "The CAP theorem states that distributed systems can provide at most two of consistency, availability, and partition tolerance simultaneously.",
+            "actual_answer": "The CAP Theorem, formulated by Eric Brewer, posits that a distributed data store can simultaneously provide at most two out of three guarantees: Consistency, Availability, and Partition Tolerance.",
+            "is_correct": true,
+            "correctness_score": 1.0,
+            "correctness_reasoning": "The answer accurately restates the CAP theorem, covering all three components and the two‑of‑three limitation.",
+            "selected_nodes": [
+                {
+                    "node_id": "2",
+                    "title": "1. Fundamental Paradigms of Distributed Computing",
+                    "page": 1
+                }
+            ]
+        },
+        {
+            "id": 42,
+            "document": "distributed-systems-rag-test",
+            "node_id": "",
+            "question": "Which consensus protocols are mentioned in the document?",
+            "expected_answer": "Paxos and Raft are mentioned as consensus protocols.",
+            "actual_answer": "Paxos, Raft",
+            "is_correct": true,
+            "correctness_score": 1.0,
+            "correctness_reasoning": "The answer correctly lists both Paxos and Raft as the consensus protocols mentioned.",
+            "selected_nodes": [
+                {
+                    "node_id": "2",
+                    "title": "1. Fundamental Paradigms of Distributed Computing",
+                    "page": 1
+                }
+            ]
+        },
+        {
+            "id": 43,
+            "document": "distributed-systems-rag-test",
+            "node_id": "",
+            "question": "What is the purpose of sharding?",
+            "expected_answer": "Sharding horizontally partitions datasets across multiple hosts.",
+            "actual_answer": "Sharding, or horizontal partitioning, divides a monolithic dataset into discrete, manageable fragments distributed across multiple hosts. This structural design mitigates systemic thrashing and ensures predictable hash‑ring equilibrium.",
+            "is_correct": true,
+            "correctness_score": 0.85,
+            "correctness_reasoning": "The answer correctly states that sharding is horizontal partitioning of a dataset across multiple hosts, covering the key fact despite extra irrelevant details.",
+            "selected_nodes": [
+                {
+                    "node_id": "2",
+                    "title": "1. Fundamental Paradigms of Distributed Computing",
+                    "page": 1
+                }
+            ]
+        },
+        {
+            "id": 44,
+            "document": "distributed-systems-rag-test",
+            "node_id": "",
+            "question": "What is consistent hashing used for?",
+            "expected_answer": "Consistent hashing dynamically assigns keys to shards while minimizing data relocation.",
+            "actual_answer": "Consistent hashing algorithms are frequently leveraged to assign keys to specific shards dynamically. By mapping both nodes and data keys to a continuous virtual ring, consistent hashing minimizes the volume of data relocation required when scaling the infrastructure layout horizontally or handling abrupt node failures.",
+            "is_correct": true,
+            "correctness_score": 1.0,
+            "correctness_reasoning": "The answer fully captures dynamic key-to-shard assignment and minimized data relocation, matching the expected answer.",
+            "selected_nodes": [
+                {
+                    "node_id": "2",
+                    "title": "1. Fundamental Paradigms of Distributed Computing",
+                    "page": 1
+                }
+            ]
+        },
+        {
+            "id": 45,
+            "document": "distributed-systems-rag-test",
+            "node_id": "",
+            "question": "What is temporal locality in memory systems?",
+            "expected_answer": "Temporal locality means recently accessed data is likely to be accessed again soon.",
+            "actual_answer": "Temporal locality dictates that data accessed recently is highly likely to be accessed again in the immediate future.",
+            "is_correct": true,
+            "correctness_score": 0.95,
+            "correctness_reasoning": "The actual answer accurately restates the definition of temporal locality, matching the expected key fact.",
+            "selected_nodes": [
+                {
+                    "node_id": "3",
+                    "title": "2. Memory Hierarchies, Caching Dynamics, and Volatile Storage",
+                    "page": 2
+                }
+            ]
+        },
+        {
+            "id": 46,
+            "document": "distributed-systems-rag-test",
+            "node_id": "",
+            "question": "What is the purpose of LRU caching?",
+            "expected_answer": "LRU removes the least recently used elements when cache capacity is exceeded.",
+            "actual_answer": "The Least Recently Used (LRU) policy discards the least active elements when capacity limits are breached, relying on tracking timestamps or doubly linked lists to maintain structural order.",
+            "is_correct": true,
+            "correctness_score": 0.9,
+            "correctness_reasoning": "The answer correctly states that LRU discards the least recently used elements when capacity is exceeded, matching the expected purpose.",
+            "selected_nodes": [
+                {
+                    "node_id": "3",
+                    "title": "2. Memory Hierarchies, Caching Dynamics, and Volatile Storage",
+                    "page": 2
+                }
+            ]
+        },
+        {
+            "id": 47,
+            "document": "distributed-systems-rag-test",
+            "node_id": "",
+            "question": "What is tokenization in text processing?",
+            "expected_answer": "Tokenization splits continuous text into discrete lexical units called tokens.",
+            "actual_answer": "The foundational step of any textual analytical pipeline is tokenization. This process ingests a raw, continuous stream of characters and segregates it into discrete lexical units, or tokens.",
+            "is_correct": true,
+            "correctness_score": 0.95,
+            "correctness_reasoning": "The answer accurately describes tokenization as splitting continuous text into discrete lexical units (tokens), matching the expected answer.",
+            "selected_nodes": [
+                {
+                    "node_id": "4",
+                    "title": "3. Algorithmic Mechanics of Non-Vectorized Text Processing",
+                    "page": 2
+                }
+            ]
+        },
+        {
+            "id": 48,
+            "document": "distributed-systems-rag-test",
+            "node_id": "",
+            "question": "What is the difference between stemming and lemmatization?",
+            "expected_answer": "Stemming uses heuristic suffix removal, while lemmatization maps words to canonical forms using lexical analysis.",
+            "actual_answer": "Stemming employs heuristic rules, such as the Porter or Lancaster algorithms, to aggressively chop off common suffixes (e.g., transforming \"running\" and \"runs\" to \"run\"). This approach is highly performant but prone to over‑stemming or under‑stemming errors due to its lack of contextual awareness.  \n\nLemmatization, conversely, leverages comprehensive lexical databases and morphological analysis to accurately map a word to its true canonical lemma (e.g., converting \"better\" to \"good\"), preserving structural grammatical fidelity at the cost of higher computational overhead.",
+            "is_correct": true,
+            "correctness_score": 0.95,
+            "correctness_reasoning": "The answer correctly describes stemming as heuristic suffix removal and lemmatization as lexical/morphological mapping to canonical forms, covering all key points.",
+            "selected_nodes": [
+                {
+                    "node_id": "4",
+                    "title": "3. Algorithmic Mechanics of Non-Vectorized Text Processing",
+                    "page": 2
+                }
+            ]
+        },
+        {
+            "id": 49,
+            "document": "distributed-systems-rag-test",
+            "node_id": "",
+            "question": "What is an inverted index?",
+            "expected_answer": "An inverted index maps terms to document identifiers and postings lists.",
+            "actual_answer": "The inverted index is the architectural bedrock of traditional search engines, consisting of two primary components: a vocabulary dictionary containing all unique terms, and a collection of postings lists. Each unique term points directly to a postings list, which records every document identifier where the term appears, along with exact positional offsets and term frequencies.",
+            "is_correct": true,
+            "correctness_score": 0.9,
+            "correctness_reasoning": "Provides the core definition of an inverted index and adds accurate extra details, fully covering the expected answer.",
+            "selected_nodes": [
+                {
+                    "node_id": "4",
+                    "title": "3. Algorithmic Mechanics of Non-Vectorized Text Processing",
+                    "page": 2
+                }
+            ]
+        },
+        {
+            "id": 50,
+            "document": "distributed-systems-rag-test",
+            "node_id": "",
+            "question": "What is the main idea behind TF-IDF?",
+            "expected_answer": "TF-IDF measures term importance based on term frequency and inverse document frequency.",
+            "actual_answer": "The importance of a term increases proportionally to its frequency within a specific document, but is counterbalanced by how frequently the term appears across the entire corpus.",
+            "is_correct": true,
+            "correctness_score": 0.9,
+            "correctness_reasoning": "The answer accurately describes TF-IDF as term importance rising with document frequency and being offset by corpus-wide frequency, matching the expected core facts.",
+            "selected_nodes": [
+                {
+                    "node_id": "5",
+                    "title": "4. Mathematical Foundations of Textual Retrieval Metrics",
+                    "page": 3
+                }
+            ]
+        },
+        {
+            "id": 51,
+            "document": "distributed-systems-rag-test",
+            "node_id": "",
+            "question": "What improvement does BM25 provide over TF-IDF?",
+            "expected_answer": "BM25 introduces non-linear term frequency scaling and document length normalization.",
+            "actual_answer": "BM25 refines the term frequency component by introducing a saturation curve controlled by an empirical constant, which prevents an extraordinarily high frequency of a single term from completely dominating the overall document score. It also factors in document length normalization, penalizing longer documents that match terms simply due to their sheer volume of text while boosting shorter, more concise matches where the query terms make up a larger percentage of the content.",
+            "is_correct": true,
+            "correctness_score": 0.95,
+            "correctness_reasoning": "The answer correctly describes BM25's non-linear term frequency scaling and its document length normalization, matching the expected key points.",
+            "selected_nodes": [
+                {
+                    "node_id": "5",
+                    "title": "4. Mathematical Foundations of Textual Retrieval Metrics",
+                    "page": 3
+                }
+            ]
+        },
+        {
+            "id": 52,
+            "document": "distributed-systems-rag-test",
+            "node_id": "",
+            "question": "Why is document parsing important?",
+            "expected_answer": "Document parsing extracts structured text and metadata from complex file formats.",
+            "actual_answer": "Before unstructured text can be processed by retrieval algorithms, it must be extracted from complex, nested document file formats. This requires parsing deep hierarchical trees, resolving document object models (DOMs), and handling diverse document encodings. This structural normalization layer must be executed with high precision to avoid introducing noise or losing contextual continuity. If a parsing pipeline misinterprets a document's underlying character encoding, it introduces malformed byte sequences and corrupted characters into the processing pipeline, rendering downstream tokenization and lexical matching highly inaccurate. By maintaining the distinction between structural section metadata and raw body text, the indexing engine can apply varying weights to different zones of a document, boosting terms that appear in titles or summary headings relative to those found deep within regular paragraphs.",
+            "is_correct": true,
+            "correctness_score": 0.9,
+            "correctness_reasoning": "The answer correctly explains that parsing extracts structured text and metadata from complex formats and why it's needed, matching the key fact.",
+            "selected_nodes": [
+                {
+                    "node_id": "6",
+                    "title": "5. Structural Foundations of Document Parsing and Document Object Models",
+                    "page": 4
+                }
+            ]
+        },
+        {
+            "id": 53,
+            "document": "distributed-systems-rag-test",
+            "node_id": "",
+            "question": "What challenge does character encoding introduce?",
+            "expected_answer": "Incorrect encoding interpretation can corrupt textual data and break keyword matching.",
+            "actual_answer": "If a parsing pipeline misinterprets a document’s underlying character encoding, it introduces malformed byte sequences and corrupted characters into the processing pipeline, making downstream tokenization and lexical matching highly inaccurate because exact keyword match rules will fail on the corrupted textual artifacts.",
+            "is_correct": true,
+            "correctness_score": 0.9,
+            "correctness_reasoning": "The answer correctly describes that misinterpreting character encoding corrupts text and breaks keyword matching, matching the expected key facts.",
+            "selected_nodes": [
+                {
+                    "node_id": "6",
+                    "title": "5. Structural Foundations of Document Parsing and Document Object Models",
+                    "page": 4
+                }
+            ]
+        },
+        {
+            "id": 54,
+            "document": "distributed-systems-rag-test",
+            "node_id": "",
+            "question": "What is lexical proximity analysis?",
+            "expected_answer": "Lexical proximity analysis measures how close query terms appear within documents.",
+            "actual_answer": "Lexical proximity analysis evaluates how close query terms are to one another within the body of a document. If a user queries two distinct terms, a document where those terms appear adjacent to each other is highly likely to be more relevant than a document where they are separated by hundreds of words. Postings lists that contain exact character and word position offsets enable the search engine to compute these distances dynamically. The system calculates the absolute word distance between matching terms and applies an analytical penalty that decays the document's relevance score as the physical gap between the words increases.",
+            "is_correct": true,
+            "correctness_score": 0.95,
+            "correctness_reasoning": "The answer accurately describes lexical proximity analysis as measuring closeness of query terms within documents, matching the expected core fact.",
+            "selected_nodes": [
+                {
+                    "node_id": "7",
+                    "title": "6. Lexical Proximity, Collocation, and Windowing Methodologies",
+                    "page": 4
+                }
+            ]
+        },
+        {
+            "id": 55,
+            "document": "distributed-systems-rag-test",
+            "node_id": "",
+            "question": "What are collocations in retrieval systems?",
+            "expected_answer": "Collocations are word combinations that frequently occur together.",
+            "actual_answer": "Collocation indexing focuses on identifying pairs or chains of words that co‑occur more frequently than would be expected by pure random chance. This technique is critical for identifying fixed expressions, idioms, and proper nouns.",
+            "is_correct": true,
+            "correctness_score": 0.9,
+            "correctness_reasoning": "Captures the core definition of collocations as frequent word combinations and adds relevant details, fully matching the expected answer.",
+            "selected_nodes": [
+                {
+                    "node_id": "7",
+                    "title": "6. Lexical Proximity, Collocation, and Windowing Methodologies",
+                    "page": 4
+                }
+            ]
+        },
+        {
+            "id": 56,
+            "document": "distributed-systems-rag-test",
+            "node_id": "",
+            "question": "What advantage do inverted files provide over B-Trees?",
+            "expected_answer": "Inverted files support efficient keyword lookups and set intersections for text search.",
+            "actual_answer": "When executing complex multi‑keyword search queries, inverted files outperform traditional tree structures by allowing direct, high‑speed set intersections and unions across postings lists. If a query contains multiple distinct search terms, the retrieval engine fetches the postings lists for each term and performs bitwise intersections or two‑pointer merge joins to quickly identify the exact subset of documents that contain all terms. This operation is highly efficient and circumvents the need to traverse multi‑layered tree structures for every single document record, making inverted files the ideal choice for text search scaling.",
+            "is_correct": true,
+            "correctness_score": 0.95,
+            "correctness_reasoning": "The answer correctly describes that inverted files enable fast keyword lookups and efficient set intersections for text search, matching the expected key points.",
+            "selected_nodes": [
+                {
+                    "node_id": "8",
+                    "title": "7. Comparative Analysis of Indexing Strategies: B-Trees vs. Inverted Files",
+                    "page": 5
+                }
+            ]
+        },
+        {
+            "id": 57,
+            "document": "distributed-systems-rag-test",
+            "node_id": "",
+            "question": "What is a deterministic finite automaton?",
+            "expected_answer": "A deterministic finite automaton is a state machine used for exact string matching.",
+            "actual_answer": "A Deterministic Finite Automaton is a theoretical model of computation consisting of a finite set of states, a set of input symbols, a transition function that maps a state and a symbol to a next state, an initial state, and a set of accepting states.",
+            "is_correct": true,
+            "correctness_score": 0.9,
+            "correctness_reasoning": "The answer correctly defines a DFA, covering its components and function, which aligns with the expected description of a state machine for exact string matching.",
+            "selected_nodes": [
+                {
+                    "node_id": "9",
+                    "title": "8. Algorithmic Complexity of Deterministic Finite Automata in String Matching",
+                    "page": 6
+                }
+            ]
+        },
+        {
+            "id": 58,
+            "document": "distributed-systems-rag-test",
+            "node_id": "",
+            "question": "What does the Aho-Corasick algorithm do?",
+            "expected_answer": "Aho-Corasick performs simultaneous matching of multiple keywords in linear time.",
+            "actual_answer": "The Aho‑Corasick algorithm builds a dictionary‑matching automaton by constructing a trie structure from a set of target keywords, then adding explicit failure transitions between nodes. This allows the automaton to search for an arbitrary number of distinct keywords simultaneously in a single, linear pass over the text stream.",
+            "is_correct": true,
+            "correctness_score": 0.95,
+            "correctness_reasoning": "The answer correctly describes simultaneous matching of multiple keywords in linear time, matching the expected core fact.",
+            "selected_nodes": [
+                {
+                    "node_id": "9",
+                    "title": "8. Algorithmic Complexity of Deterministic Finite Automata in String Matching",
+                    "page": 6
+                }
+            ]
+        },
+        {
+            "id": 59,
+            "document": "distributed-systems-rag-test",
+            "node_id": "",
+            "question": "What is POS tagging?",
+            "expected_answer": "POS tagging labels words with grammatical categories such as nouns or verbs.",
+            "actual_answer": "Part-of-Speech (POS) tagging is the process of labeling each word in a document with its corresponding grammatical category (such as noun, verb, adjective, or adverb) based on its context.",
+            "is_correct": true,
+            "correctness_score": 0.95,
+            "correctness_reasoning": "The answer correctly defines POS tagging and lists grammatical categories, matching the expected answer.",
+            "selected_nodes": [
+                {
+                    "node_id": "10",
+                    "title": "9. Natural Language Syntax, Part-of-Speech Tagging, and N-Gram Distribution",
+                    "page": 7
+                }
+            ]
+        },
+        {
+            "id": 60,
+            "document": "distributed-systems-rag-test",
+            "node_id": "",
+            "question": "What is the purpose of Boolean retrieval models?",
+            "expected_answer": "Boolean retrieval models process logical query operators like AND, OR, and NOT.",
+            "actual_answer": "The core architecture of any non‑vectorized retrieval engine relies on a robust Boolean retrieval model. This framework evaluates search queries using classic set theory and Boolean algebra, processing precise operators like AND, OR, and NOT to isolate matching document sets.",
+            "is_correct": true,
+            "correctness_score": 0.95,
+            "correctness_reasoning": "The answer correctly states that Boolean retrieval models process AND, OR, NOT, matching the expected answer and adds accurate context.",
+            "selected_nodes": [
+                {
+                    "node_id": "11",
+                    "title": "10. Boolean Retrieval Algebra and Query Optimization Frameworks",
+                    "page": 7
+                }
+            ]
+        },
+        {
+            "id": 61,
+            "document": "final-major-project-research-paper",
+            "node_id": "",
+            "question": "What is the main objective of the Game Mind project?",
+            "expected_answer": "The main objective is to develop an AI-driven autonomous game bot using reinforcement learning techniques.",
+            "actual_answer": "Develop an AI‑Driven Game Bot that uses Reinforcement Learning techniques to learn and compete on its own in simulated game environments, thereby exposing AI agents to a broader range of simulated conditions to increase their efficiency.",
+            "is_correct": true,
+            "correctness_score": 0.9,
+            "correctness_reasoning": "The answer captures the core objective of creating an AI-driven autonomous game bot using reinforcement learning, matching the expected answer with minor extra detail.",
+            "selected_nodes": [
+                {
+                    "node_id": "1",
+                    "title": "Game Mind: Reinforcement Learning Framework for Autonomous Agents",
+                    "page": 1
+                }
+            ]
+        },
+        {
+            "id": 62,
+            "document": "final-major-project-research-paper",
+            "node_id": "",
+            "question": "Why is virtual training important for AI agents?",
+            "expected_answer": "Virtual training exposes AI agents to broader simulated environments and improves their efficiency.",
+            "actual_answer": "To overcome limited training environments and improve efficiency, it is essential to expose AI agents to a broader range of simulated conditions. Thus, virtual training of AI agents is the best way to increase their efficiency.",
+            "is_correct": true,
+            "correctness_score": 0.95,
+            "correctness_reasoning": "The answer restates the key points about broader simulated environments and increased efficiency, matching the expected answer.",
+            "selected_nodes": [
+                {
+                    "node_id": "1",
+                    "title": "Game Mind: Reinforcement Learning Framework for Autonomous Agents",
+                    "page": 1
+                }
+            ]
+        },
+        {
+            "id": 63,
+            "document": "final-major-project-research-paper",
+            "node_id": "",
+            "question": "Which learning approach is used in the project?",
+            "expected_answer": "The project uses reinforcement learning as the primary learning approach.",
+            "actual_answer": "Reinforcement learning framework.",
+            "is_correct": true,
+            "correctness_score": 0.9,
+            "correctness_reasoning": "The answer correctly identifies reinforcement learning as the approach, matching the expected key fact.",
+            "selected_nodes": [
+                {
+                    "node_id": "5.4",
+                    "title": "4.4 Reinforcement Learning Framework",
+                    "page": 3
+                }
+            ]
+        },
+        {
+            "id": 64,
+            "document": "final-major-project-research-paper",
+            "node_id": "",
+            "question": "What are traditional rule-based systems lacking?",
+            "expected_answer": "Traditional rule-based systems lack adaptability and the ability to learn from experience.",
+            "actual_answer": "Rule-based agents lack the ability to adapt, discover new strategies, or improve performance through experience.",
+            "is_correct": true,
+            "correctness_score": 0.9,
+            "correctness_reasoning": "The answer captures both lack of adaptability and inability to learn from experience, matching the expected key facts.",
+            "selected_nodes": [
+                {
+                    "node_id": "2",
+                    "title": "1. INTRODUCTION",
+                    "page": 1
+                },
+                {
+                    "node_id": "3",
+                    "title": "2. Related Work",
+                    "page": 2
+                },
+                {
+                    "node_id": "4",
+                    "title": "3. Problem Statement",
+                    "page": 2
+                }
+            ]
+        },
+        {
+            "id": 65,
+            "document": "final-major-project-research-paper",
+            "node_id": "",
+            "question": "What is the role of rewards in reinforcement learning?",
+            "expected_answer": "Rewards guide the agent toward learning optimal behaviors through trial-and-error interactions.",
+            "actual_answer": "The reward function plays a crucial role in guiding agent behavior.",
+            "is_correct": true,
+            "correctness_score": 0.8,
+            "correctness_reasoning": "Captures the core idea that rewards guide the agent, but omits details about trial-and-error learning and optimal behavior.",
+            "selected_nodes": [
+                {
+                    "node_id": "5.6",
+                    "title": "4.6 Reward Design",
+                    "page": 3
+                }
+            ]
+        },
+        {
+            "id": 66,
+            "document": "final-major-project-research-paper",
+            "node_id": "",
+            "question": "Which reinforcement learning algorithms are mentioned in the paper?",
+            "expected_answer": "Deep Q-Networks (DQN) and Proximal Policy Optimization (PPO) are mentioned.",
+            "actual_answer": "Deep Q-Networks (DQN)  \nProximal Policy Optimization (PPO)  \nActor-Critic methods  \nDeep Q-Learning (DQN)",
+            "is_correct": true,
+            "correctness_score": 0.95,
+            "correctness_reasoning": "Includes both expected algorithms and adds extra but does not omit any required information",
+            "selected_nodes": [
+                {
+                    "node_id": "2",
+                    "title": "1. INTRODUCTION",
+                    "page": 1
+                },
+                {
+                    "node_id": "3",
+                    "title": "2. Related Work",
+                    "page": 2
+                },
+                {
+                    "node_id": "3.1",
+                    "title": "Reinforcement Learning approaches",
+                    "page": 2
+                },
+                {
+                    "node_id": "3.2",
+                    "title": "Multi AI Agent System",
+                    "page": 2
+                },
+                {
+                    "node_id": "8",
+                    "title": "6. Advantages",
+                    "page": 5
+                },
+                {
+                    "node_id": "11",
+                    "title": "9. Conclusion",
+                    "page": 5
+                },
+                {
+                    "node_id": "12",
+                    "title": "10. References",
+                    "page": 5
+                }
+            ]
+        },
+        {
+            "id": 67,
+            "document": "final-major-project-research-paper",
+            "node_id": "",
+            "question": "Why is PPO considered suitable for the project?",
+            "expected_answer": "PPO provides stable and efficient training for continuous decision-making environments.",
+            "actual_answer": "PPO in particular has gained popularity due to its training stability and efficiency, making it suitable for environments that require continuous decision-making and adaptive behaviour.",
+            "is_correct": true,
+            "correctness_score": 0.95,
+            "correctness_reasoning": "The answer captures the key points of stability, efficiency, and suitability for continuous decision-making, matching the expected answer.",
+            "selected_nodes": [
+                {
+                    "node_id": "2",
+                    "title": "1. INTRODUCTION",
+                    "page": 1
+                },
+                {
+                    "node_id": "3.2",
+                    "title": "Multi AI Agent System",
+                    "page": 2
+                },
+                {
+                    "node_id": "8",
+                    "title": "6. Advantages",
+                    "page": 5
+                }
+            ]
+        },
+        {
+            "id": 68,
+            "document": "final-major-project-research-paper",
+            "node_id": "",
+            "question": "What simulated environment is used in the project?",
+            "expected_answer": "The project uses a simulated multi-agent soccer environment.",
+            "actual_answer": "The Unity ML-Agents Toolkit is employed to create the 3D environment.",
+            "is_correct": false,
+            "correctness_score": 0.1,
+            "correctness_reasoning": "The answer mentions Unity ML-Agents instead of the expected multi-agent soccer environment, missing the key fact.",
+            "selected_nodes": [
+                {
+                    "node_id": "5.7",
+                    "title": "4.7 Tools and Technologies",
+                    "page": 4
+                }
+            ]
+        },
+        {
+            "id": 69,
+            "document": "final-major-project-research-paper",
+            "node_id": "",
+            "question": "What information is included in the state representation?",
+            "expected_answer": "The state representation includes ball position, agent position, teammate positions, opponent positions, and goal direction.",
+            "actual_answer": "- Current position of the agent  \n- Ball position and distance from the agent  \n- Positions of teammates and opponent agents  \n- Distance and direction to the opponent goal  \n- Relative velocity of the ball",
+            "is_correct": true,
+            "correctness_score": 0.9,
+            "correctness_reasoning": "The answer covers all expected elements (agent, ball, teammates, opponents, goal direction) and adds extra details, so it is mostly correct.",
+            "selected_nodes": [
+                {
+                    "node_id": "5.2",
+                    "title": "4.2 State Representation",
+                    "page": 3
+                }
+            ]
+        },
+        {
+            "id": 70,
+            "document": "final-major-project-research-paper",
+            "node_id": "",
+            "question": "What actions can the agents perform in the environment?",
+            "expected_answer": "Agents can move, pass the ball, shoot toward goals, and defend against opponents.",
+            "actual_answer": "- Moving in different directions (forward, backward, left, right)  \n- Passing the ball to teammates  \n- Shooting the ball towards the goal  \n- Intercepting or defending against opponent players",
+            "is_correct": true,
+            "correctness_score": 1.0,
+            "correctness_reasoning": "The answer includes all listed actions—move, pass, shoot, and defend—matching the expected answer.",
+            "selected_nodes": [
+                {
+                    "node_id": "5.3",
+                    "title": "4.3 Action Space",
+                    "page": 3
+                }
+            ]
+        },
+        {
+            "id": 71,
+            "document": "final-major-project-research-paper",
+            "node_id": "",
+            "question": "What is the learning objective of the reinforcement learning framework?",
+            "expected_answer": "The objective is to maximize cumulative rewards over time.",
+            "actual_answer": "to maximize cumulative rewards over time",
+            "is_correct": true,
+            "correctness_score": 1.0,
+            "correctness_reasoning": "The answer exactly matches the expected objective of maximizing cumulative rewards over time.",
+            "selected_nodes": [
+                {
+                    "node_id": "5.4",
+                    "title": "4.4 Reinforcement Learning Framework",
+                    "page": 3
+                }
+            ]
+        },
+        {
+            "id": 72,
+            "document": "final-major-project-research-paper",
+            "node_id": "",
+            "question": "How are agents trained in the system?",
+            "expected_answer": "Agents are trained through repeated simulation episodes where they interact with the environment and update their policies.",
+            "actual_answer": "The agents are trained through repeated simulation episodes. \n\nEach training episode represents a full match simulation where agents continuously interact with the environment and update their policies. The training process involves: \n\n1. Initializing the soccer environment  \n2. Allowing agents to interact with the environment for multiple time steps  \n3. Collecting rewards and state transitions  \n4. Updating the agent policies based on the learning algorithm \n\nOver time, the agents gradually improve their ability to coordinate movements, maintain possession, and score goals.",
+            "is_correct": true,
+            "correctness_score": 0.95,
+            "correctness_reasoning": "Provides the same core facts—training via repeated simulation episodes with interaction and policy updates—and adds extra relevant details.",
+            "selected_nodes": [
+                {
+                    "node_id": "5.5",
+                    "title": "4.5 Training Process",
+                    "page": 3
+                }
+            ]
+        },
+        {
+            "id": 73,
+            "document": "final-major-project-research-paper",
+            "node_id": "",
+            "question": "What reward is given for scoring a goal?",
+            "expected_answer": "A reward of +1.0 is given for scoring a goal.",
+            "actual_answer": "+1.0",
+            "is_correct": true,
+            "correctness_score": 0.9,
+            "correctness_reasoning": "The actual answer provides the correct reward value +1.0, matching the expected answer despite being brief.",
+            "selected_nodes": [
+                {
+                    "node_id": "5.6",
+                    "title": "4.6 Reward Design",
+                    "page": 3
+                }
+            ]
+        },
+        {
+            "id": 74,
+            "document": "final-major-project-research-paper",
+            "node_id": "",
+            "question": "What penalty is applied when the opponent scores?",
+            "expected_answer": "A penalty of -1.0 is applied when the opponent scores.",
+            "actual_answer": "-1.0",
+            "is_correct": true,
+            "correctness_score": 0.85,
+            "correctness_reasoning": "Provides the correct penalty value but omits the explicit context that it applies when the opponent scores.",
+            "selected_nodes": [
+                {
+                    "node_id": "5.6",
+                    "title": "4.6 Reward Design",
+                    "page": 3
+                }
+            ]
+        },
+        {
+            "id": 75,
+            "document": "final-major-project-research-paper",
+            "node_id": "",
+            "question": "Which tools and frameworks are used in the project?",
+            "expected_answer": "The project uses Python, TensorFlow or PyTorch, Unity ML-Agents, NumPy, and Matplotlib.",
+            "actual_answer": "Python, TensorFlow, PyTorch, Unity ML‑Agents Toolkit, NumPy, Matplotlib, Unity MLAgents, Google Research Football, OpenAI Gym",
+            "is_correct": true,
+            "correctness_score": 1.0,
+            "correctness_reasoning": "The answer includes all expected tools and frameworks, covering every key item; extra items do not detract from correctness.",
+            "selected_nodes": [
+                {
+                    "node_id": "5.7",
+                    "title": "4.7 Tools and Technologies",
+                    "page": 4
+                },
+                {
+                    "node_id": "3.3",
+                    "title": "Simulation Platform and Tool kits",
+                    "page": 2
+                }
+            ]
+        },
+        {
+            "id": 76,
+            "document": "final-major-project-research-paper",
+            "node_id": "",
+            "question": "What intelligent behavior did agents learn after training?",
+            "expected_answer": "Agents learned ball tracking, goal-oriented movement, and defensive reactions.",
+            "actual_answer": "- Ball tracking: Agents consistently moved toward the ball when it was nearby.  \n- Goal-oriented movement: When in possession of the ball, agents tended to move toward the  \n- Approaching the ball strategically  \n- Maintaining possession  \n- Attempting goal‑directed actions",
+            "is_correct": false,
+            "correctness_score": 0.6,
+            "correctness_reasoning": "Includes ball tracking and goal-oriented movement but omits defensive reactions and adds unrelated items.",
+            "selected_nodes": [
+                {
+                    "node_id": "7.1",
+                    "title": "5.1 Training Performance",
+                    "page": 4
+                },
+                {
+                    "node_id": "7.2",
+                    "title": "5.2 Agent Behavior Analysis",
+                    "page": 4
+                }
+            ]
+        },
+        {
+            "id": 77,
+            "document": "final-major-project-research-paper",
+            "node_id": "",
+            "question": "What metric measures how long agents control the ball?",
+            "expected_answer": "Ball possession time measures how long agents maintain control of the ball.",
+            "actual_answer": "Ball possession time – Percentage of time agents maintained control of the ball",
+            "is_correct": true,
+            "correctness_score": 1.0,
+            "correctness_reasoning": "The answer correctly identifies ball possession time as the metric and states it measures the percentage/time agents maintain control of the ball.",
+            "selected_nodes": [
+                {
+                    "node_id": "6",
+                    "title": "5.3 Performance Metrics",
+                    "page": 4
+                }
+            ]
+        },
+        {
+            "id": 78,
+            "document": "final-major-project-research-paper",
+            "node_id": "",
+            "question": "What does the increase in cumulative reward indicate?",
+            "expected_answer": "It indicates that the agents are learning better gameplay strategies over time.",
+            "actual_answer": "The increase in cumulative reward indicates that the agents were able to learn better strategies for ball control, movement, and goalscoring.",
+            "is_correct": true,
+            "correctness_score": 0.9,
+            "correctness_reasoning": "Captures the core idea that increased cumulative reward shows agents learning better strategies, adding relevant details but still aligns with expected answer.",
+            "selected_nodes": [
+                {
+                    "node_id": "7.1",
+                    "title": "5.1 Training Performance",
+                    "page": 4
+                },
+                {
+                    "node_id": "7.3",
+                    "title": "5.4 Learning Progress",
+                    "page": 4
+                }
+            ]
+        },
+        {
+            "id": 79,
+            "document": "final-major-project-research-paper",
+            "node_id": "",
+            "question": "What challenge does the project aim to solve?",
+            "expected_answer": "The project aims to solve the challenge of developing adaptive autonomous agents in dynamic environments.",
+            "actual_answer": "The project aims to solve the challenge of developing an autonomous agent that can learn effective gameplay strategies through interaction with the environment rather than relying on predefined rules.",
+            "is_correct": false,
+            "correctness_score": 0.5,
+            "correctness_reasoning": "Captures the idea of an autonomous learning agent but shifts focus to gameplay strategies, missing the broader goal of adaptivity in dynamic environments.",
+            "selected_nodes": [
+                {
+                    "node_id": "4",
+                    "title": "3. Problem Statement",
+                    "page": 2
+                }
+            ]
+        },
+        {
+            "id": 80,
+            "document": "final-major-project-research-paper",
+            "node_id": "",
+            "question": "What broader applications are mentioned for reinforcement learning systems?",
+            "expected_answer": "Applications include robotics, autonomous vehicles, and intelligent decision-making systems.",
+            "actual_answer": "The techniques explored in this project have applications beyond simulated game environments. In the gaming industry, reinforcement learning can be used to develop intelligent non-player characters (NPCs) that adapt to player strategies and provide more realistic gameplay experiences. In robotics, similar learning frameworks can help robots learn navigation, object interaction, and collaborative tasks through trial-and-error learning. Reinforcement learning also plays a major role in autonomous vehicles, where systems must continuously analyze their surroundings and make safe driving decisions. Other applications include industrial automation, where intelligent agents can optimize processes and resource allocation, and decision-support systems used in finance, logistics, and healthcare to improve planning and operational efficiency.",
+            "is_correct": true,
+            "correctness_score": 1.0,
+            "correctness_reasoning": "The answer includes all expected applications (robotics, autonomous vehicles, intelligent decision-making) and adds relevant extra ones, fully covering the key facts.",
+            "selected_nodes": [
+                {
+                    "node_id": "2",
+                    "title": "1. INTRODUCTION",
+                    "page": 1
+                },
+                {
+                    "node_id": "9",
+                    "title": "7. Applications",
+                    "page": 5
+                }
+            ]
+        },
+        {
+            "id": 81,
+            "document": "earthmover",
+            "node_id": "",
+            "question": "What is the Earth Mover's Distance (EMD)?",
+            "expected_answer": "Earth Mover's Distance is a similarity measure that calculates the minimum amount of work required to transform one histogram into another.",
+            "actual_answer": "The _Earth Mover’s Distance_ (EMD) is a distance function that measures the dissimilarity of two histograms (e.g., probability or feature distributions). Given two histograms **q** = (q₁,…,qₙ) and **p** = (p₁,…,pₙ), each having n bins, a flow matrix **F**, where fᵢ,ⱼ indicates flow (i.e., earth) to move from qᵢ to pⱼ, and a cost matrix **C**, where cᵢ,ⱼ models cost of moving flow from the i‑th bin to the j‑th bin, we can define the total cost of moving unit flow according to **F** and **C** between **q** and **p** as  \n\nemd(**q**, **p**) is the minimum cost needed to transform **q** to **p**; to do so, we distribute the flow (i.e., earth) from each bin qᵢ to a set of initially empty bins for **p**, such that the resulting histogram will be equal to **p**. As moving earth fᵢ,ⱼ from qᵢ to the j‑th bin of **p** bears a cost fᵢ,ⱼ cᵢ,ⱼ, the objective is to find the flow distribution that results in the minimum total cost. Note that emd(**q**, **p**) is equal to emd(**p**, **q**) when the cost matrix **C** is symmetric.",
+            "is_correct": true,
+            "correctness_score": 0.95,
+            "correctness_reasoning": "Provides the same core definition of EMD as the minimum work to transform one histogram into another, with additional detail but no contradictions.",
+            "selected_nodes": [
+                {
+                    "node_id": "2",
+                    "title": "2. PRELIMINARIES",
+                    "page": 2
+                }
+            ]
+        },
+        {
+            "id": 82,
+            "document": "earthmover",
+            "node_id": "",
+            "question": "In which fields is EMD commonly used?",
+            "expected_answer": "EMD is commonly used in multimedia databases, computer vision, image retrieval, machine learning, and probabilistic databases.",
+            "actual_answer": "image retrieval, computer vision, machine learning, probabilistic databases, multimedia databases, video and music identification, phishing detection, data cleaning, privacy, matrix factorization, clustering, classification.",
+            "is_correct": true,
+            "correctness_score": 0.95,
+            "correctness_reasoning": "Includes all expected fields and adds relevant extra ones, fully covering the answer.",
+            "selected_nodes": [
+                {
+                    "node_id": "6",
+                    "title": "6. RELATED WORK",
+                    "page": 11
+                }
+            ]
+        },
+        {
+            "id": 83,
+            "document": "earthmover",
+            "node_id": "",
+            "question": "Why is EMD preferred over Euclidean distance for histogram comparison?",
+            "expected_answer": "EMD provides better distinguishability and is more robust to small shifts and outliers in histogram distributions.",
+            "actual_answer": "EMD is robust to outliers and small shifts of values among histogram bins.",
+            "is_correct": true,
+            "correctness_score": 0.85,
+            "correctness_reasoning": "Covers robustness to outliers and small shifts, but omits the point about better distinguishability.",
+            "selected_nodes": [
+                {
+                    "node_id": "1",
+                    "title": "1. INTRODUCTION",
+                    "page": 1
+                }
+            ]
+        },
+        {
+            "id": 84,
+            "document": "earthmover",
+            "node_id": "",
+            "question": "What is the main drawback of EMD?",
+            "expected_answer": "The main drawback of EMD is its high computational cost.",
+            "actual_answer": "The high computational cost of EMD.",
+            "is_correct": true,
+            "correctness_score": 1.0,
+            "correctness_reasoning": "The answer directly states the main drawback as high computational cost, matching the expected answer.",
+            "selected_nodes": [
+                {
+                    "node_id": "0.1",
+                    "title": "ABSTRACT",
+                    "page": 1
+                },
+                {
+                    "node_id": "1",
+                    "title": "1. INTRODUCTION",
+                    "page": 1
+                }
+            ]
+        },
+        {
+            "id": 85,
+            "document": "earthmover",
+            "node_id": "",
+            "question": "What optimization problem is EMD modeled as?",
+            "expected_answer": "EMD is modeled as a minimum-cost flow optimization problem.",
+            "actual_answer": "Finding the _minimum‑cost flow_ in this bipartite graph is equivalent to finding the EMD.",
+            "is_correct": true,
+            "correctness_score": 1.0,
+            "correctness_reasoning": "The answer correctly states that EMD is modeled as a minimum-cost flow optimization problem.",
+            "selected_nodes": [
+                {
+                    "node_id": "2",
+                    "title": "2. PRELIMINARIES",
+                    "page": 2
+                }
+            ]
+        },
+        {
+            "id": 86,
+            "document": "earthmover",
+            "node_id": "",
+            "question": "What is the purpose of the refinement phase in EMD-based similarity search?",
+            "expected_answer": "The refinement phase computes the exact EMD values for candidates that survive the filtering phase.",
+            "actual_answer": "If the lower bound lb is < θ, the algorithm enters the **refinement phase**, where the exact emd (q, p) is computed by a black‑box algorithm. The purpose of this phase is to calculate the true Earth Mover’s Distance for those histograms that cannot be pruned by the lower‑bound filters.",
+            "is_correct": true,
+            "correctness_score": 0.95,
+            "correctness_reasoning": "The answer correctly states that the refinement phase computes the exact EMD for candidates that pass the lower‑bound filter, matching the expected answer.",
+            "selected_nodes": [
+                {
+                    "node_id": "2.2",
+                    "title": "2.2",
+                    "page": 3
+                }
+            ]
+        },
+        {
+            "id": 87,
+            "document": "earthmover",
+            "node_id": "",
+            "question": "What does the SIA algorithm stand for?",
+            "expected_answer": "SIA stands for Simplified Graph Incremental Algorithm.",
+            "actual_answer": "simplified graph incremental algorithm (SIA)",
+            "is_correct": true,
+            "correctness_score": 0.95,
+            "correctness_reasoning": "The answer correctly provides the full form of SIA, matching the expected answer despite minor formatting differences.",
+            "selected_nodes": [
+                {
+                    "node_id": "3",
+                    "title": "3. SCALING UP SSP",
+                    "page": 4
+                }
+            ]
+        },
+        {
+            "id": 88,
+            "document": "earthmover",
+            "node_id": "",
+            "question": "How does SIA improve EMD computation?",
+            "expected_answer": "SIA incrementally constructs the flow graph and reduces unnecessary computations during min-cost flow calculations.",
+            "actual_answer": "Computing EMD by SSP requires having the complete bipartite graph between **q** and **p**, which is quadratic to the number of histogram bins. In our previous work, we proposed an optimized version of SSP, _simplified graph incremental algorithm_ (SIA) [29], to scale up the computation of _spatial matching_ problems. We now show how SIA can be adopted to scale up the computation of EMD, for histograms with a large number of bins. Different from SSP, SIA incrementally constructs a _partial_ flow graph _G[′]_ by inserting edges from the complete bipartite graph _G_ to _G[′]_. The incremental graph construction significantly reduces the search cost since the size of the partial graph _G[′]_ is typically much smaller than the complete graph _G_.  \n\nAt each iteration, SIA searches the min‑cost feasible path _sp_ using Dijkstra’s shortest‑path algorithm in _G[′]_. If the cost of _sp_ does not exceed the distance bound Π, then it must be a valid min‑cost feasible path in the entire graph _G_. Otherwise, _G[′]_ is expanded by adding more edges from _G_ and the distance bound Π is updated. This incremental expansion and distance‑bound checking guarantee that the min‑cost feasible paths in _G_ and _G[′]_ are equivalent while keeping the graph size small, thereby improving the efficiency and scalability of EMD computation.",
+            "is_correct": true,
+            "correctness_score": 0.9,
+            "correctness_reasoning": "The answer correctly describes SIA's incremental graph construction and how it reduces unnecessary computation, matching the expected key facts.",
+            "selected_nodes": [
+                {
+                    "node_id": "3",
+                    "title": "3. SCALING UP SSP",
+                    "page": 4
+                }
+            ]
+        },
+        {
+            "id": 89,
+            "document": "earthmover",
+            "node_id": "",
+            "question": "What is Progressive Bounding (PB)?",
+            "expected_answer": "Progressive Bounding is a technique that dynamically maintains a running lower bound during EMD computation to terminate unpromising refinements early.",
+            "actual_answer": "Progressive Bounding (PB) is an approach that, during the EMD calculation for a candidate, progressively maintains and tightens the running lower bound emd[−] and prunes the object as soon as the intermediate emd[−] reaches the pruning threshold θ. It saves unnecessary computations at the latter (expensive) stages of SIA for candidate objects that do not make it to the k‑NN result, conducting only the necessary portion of the entire flow calculation and thus reducing the cost of each individual refinement.",
+            "is_correct": true,
+            "correctness_score": 0.92,
+            "correctness_reasoning": "The answer correctly describes Progressive Bounding as maintaining a running lower bound during EMD computation and pruning early, matching the key facts of the expected answer.",
+            "selected_nodes": [
+                {
+                    "node_id": "4.2",
+                    "title": "4.2 Progressive Bounding",
+                    "page": 5
+                }
+            ]
+        },
+        {
+            "id": 90,
+            "document": "earthmover",
+            "node_id": "",
+            "question": "What is the purpose of Dynamic Refinement Ordering (DRO)?",
+            "expected_answer": "DRO prioritizes and concurrently refines the most promising candidates during similarity search.",
+            "actual_answer": "The purpose of Dynamic Refinement Ordering (DRO) is to refine multiple candidate objects concurrently during EMD‑based similarity search, prioritizing the most promising candidates (those with the lowest lower‑bound emd[−]) so that cheap iterations of SIA are performed for many candidates, upper bounds emd[+] are derived early, and a tight pruning threshold θ is obtained quickly. This early θ helps prune more candidates and avoids expensive exact EMD computations, making the search more efficient than processing candidates one by one.",
+            "is_correct": true,
+            "correctness_score": 0.95,
+            "correctness_reasoning": "The answer accurately states that DRO refines multiple candidates concurrently, prioritizing the most promising ones, which aligns with the expected answer and adds correct supporting details.",
+            "selected_nodes": [
+                {
+                    "node_id": "4.4",
+                    "title": "4.4 Dynamic Refinement Ordering",
+                    "page": 7
+                }
+            ]
+        },
+        {
+            "id": 91,
+            "document": "earthmover",
+            "node_id": "",
+            "question": "What is the objective of k-nearest neighbor (k-NN) search in EMD-based systems?",
+            "expected_answer": "The objective is to find the k histogram objects with the smallest EMD values relative to the query histogram.",
+            "actual_answer": "finds a subset S of D containing k histograms, such that ∀ p ∈ S, ∀ p′ ∈ D \\ S, emd(q, p) ≤ emd(q, p′).",
+            "is_correct": true,
+            "correctness_score": 1.0,
+            "correctness_reasoning": "The answer precisely describes selecting the k histograms with the smallest EMD values relative to the query.",
+            "selected_nodes": [
+                {
+                    "node_id": "2.2",
+                    "title": "2.2",
+                    "page": 3
+                }
+            ]
+        },
+        {
+            "id": 92,
+            "document": "earthmover",
+            "node_id": "",
+            "question": "What does the cost matrix represent in EMD?",
+            "expected_answer": "The cost matrix represents the cost of moving flow between histogram bins.",
+            "actual_answer": "The cost matrix **C** (a.k.a., ground distance) models the cost of moving flow from the *i*-th bin to the *j*-th bin. It can be designed by domain experts and/or derived from a mathematical formula. Intuitively, _ci,i_ = 0 and the larger the distance between _i_ and _j_ in the bin space, the larger _ci,j_ is.  \n\n**Table 1: Cost matrix C of 4 music genres**  \n\n| _p_1 | _p_2 | _p_3 | _p_4 |\n|------|------|------|------|\n| 0    | 0.9  | 0.1  | 0.7  |\n| 0.9  | 0    | 0.6  | 0.9  |\n| 0.1  | 0.6  | 0    | 0.3  |\n| 0.7  | 0.9  | 0.3  | 0    |",
+            "is_correct": true,
+            "correctness_score": 0.95,
+            "correctness_reasoning": "Accurately describes the cost matrix as the cost of moving flow between bins, matching the expected answer.",
+            "selected_nodes": [
+                {
+                    "node_id": "2",
+                    "title": "2. PRELIMINARIES",
+                    "page": 2
+                }
+            ]
+        },
+        {
+            "id": 93,
+            "document": "earthmover",
+            "node_id": "",
+            "question": "Why are filtering techniques important in EMD similarity search?",
+            "expected_answer": "Filtering techniques reduce the number of expensive exact EMD calculations.",
+            "actual_answer": "Filtering techniques are used to “filter out” unpromising objects (or object groups) before the expensive exact EMD calculation. By utilizing various effective EMD lower‑bound estimations, they allow many objects to be pruned at the filter step, so that the actual EMD calculations are applied only to the objects that survive the filter step. This reduces the number of costly EMD computations and improves the feasibility of similarity search on large‑scale datasets.",
+            "is_correct": true,
+            "correctness_score": 0.95,
+            "correctness_reasoning": "The answer correctly states that filtering reduces expensive exact EMD calculations by pruning unpromising objects, matching the expected key fact.",
+            "selected_nodes": [
+                {
+                    "node_id": "1",
+                    "title": "1. INTRODUCTION",
+                    "page": 1
+                },
+                {
+                    "node_id": "2.2",
+                    "title": "2.2",
+                    "page": 3
+                }
+            ]
+        },
+        {
+            "id": 94,
+            "document": "earthmover",
+            "node_id": "",
+            "question": "What lower-bound estimation methods are mentioned in the paper?",
+            "expected_answer": "The paper mentions full projections, dimensionality reduction, independent minimization, and normal distribution indexing.",
+            "actual_answer": "normal distribution index, full projection lower bound, reduced dimension lower bound, independent minimization",
+            "is_correct": true,
+            "correctness_score": 1.0,
+            "correctness_reasoning": "The answer lists all four methods, just using synonymous phrasing.",
+            "selected_nodes": [
+                {
+                    "node_id": "2.2",
+                    "title": "2.2",
+                    "page": 3
+                },
+                {
+                    "node_id": "4.2",
+                    "title": "4.2 Progressive Bounding",
+                    "page": 5
+                },
+                {
+                    "node_id": "4.4",
+                    "title": "4.4 Dynamic Refinement Ordering",
+                    "page": 7
+                },
+                {
+                    "node_id": "5.3",
+                    "title": "5.3 Parameter Tuning in DRO",
+                    "page": 11
+                }
+            ]
+        },
+        {
+            "id": 95,
+            "document": "earthmover",
+            "node_id": "",
+            "question": "What type of graph is used to model the EMD flow network?",
+            "expected_answer": "A bipartite flow graph is used to model the EMD network.",
+            "actual_answer": "a bipartite flow network",
+            "is_correct": true,
+            "correctness_score": 1.0,
+            "correctness_reasoning": "The answer correctly identifies a bipartite flow graph/network, matching the expected answer.",
+            "selected_nodes": [
+                {
+                    "node_id": "2",
+                    "title": "2. PRELIMINARIES",
+                    "page": 2
+                }
+            ]
+        },
+        {
+            "id": 96,
+            "document": "earthmover",
+            "node_id": "",
+            "question": "What does a feasible edge represent in the flow graph?",
+            "expected_answer": "A feasible edge represents an edge with remaining flow capacity or a reverse edge with existing flow.",
+            "actual_answer": "A feasible edge is defined as follows:\n\n- **Physical edge** \\(e(q_i, p_j)\\) is feasible if \\(f_{i,j} < \\text{cap}_{i,j}\\).\n- **Non‑physical (reverse) edge** \\(e(p_j, q_i)\\) is feasible if \\(f_{i,j} > 0\\).",
+            "is_correct": true,
+            "correctness_score": 1.0,
+            "correctness_reasoning": "The answer correctly states that a feasible edge is either a physical edge with remaining capacity or a reverse edge with existing flow, matching the expected answer.",
+            "selected_nodes": [
+                {
+                    "node_id": "2.1",
+                    "title": "2.1 Computing the EMD",
+                    "page": 3
+                }
+            ]
+        },
+        {
+            "id": 97,
+            "document": "earthmover",
+            "node_id": "",
+            "question": "What is the role of the pruning threshold in similarity search?",
+            "expected_answer": "The pruning threshold is used to discard candidates whose lower bounds exceed the current best k-NN distances.",
+            "actual_answer": "θ is the pruning threshold that represents the k‑th best‑so‑far EMD value.  \nDuring search it is used to prune objects: if a candidate’s lower‑bound lbₚ ≥ θ the object is filtered and its exact emd is not computed. When an object’s exact emd is smaller than θ, the heap H is updated and θ is set to the new k‑th smallest EMD in H.",
+            "is_correct": true,
+            "correctness_score": 0.9,
+            "correctness_reasoning": "The answer correctly explains that the pruning threshold discards candidates whose lower bounds exceed the current best k‑NN distance, matching the expected key fact.",
+            "selected_nodes": [
+                {
+                    "node_id": "2.2",
+                    "title": "2.2",
+                    "page": 3
+                },
+                {
+                    "node_id": "4.3",
+                    "title": "4.3 Sensitivity to Refinement Order",
+                    "page": 6
+                }
+            ]
+        },
+        {
+            "id": 98,
+            "document": "earthmover",
+            "node_id": "",
+            "question": "How does the running lower bound emd− help optimization?",
+            "expected_answer": "The running lower bound allows early termination of expensive EMD computations when candidates become unpromising.",
+            "actual_answer": "The running lower bound emd[−] “not only considers the so‑far accumulated flow cost, but also provides an estimation to the cost of flows yet to be augmented.” Because emd[−] grows much faster than the current cost, it reaches the pruning threshold θ earlier, allowing SIA to terminate early:  \n\n- “The effectiveness of emd[−] is shown … where emd[−] reaches the pruning threshold θ after augmenting 61 % iterations which take only 2.84 % of the total execution time.”  \n- “Summing up, our progressive bounding (PB) approach … prunes the object as soon as the intermediate emd[−] reaches the pruning threshold θ. PB saves unnecessary computations at the latter (expensive) stages of SIA for candidate objects that do not make it to the k‑NN result … and thus reduces the cost of each individual refinement.”",
+            "is_correct": true,
+            "correctness_score": 0.9,
+            "correctness_reasoning": "The answer correctly explains that the running lower bound enables early termination of expensive EMD calculations by reaching the pruning threshold sooner, matching the expected key fact.",
+            "selected_nodes": [
+                {
+                    "node_id": "4.2",
+                    "title": "4.2 Progressive Bounding",
+                    "page": 5
+                }
+            ]
+        },
+        {
+            "id": 99,
+            "document": "earthmover",
+            "node_id": "",
+            "question": "What does the running upper bound emd+ represent?",
+            "expected_answer": "The running upper bound estimates the maximum possible remaining EMD cost during partial refinement.",
+            "actual_answer": "The running upper bound emd₊ is defined as the _current cost_ plus an upper bound considering the nodes which still have remaining flow capacity (i.e., the vertices inside the dashed‑line regions). It is computed as the sum of the current cost and the cost of a maximum flow based on the remaining capacities of q and p.",
+            "is_correct": true,
+            "correctness_score": 0.85,
+            "correctness_reasoning": "The answer captures the core idea that the running upper bound adds the current cost to an upper bound on remaining flow, matching the expected description of estimating the maximum possible remaining EMD cost.",
+            "selected_nodes": [
+                {
+                    "node_id": "4.5",
+                    "title": "4.5 Running Upper Bound",
+                    "page": 8
+                }
+            ]
+        },
+        {
+            "id": 100,
+            "document": "earthmover",
+            "node_id": "",
+            "question": "What is the overall contribution of the paper?",
+            "expected_answer": "The paper proposes scalable refinement optimization techniques that significantly accelerate EMD-based similarity search on large datasets.",
+            "actual_answer": "In this paper, we studied the efficient evaluation of similarity queries using Earth Mover’s Distance (EMD). First, we showed how we can adapt SIA, an algorithm originally proposed for spatial matching problems, to compute the EMD between two histograms efficiently. Then, we proposed a progressive refinement strategy, which updates a lower bound for EMD during its computation, in order to abandon early a partial EMD refinement, if the object cannot make it in the query result. Finally, we proposed a technique which concurrently handles the refinement of multiple candidates, by dynamically reordering them and computing upper bounds that help to tighten the pruning threshold early. Our experiments show that our methods are very effective in practice, decreasing the overall cost of EMD-based similarity queries by up to two orders of magnitude, compared to the state-of-the-art solution [25].",
+            "is_correct": true,
+            "correctness_score": 0.9,
+            "correctness_reasoning": "The answer captures the main contribution of scalable refinement techniques that greatly speed up EMD-based similarity search, matching the expected key facts.",
+            "selected_nodes": [
+                {
+                    "node_id": "0.1",
+                    "title": "ABSTRACT",
+                    "page": 1
+                },
+                {
+                    "node_id": "7",
+                    "title": "7. CONCLUSION",
+                    "page": 12
+                }
+            ]
+        }
+    ]
+}

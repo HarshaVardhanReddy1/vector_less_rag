@@ -24,7 +24,8 @@ from backend.processing.pipeline import run_document_processing_pipeline
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 DATA_DIR     = PROJECT_ROOT / "data"
 DOCS_DIR     = DATA_DIR / "docs"
-NODES_DIR    = DATA_DIR / "nodes"
+NODES_DIR    = DATA_DIR / "nodes"   # intermediate artifacts: markdown + chunked nodes
+TOCS_DIR     = DATA_DIR / "tocs"    # enriched/summarized nodes JSON (queried at runtime)
 TREES_DIR    = DATA_DIR / "trees"
 
 
@@ -40,8 +41,10 @@ def slugify_document_name(filename: str) -> str:
 
 def build_document_paths(document_slug: str) -> dict[str, Path]:
     return {
-        "pdf_path":   DOCS_DIR  / f"{document_slug}.pdf",
-        "nodes_path": NODES_DIR / f"{document_slug}.json",
+        "pdf_path": DOCS_DIR / f"{document_slug}.pdf",
+        # The enriched/summarized nodes file is what gets queried at runtime.
+        # It lives in tocs/; markdown + chunked intermediates stay in nodes/.
+        "toc_path": TOCS_DIR / f"{document_slug}.json",
         "tree_path":  TREES_DIR / f"{document_slug}.json",
     }
 
@@ -49,16 +52,20 @@ def build_document_paths(document_slug: str) -> dict[str, Path]:
 def ensure_storage_directories() -> None:
     DOCS_DIR.mkdir(parents=True, exist_ok=True)
     NODES_DIR.mkdir(parents=True, exist_ok=True)
+    TOCS_DIR.mkdir(parents=True, exist_ok=True)
     TREES_DIR.mkdir(parents=True, exist_ok=True)
 
 
-def _run_pdf_processing(pdf_path: Path, nodes_path: Path) -> None:
-    nodes_dir = str(nodes_path.parent)
-    run_document_processing_pipeline(str(pdf_path), nodes_dir)
+def _run_pdf_processing(pdf_path: Path, toc_path: Path) -> None:
+    run_document_processing_pipeline(
+        str(pdf_path),
+        base_output_dir=str(NODES_DIR),
+        toc_output_dir=str(toc_path.parent),
+    )
 
-    generated = nodes_path.parent / f"{pdf_path.stem}.json"
-    if generated.exists() and generated != nodes_path:
-        generated.rename(nodes_path)
+    generated = toc_path.parent / f"{pdf_path.stem}.json"
+    if generated.exists() and generated != toc_path:
+        generated.rename(toc_path)
 
 
 # ---------------------------------------------------------------------------
@@ -82,13 +89,13 @@ async def save_and_register_document(file: UploadFile) -> tuple[str, dict[str, P
 
     try:
         # Already processed — return existing record, no background task needed.
-        if document_paths["nodes_path"].exists():
-            saved = fetch_document_by_nodes_path(str(document_paths["nodes_path"]))
+        if document_paths["toc_path"].exists():
+            saved = fetch_document_by_nodes_path(str(document_paths["toc_path"]))
             if saved:
                 # Rebuild tree if missing (fast, pure Python, no LLM calls).
                 if not document_paths["tree_path"].exists() or not saved.get("tree_json_path"):
                     build_index(
-                        nodes_path=str(document_paths["nodes_path"]),
+                        toc_path=str(document_paths["toc_path"]),
                         tree_path=str(document_paths["tree_path"]),
                     )
                     update_document_tree(saved["_id"], str(document_paths["tree_path"]))
@@ -119,17 +126,17 @@ async def save_and_register_document(file: UploadFile) -> tuple[str, dict[str, P
 def run_document_pipeline_background(
     document_id: str,
     pdf_path: Path,
-    nodes_path: Path,
+    toc_path: Path,
     tree_path: Path,
 ) -> None:
     """Full processing pipeline: PDF → nodes → tree. Runs in a background task."""
     update_document_status(document_id, "PROCESSING")
     try:
-        _run_pdf_processing(pdf_path, nodes_path)
-        nodes_data = load_json_data(nodes_path)
-        update_document_nodes(document_id, str(nodes_path), len(nodes_data))
+        _run_pdf_processing(pdf_path, toc_path)
+        nodes_data = load_json_data(toc_path)
+        update_document_nodes(document_id, str(toc_path), len(nodes_data))
 
-        build_index(nodes_path=str(nodes_path), tree_path=str(tree_path))
+        build_index(toc_path=str(toc_path), tree_path=str(tree_path))
         update_document_tree(document_id, str(tree_path))
 
     except Exception as error:
@@ -146,8 +153,8 @@ def build_document_index(document_id: str) -> dict:
     if saved is None:
         raise HTTPException(status_code=404, detail=f"Document '{document_id}' not found.")
 
-    nodes_path    = Path(saved["nodes_json_path"])
-    document_slug = nodes_path.stem
+    toc_path    = Path(saved["nodes_json_path"])
+    document_slug = toc_path.stem
     tree_path     = TREES_DIR / f"{document_slug}.json"
 
     try:
@@ -158,13 +165,13 @@ def build_document_index(document_id: str) -> dict:
                 "status":                "READY",
                 "reused_existing_index": True,
                 "paths": {
-                    "nodes_path": str(nodes_path),
+                    "toc_path": str(toc_path),
                     "tree_path":  str(tree_path),
                 },
             }
 
         index_info = build_index(
-            nodes_path=str(nodes_path),
+            toc_path=str(toc_path),
             tree_path=str(tree_path),
         )
         update_document_tree(document_id, str(tree_path))
@@ -179,7 +186,7 @@ def build_document_index(document_id: str) -> dict:
         "document_id": document_id,
         "status":      "READY",
         "paths": {
-            "nodes_path": str(nodes_path),
+            "toc_path": str(toc_path),
             "tree_path":  str(tree_path),
         },
         "index_info": index_info,
@@ -202,15 +209,15 @@ def answer_document_query(query: str, document_id: str, evaluate: bool = False) 
         )
 
     tree_path  = saved.get("tree_json_path")
-    nodes_path = saved.get("nodes_json_path")
-    if not tree_path or not nodes_path:
+    toc_path = saved.get("nodes_json_path")
+    if not tree_path or not toc_path:
         raise HTTPException(status_code=409, detail="Document index is incomplete.")
 
     try:
         return answer_query(
             query=query,
             tree_path=tree_path,
-            nodes_path=nodes_path,
+            toc_path=toc_path,
             evaluate=evaluate,
         )
     except Exception as error:

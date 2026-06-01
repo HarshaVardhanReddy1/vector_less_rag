@@ -10,7 +10,7 @@ from backend.retrieval.node_selector import retrieve_relevant_nodes
 def get_context_from_node_ids(
     node_ids: list[str],
     tree_path: str,
-    nodes_path: str,
+    toc_path: str,
 ) -> dict | None:
     """Assemble combined context for a list of selected node IDs.
 
@@ -22,7 +22,7 @@ def get_context_from_node_ids(
 
     try:
         tree  = load_json_data(tree_path)
-        nodes = load_json_data(nodes_path)
+        nodes = load_json_data(toc_path)
     except Exception as error:
         raise RuntimeError(
             f"Failed to load retrieval inputs for nodes {node_ids!r}."
@@ -68,7 +68,7 @@ def get_context_from_node_ids(
 def retrieve_context_for_query(
     query: str,
     tree_path: str,
-    nodes_path: str,
+    toc_path: str,
 ) -> dict | None:
     relevant_nodes = retrieve_relevant_nodes(query=query, tree_path=tree_path)
     if not relevant_nodes:
@@ -77,5 +77,5 @@ def retrieve_context_for_query(
     return get_context_from_node_ids(
         node_ids=[n["node_id"] for n in relevant_nodes],
         tree_path=tree_path,
-        nodes_path=nodes_path,
+        toc_path=toc_path,
     )
