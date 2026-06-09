@@ -1,0 +1,22 @@
+# Web framework
+fastapi
+uvicorn[standard]
+python-multipart
+
+# Database
+pymongo
+
+# LLM / AI
+openai
+tiktoken
+
+# PDF processing
+pymupdf4llm
+
+# Environment variables
+python-dotenv
+
+# Tracing
+langsmith
+
+# Evaluation is handled by the existing openai + langsmith stack (LLM-as-Judge)
