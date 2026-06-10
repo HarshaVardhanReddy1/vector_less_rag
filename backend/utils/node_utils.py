@@ -13,6 +13,7 @@ from backend.utils.validation import (
 
 _MD_BOLD_RE = re.compile(r"\*+")
 _MD_ITALIC_RE = re.compile(r"(?<!\w)_+|_+(?!\w)")
+_REFERENCED_IMAGES_RE = re.compile(r"<REFERENCED_IMAGES>(.*?)</REFERENCED_IMAGES>", re.DOTALL)
 
 
 def normalize_title(text: str) -> str:
@@ -158,6 +159,28 @@ def format_retrieved_context(item: dict) -> str:
 # ---------------------------------------------------------------------------
 # Query response logging
 # ---------------------------------------------------------------------------
+
+def extract_image_refs_from_answer(answer_text: str) -> list[dict]:
+    """Parse <REFERENCED_IMAGES> block from LLM answer and return HTTP-ready refs."""
+    match = _REFERENCED_IMAGES_RE.search(answer_text)
+    if not match:
+        return []
+    refs = []
+    for raw_path in match.group(1).split("|"):
+        src = raw_path.strip()
+        if not src:
+            continue
+        try:
+            rel = Path(src).relative_to("data/nodes/extracted_images")
+        except ValueError:
+            rel = Path(src).name
+        refs.append({
+            "src": src,
+            "url": f"/images/{Path(rel).as_posix()}",
+            "exists": Path(src).exists(),
+        })
+    return refs
+
 
 def append_query_response(query_response: dict, log_path: str | Path) -> None:
     try:

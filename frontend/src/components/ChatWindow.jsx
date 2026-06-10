@@ -1,7 +1,43 @@
-import { ArrowUp, BookOpen, Copy, MessageSquare, Sparkles, X, ChevronUp as ScrollUp } from "lucide-react";
+import { ArrowUp, BookOpen, Copy, Image, MessageSquare, Sparkles, X, ChevronUp as ScrollUp } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+
+function ImageGallery({ images }) {
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000";
+  const visible = (images || []).filter((img) => img.exists !== false);
+
+  if (!visible.length) return null;
+
+  return (
+    <div className="image-gallery">
+      <span className="image-gallery__label">
+        <Image size={9} />
+        Referenced images ({visible.length})
+      </span>
+      <div className="image-gallery__grid">
+        {visible.map((img) => {
+          const fullImageUrl = img.url.startsWith("http")
+            ? img.url
+            : `${API_BASE_URL}${img.url}`;
+          return (
+            <div className="image-tile" key={img.src}>
+              <img
+                className="image-tile__img"
+                src={fullImageUrl}
+                alt="referenced"
+                loading="lazy"
+                onError={(e) => {
+                  e.currentTarget.closest(".image-tile").style.display = "none";
+                }}
+              />
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
 
 function formatTime(iso) {
   if (!iso) return "";
@@ -54,6 +90,10 @@ function AssistantMessage({ entry }) {
                 <ReactMarkdown remarkPlugins={[remarkGfm]}>{entry.answer}</ReactMarkdown>
                 {entry.streaming && <span className="stream-cursor" />}
               </div>
+            )}
+
+            {entry.images?.length > 0 && (
+              <ImageGallery images={entry.images} />
             )}
           </div>
         </div>

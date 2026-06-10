@@ -137,6 +137,7 @@ function App() {
       query: message,
       answer: "",
       selectedNodes: [],
+      images: [],
       streaming: true,
       timestamp: new Date().toISOString(),
     };
@@ -175,6 +176,13 @@ function App() {
             entryData.reasoning = event.reasoning;
             entryData.confidence = event.confidence;
             entryData.metrics = event.metrics;
+            syncEntry();
+          },
+          onImages: (images) => {
+            entryData.images = images;
+            entryData.answer = entryData.answer
+              .replace(/<REFERENCED_IMAGES>[\s\S]*?<\/REFERENCED_IMAGES>/g, "")
+              .trimEnd();
             syncEntry();
           },
           onError: (message) => setErrorMessage(message),

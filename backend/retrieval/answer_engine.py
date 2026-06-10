@@ -1,6 +1,7 @@
 """Answer generation — retrieves context, generates answer, evaluates, logs."""
 
 import json
+import re
 from typing import Iterator
 
 from langsmith import traceable
@@ -10,7 +11,12 @@ from backend.core.llm import generate_response, generate_response_stream
 from backend.evaluation.evaluator import evaluate_answer
 from backend.prompts.answer import generate_context_grounded_answer_prompt
 from backend.retrieval.context_retriever import retrieve_context_for_query
-from backend.utils.node_utils import append_query_response, format_retrieved_context, normalize_title
+from backend.utils.node_utils import (
+    append_query_response,
+    extract_image_refs_from_answer,
+    format_retrieved_context,
+    normalize_title,
+)
 
 
 def _build_answer_prompt(query: str, retrieved_context: dict) -> str:
@@ -52,6 +58,7 @@ def answer_query(
             return result
 
         answer_text = generate_response(_build_answer_prompt(query, retrieved_context))
+        clean_answer = re.sub(r"<REFERENCED_IMAGES>[\s\S]*?</REFERENCED_IMAGES>", "", answer_text).rstrip()
 
         _start_indices = retrieved_context.get(
             "start_indices",
@@ -68,13 +75,13 @@ def answer_query(
                 )
             ],
             "start_index": retrieved_context["start_index"],
-            "answer":      answer_text,
+            "answer":      clean_answer,
         }
 
         if evaluate:
             judgment = evaluate_answer(
                 query=query,
-                answer=answer_text,
+                answer=clean_answer,
                 context_text=format_retrieved_context(retrieved_context),
             )
             result["reasoning"]  = judgment.get("reasoning", "")
@@ -145,12 +152,19 @@ def stream_answer_query(
             full_answer += token
             yield f"data: {json.dumps({'type': 'token', 'content': token})}\n\n"
 
-        result = {"query": query, "selected_nodes": selected_nodes, "answer": full_answer}
+        # Extract image refs from REFERENCED_IMAGES block
+        image_refs = extract_image_refs_from_answer(full_answer)
+        if image_refs:
+            yield f"data: {json.dumps({'type': 'images', 'images': image_refs})}\n\n"
+
+        # Strip image block from displayed answer
+        clean_answer = re.sub(r"<REFERENCED_IMAGES>[\s\S]*?</REFERENCED_IMAGES>", "", full_answer).rstrip()
+        result = {"query": query, "selected_nodes": selected_nodes, "answer": clean_answer}
 
         if evaluate:
             judgment = evaluate_answer(
                 query=query,
-                answer=full_answer,
+                answer=clean_answer,
                 context_text=format_retrieved_context(retrieved_context),
             )
             result["reasoning"]  = judgment.get("reasoning", "")

@@ -57,7 +57,7 @@ export async function fetchDocumentStatus(documentId) {
 
 export async function queryDocumentStream(
   { documentId, query, evaluate = true },
-  { onMeta, onToken, onEval, onError, onDone } = {},
+  { onMeta, onToken, onEval, onImages, onError, onDone } = {},
 ) {
   const params = new URLSearchParams({ query });
   if (!evaluate) params.set("evaluate", "false");
@@ -89,6 +89,7 @@ export async function queryDocumentStream(
         if (event.type === "meta") onMeta?.(event);
         else if (event.type === "token") onToken?.(event.content);
         else if (event.type === "eval") onEval?.(event);
+        else if (event.type === "images") onImages?.(event.images);
         else if (event.type === "error") onError?.(event.message);
       } catch { /* malformed chunk — skip */ }
     }

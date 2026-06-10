@@ -140,6 +140,23 @@ The provided context does not contain sufficient information to answer this ques
 - Do not repeat information unnecessarily.
 - Organize long answers using headings and bullet points.
 
+## Image References - IMPORTANT
+
+The context contains IMAGE_CONTEXT blocks describing visual content (charts, diagrams, figures,
+tables, maps). Each block has this format:
+<IMAGE_CONTEXT src='path/to/image.png' type='chart|diagram|table|etc'>description</IMAGE_CONTEXT>
+
+REQUIRED: If your answer uses information from image descriptions or references visual content,
+you MUST append image paths at the very end of your response:
+
+<REFERENCED_IMAGES>path_1|path_2|path_3</REFERENCED_IMAGES>
+
+Instructions:
+- Extract EXACT src= attribute values from relevant IMAGE_CONTEXT blocks
+- Separate multiple paths with | (pipe character)
+- Include this block ONLY if images are relevant to the answer
+- Place this block at the very end, after all answer text
+
 ## User Question
 
 {query}
