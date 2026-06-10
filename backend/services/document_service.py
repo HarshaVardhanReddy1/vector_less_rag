@@ -38,6 +38,26 @@ def build_document_paths(document_slug: str) -> dict[str, Path]:
     }
 
 
+def get_relative_path(full_path: str | Path) -> str:
+    """Extract just the filename from a full path."""
+    return Path(full_path).name
+
+
+def reconstruct_toc_path(relative_path: str) -> Path:
+    """Reconstruct full path for a TOC (nodes JSON) file."""
+    return TOCS_DIR / relative_path
+
+
+def reconstruct_tree_path(relative_path: str) -> Path:
+    """Reconstruct full path for a tree JSON file."""
+    return TREES_DIR / relative_path
+
+
+def reconstruct_pdf_path(relative_path: str) -> Path:
+    """Reconstruct full path for a PDF file."""
+    return DOCS_DIR / relative_path
+
+
 def ensure_storage_directories() -> None:
     DOCS_DIR.mkdir(parents=True, exist_ok=True)
     NODES_DIR.mkdir(parents=True, exist_ok=True)
@@ -79,7 +99,8 @@ async def save_and_register_document(file: UploadFile) -> tuple[str, dict[str, P
     try:
         # Already processed — return existing record, no background task needed.
         if document_paths["toc_path"].exists():
-            saved = fetch_document_by_nodes_path(str(document_paths["toc_path"]))
+            relative_toc_path = get_relative_path(document_paths["toc_path"])
+            saved = fetch_document_by_nodes_path(relative_toc_path)
             if saved:
                 # Rebuild tree if missing (fast, pure Python, no LLM calls).
                 if not document_paths["tree_path"].exists() or not saved.get("tree_json_path"):
@@ -87,7 +108,7 @@ async def save_and_register_document(file: UploadFile) -> tuple[str, dict[str, P
                         toc_path=str(document_paths["toc_path"]),
                         tree_path=str(document_paths["tree_path"]),
                     )
-                    update_document_tree(saved["_id"], str(document_paths["tree_path"]))
+                    update_document_tree(saved["_id"], get_relative_path(document_paths["tree_path"]))
                 return saved["_id"], document_paths, False
 
         # New document — save PDF and create a PENDING record.
@@ -96,7 +117,7 @@ async def save_and_register_document(file: UploadFile) -> tuple[str, dict[str, P
 
         document_id = create_pending_record(
             document_name=file.filename,
-            original_file_path=str(document_paths["pdf_path"]),
+            original_file_path=get_relative_path(document_paths["pdf_path"]),
         )
         return document_id, document_paths, True
 
@@ -123,10 +144,10 @@ def run_document_pipeline_background(
     try:
         _run_pdf_processing(pdf_path, toc_path)
         nodes_data = load_json_data(toc_path)
-        update_document_nodes(document_id, str(toc_path), len(nodes_data))
+        update_document_nodes(document_id, get_relative_path(toc_path), len(nodes_data))
 
         build_index(toc_path=str(toc_path), tree_path=str(tree_path))
-        update_document_tree(document_id, str(tree_path))
+        update_document_tree(document_id, get_relative_path(tree_path))
 
     except Exception as error:
         update_document_status(document_id, "FAILED", str(error))
@@ -142,7 +163,7 @@ def build_document_index(document_id: str) -> dict:
     if saved is None:
         raise HTTPException(status_code=404, detail=f"Document '{document_id}' not found.")
 
-    toc_path    = Path(saved["nodes_json_path"])
+    toc_path    = reconstruct_toc_path(saved["nodes_json_path"])
     document_slug = toc_path.stem
     tree_path     = TREES_DIR / f"{document_slug}.json"
 
@@ -163,7 +184,7 @@ def build_document_index(document_id: str) -> dict:
             toc_path=str(toc_path),
             tree_path=str(tree_path),
         )
-        update_document_tree(document_id, str(tree_path))
+        update_document_tree(document_id, get_relative_path(tree_path))
 
     except HTTPException:
         raise
@@ -197,10 +218,13 @@ def answer_document_query(query: str, document_id: str, evaluate: bool = True) -
             detail=f"Document is not ready for querying (status: {saved.get('status', 'unknown')}).",
         )
 
-    tree_path  = saved.get("tree_json_path")
-    toc_path = saved.get("nodes_json_path")
-    if not tree_path or not toc_path:
+    relative_tree_path = saved.get("tree_json_path")
+    relative_toc_path = saved.get("nodes_json_path")
+    if not relative_tree_path or not relative_toc_path:
         raise HTTPException(status_code=409, detail="Document index is incomplete.")
+
+    tree_path = str(reconstruct_tree_path(relative_tree_path))
+    toc_path = str(reconstruct_toc_path(relative_toc_path))
 
     try:
         return answer_query(

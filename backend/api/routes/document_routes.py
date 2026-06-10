@@ -6,6 +6,8 @@ from backend.retrieval.answer_engine import stream_answer_query
 from backend.services.document_service import (
     answer_document_query,
     build_document_index,
+    reconstruct_toc_path,
+    reconstruct_tree_path,
     run_document_pipeline_background,
     save_and_register_document,
 )
@@ -101,10 +103,13 @@ async def stream_query_endpoint(document_id: str, query: str, evaluate: bool = T
             status_code=409,
             detail=f"Document is not ready (status: {document.get('status', 'unknown')}).",
         )
-    tree_path = document.get("tree_json_path")
-    toc_path = document.get("nodes_json_path")
-    if not tree_path or not toc_path:
+    relative_tree_path = document.get("tree_json_path")
+    relative_toc_path = document.get("nodes_json_path")
+    if not relative_tree_path or not relative_toc_path:
         raise HTTPException(status_code=409, detail="Document index is incomplete.")
+
+    tree_path = str(reconstruct_tree_path(relative_tree_path))
+    toc_path = str(reconstruct_toc_path(relative_toc_path))
 
     return StreamingResponse(
         stream_answer_query(query=query, tree_path=tree_path, toc_path=toc_path, evaluate=evaluate),
