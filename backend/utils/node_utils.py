@@ -161,24 +161,28 @@ def format_retrieved_context(item: dict) -> str:
 # ---------------------------------------------------------------------------
 
 def extract_image_refs_from_answer(answer_text: str) -> list[dict]:
-    """Parse <REFERENCED_IMAGES> block from LLM answer and return HTTP-ready refs."""
+    """Parse <REFERENCED_IMAGES>path1|path2</REFERENCED_IMAGES> from answer. Returns list of {src, url, exists}."""
     match = _REFERENCED_IMAGES_RE.search(answer_text)
     if not match:
         return []
+
     refs = []
-    for raw_path in match.group(1).split("|"):
-        src = raw_path.strip()
+    for src in match.group(1).split("|"):
+        src = src.strip()
         if not src:
             continue
+
         try:
-            rel = Path(src).relative_to("data/nodes/extracted_images")
+            relative_path = Path(src).relative_to("data/nodes/extracted_images")
         except ValueError:
-            rel = Path(src).name
+            relative_path = Path(src).name
+
         refs.append({
             "src": src,
-            "url": f"/images/{Path(rel).as_posix()}",
+            "url": f"/images/{relative_path.as_posix()}",
             "exists": Path(src).exists(),
         })
+
     return refs
 
 

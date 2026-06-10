@@ -26,6 +26,46 @@ def _build_answer_prompt(query: str, retrieved_context: dict) -> str:
     )
 
 
+def _build_selected_nodes(retrieved_context: dict) -> list[dict]:
+    """Build selected nodes metadata from retrieved context."""
+    start_indices = retrieved_context.get(
+        "start_indices",
+        [retrieved_context["start_index"]] * len(retrieved_context["node_ids"]),
+    )
+    return [
+        {"node_id": nid, "title": normalize_title(title), "page": page}
+        for nid, title, page in zip(
+            retrieved_context["node_ids"],
+            retrieved_context["titles"],
+            start_indices,
+        )
+    ]
+
+
+def _process_answer(full_answer: str) -> tuple[str, list[dict]]:
+    """Extract images and clean answer text. Returns (clean_answer, image_refs)."""
+    image_refs = extract_image_refs_from_answer(full_answer)
+    clean_answer = re.sub(r"<REFERENCED_IMAGES>[\s\S]*?</REFERENCED_IMAGES>", "", full_answer).rstrip()
+    return clean_answer, image_refs
+
+
+def _build_result(query: str, selected_nodes: list[dict], clean_answer: str, context_text: str, evaluate: bool) -> dict:
+    """Build result dict with optional evaluation."""
+    result = {
+        "query": query,
+        "selected_nodes": selected_nodes,
+        "answer": clean_answer,
+    }
+
+    if evaluate:
+        judgment = evaluate_answer(query=query, answer=clean_answer, context_text=context_text)
+        result["reasoning"] = judgment.get("reasoning", "")
+        result["confidence"] = judgment.get("confidence", "")
+        result["metrics"] = judgment.get("metrics", {})
+
+    return result
+
+
 @traceable(run_type="chain", name="Pipeline · answer_query")
 def answer_query(
     query: str,
@@ -34,59 +74,31 @@ def answer_query(
     log_path: str = DEFAULT_QUERY_LOG_PATH,
     evaluate: bool = True,
 ) -> dict:
-    """Generate an answer for the given query.
-
-    Args:
-        evaluate: When True (the default), runs the LLM judge after answering
-                  and includes reasoning, confidence, and metrics in the
-                  response. Pass False to skip the extra LLM call.
-    """
+    """Generate an answer for the given query."""
     try:
-        retrieved_context = retrieve_context_for_query(
-            query=query,
-            tree_path=tree_path,
-            toc_path=toc_path,
-        )
+        retrieved_context = retrieve_context_for_query(query, tree_path, toc_path)
 
         if retrieved_context is None:
             result = {
-                "query":          query,
+                "query": query,
                 "selected_nodes": [],
-                "answer":         "No relevant nodes were found for the query.",
+                "answer": "No relevant nodes were found for the query.",
             }
             append_query_response(result, log_path)
             return result
 
         answer_text = generate_response(_build_answer_prompt(query, retrieved_context))
-        clean_answer = re.sub(r"<REFERENCED_IMAGES>[\s\S]*?</REFERENCED_IMAGES>", "", answer_text).rstrip()
+        clean_answer, _ = _process_answer(answer_text)
+        selected_nodes = _build_selected_nodes(retrieved_context)
 
-        _start_indices = retrieved_context.get(
-            "start_indices",
-            [retrieved_context["start_index"]] * len(retrieved_context["node_ids"]),
+        result = _build_result(
+            query=query,
+            selected_nodes=selected_nodes,
+            clean_answer=clean_answer,
+            context_text=format_retrieved_context(retrieved_context),
+            evaluate=evaluate,
         )
-        result = {
-            "query": query,
-            "selected_nodes": [
-                {"node_id": nid, "title": normalize_title(title), "page": page}
-                for nid, title, page in zip(
-                    retrieved_context["node_ids"],
-                    retrieved_context["titles"],
-                    _start_indices,
-                )
-            ],
-            "start_index": retrieved_context["start_index"],
-            "answer":      clean_answer,
-        }
-
-        if evaluate:
-            judgment = evaluate_answer(
-                query=query,
-                answer=clean_answer,
-                context_text=format_retrieved_context(retrieved_context),
-            )
-            result["reasoning"]  = judgment.get("reasoning", "")
-            result["confidence"] = judgment.get("confidence", "")
-            result["metrics"]    = judgment.get("metrics", {})
+        result["start_index"] = retrieved_context["start_index"]
 
         append_query_response(result, log_path)
         return result
@@ -106,25 +118,9 @@ def stream_answer_query(
     log_path: str = DEFAULT_QUERY_LOG_PATH,
     evaluate: bool = True,
 ) -> Iterator[str]:
-    """Yield SSE-formatted lines: first a metadata event, then answer tokens.
-
-    Event format:
-        data: {"type": "meta", "selected_nodes": [...], "start_index": N}
-        data: {"type": "token", "content": "..."}
-        data: {"type": "eval", "reasoning": "...", "confidence": "...", "metrics": {...}}
-        data: [DONE]
-
-    Args:
-        evaluate: When True, runs the LLM judge after the answer finishes and
-                  emits a final "eval" event with reasoning, confidence, and
-                  metrics before "[DONE]".
-    """
+    """Stream answer tokens via SSE with metadata, images, and optional evaluation."""
     try:
-        retrieved_context = retrieve_context_for_query(
-            query=query,
-            tree_path=tree_path,
-            toc_path=toc_path,
-        )
+        retrieved_context = retrieve_context_for_query(query, tree_path, toc_path)
 
         if retrieved_context is None:
             yield f"data: {json.dumps({'type': 'meta', 'selected_nodes': [], 'start_index': 0})}\n\n"
@@ -132,48 +128,31 @@ def stream_answer_query(
             yield "data: [DONE]\n\n"
             return
 
-        _start_indices = retrieved_context.get(
-            "start_indices",
-            [retrieved_context["start_index"]] * len(retrieved_context["node_ids"]),
-        )
-        selected_nodes = [
-            {"node_id": nid, "title": normalize_title(title), "page": page}
-            for nid, title, page in zip(
-                retrieved_context["node_ids"],
-                retrieved_context["titles"],
-                _start_indices,
-            )
-        ]
+        selected_nodes = _build_selected_nodes(retrieved_context)
         yield f"data: {json.dumps({'type': 'meta', 'selected_nodes': selected_nodes, 'start_index': retrieved_context['start_index']})}\n\n"
 
-        prompt = _build_answer_prompt(query, retrieved_context)
         full_answer = ""
-        for token in generate_response_stream(prompt):
+        for token in generate_response_stream(_build_answer_prompt(query, retrieved_context)):
             full_answer += token
             yield f"data: {json.dumps({'type': 'token', 'content': token})}\n\n"
 
-        # Extract image refs from REFERENCED_IMAGES block
-        image_refs = extract_image_refs_from_answer(full_answer)
+        clean_answer, image_refs = _process_answer(full_answer)
+
         if image_refs:
             yield f"data: {json.dumps({'type': 'images', 'images': image_refs})}\n\n"
 
-        # Strip image block from displayed answer
-        clean_answer = re.sub(r"<REFERENCED_IMAGES>[\s\S]*?</REFERENCED_IMAGES>", "", full_answer).rstrip()
-        result = {"query": query, "selected_nodes": selected_nodes, "answer": clean_answer}
+        result = _build_result(
+            query=query,
+            selected_nodes=selected_nodes,
+            clean_answer=clean_answer,
+            context_text=format_retrieved_context(retrieved_context),
+            evaluate=evaluate,
+        )
 
         if evaluate:
-            judgment = evaluate_answer(
-                query=query,
-                answer=clean_answer,
-                context_text=format_retrieved_context(retrieved_context),
-            )
-            result["reasoning"]  = judgment.get("reasoning", "")
-            result["confidence"] = judgment.get("confidence", "")
-            result["metrics"]    = judgment.get("metrics", {})
             yield f"data: {json.dumps({'type': 'eval', 'reasoning': result['reasoning'], 'confidence': result['confidence'], 'metrics': result['metrics']})}\n\n"
 
         yield "data: [DONE]\n\n"
-
         append_query_response(result, log_path)
 
     except Exception as error:
